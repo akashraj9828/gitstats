@@ -49,10 +49,7 @@ const Header = () => {
               <li>
                 <div className="change-theme mt-2 font-size-13">
                   <button onClick={changeTheme}>
-                    <img
-                      className="mr-1"
-                      src={process.env.PUBLIC_URL + imageUrl}
-                    />
+                    <img className="mr-1" src={process.env.PUBLIC_URL + imageUrl}/>
                     {dayStatus ? "Night Mode" : "Day Mode"}
                   </button>
                 </div>
