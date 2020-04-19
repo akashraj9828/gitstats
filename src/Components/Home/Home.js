@@ -46,6 +46,11 @@ const Home = () => {
                   <p className="font-size-12 mb-0 mt-1">3,323,90</p>
                 </div>
               </div>
+              <ul className="p-0 m-0 list-unstyled d-flex justify-content-end font-size-12 mt-4">
+                <li className="mr-3"> <i style={{color: "#40b14e"}} class="fa fa-bookmark" aria-hidden="true"></i> Total Repo : <span className="font-weight-bold">233</span></li>
+                <li className="mr-3"><i style={{color: "#FF9800"}} class="fa fa-comment" aria-hidden="true"></i> Total Commit : <span className="font-weight-bold">973</span></li>
+                <li><i style={{color: "#00BCD4"}} class="fa fa-star" aria-hidden="true"></i> Total Star : <span className="font-weight-bold">23</span></li>
+              </ul>
             </div>
           </div>
         </div>
