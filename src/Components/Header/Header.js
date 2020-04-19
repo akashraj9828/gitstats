@@ -2,16 +2,16 @@ import React, { useState } from "react";
 
 const Header = () => {
   let [dayStatus, setTheme] = useState(true);
-  let [imageUrl, setImageUrl] = useState("img/sun.png");
+  let [imageUrl, setImageUrl] = useState("img/moon.png");
   let body = document.querySelector("body");
 
   const changeTheme = () => {
     if (dayStatus) {
       body.classList = "night-mode";
-      setImageUrl("/img/moon.png");
+      setImageUrl("/img/sun.png");
     } else {
       body.classList = "";
-      setImageUrl("/img/sun.png");
+      setImageUrl("/img/moon.png");
     }
     setTheme(!dayStatus);
   };
@@ -53,7 +53,7 @@ const Header = () => {
                       className="mr-1"
                       src={process.env.PUBLIC_URL + imageUrl}
                     />
-                    {dayStatus ? "Day Mode" : "Night Mode"}
+                    {dayStatus ? "Night Mode" : "Day Mode"}
                   </button>
                 </div>
               </li>
