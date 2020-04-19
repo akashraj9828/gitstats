@@ -28,7 +28,6 @@ const Home = () => {
                 </p>
               </div>
             </div>
-
             <div className="col-sm-5">
               <div className="d-flex follow-details justify-content-end text-right">
                 <div>
@@ -53,6 +52,32 @@ const Home = () => {
               </ul>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="pt-5 pb-5">
+        <div className="row">
+            <div className="col-sm-4">
+              <h3 className="font-size-15">Most Active</h3>
+              <div className="card p-3">
+              <img src="https://next3-assets.s3.amazonaws.com/activities/1321/backgrounds-1495419125-graphs_a4_72dpi.gif"/>
+              </div>
+            </div>
+
+            <div className="col-sm-4">
+            <h3 className="font-size-15">Technologies</h3>
+              <div className="card p-3">
+              <img src="https://next3-assets.s3.amazonaws.com/activities/1321/backgrounds-1495419125-graphs_a4_72dpi.gif"/>
+
+              </div>
+            </div>
+
+            <div className="col-sm-4">
+            <h3 className="font-size-15">Most Used Lanauage</h3>
+              <div className="card p-3">
+              <img src="https://next3-assets.s3.amazonaws.com/activities/1321/backgrounds-1495419125-graphs_a4_72dpi.gif"/>
+              </div>
+            </div>
         </div>
       </section>
     </Layout>
