@@ -5,7 +5,7 @@ import BasicInformation from './Basic-Info/Basic-info'
 const Home = (props) => {
   return (
     <Layout>
-      <BasicInformation username={props.location.pathname}/>
+      <BasicInformation username={props.match.params.username}/>
       <section className="pt-5 pb-5">
         <div className="row">
             <div className="col-sm-4">

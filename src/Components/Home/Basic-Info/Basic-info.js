@@ -3,13 +3,13 @@ import axios from "axios";
 
 const BasicInformation = (props) => {
   const [userInfo, setInfo] = useState();
-  const BASE_URL_API = window.BASE_URL_API
-  const username = props.username != '/' ? props.username : "/akashraj9828"
-  const FULL_API_URL = BASE_URL_API + username;
+  const API_BASE_URL = window.API_BASE_URL
+  const username = props.username ? props.username : "akashraj9828"
+  const API_FULL_URL = API_BASE_URL + username;
 
   const getUserInfo = async () => {
-    let responce = await axios.get(FULL_API_URL);
-    const userData = responce.data;
+    let response = await axios.get(API_FULL_URL);
+    const userData = response.data;
     setInfo(userData.data.user);
   }
 
