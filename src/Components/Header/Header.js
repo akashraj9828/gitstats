@@ -20,8 +20,8 @@ const Header = () => {
     <header>
       <div className="container">
         <nav className="navbar navbar-expand-lg">
-          <a className="navbar-brand text-white logo" href="#">
-            <img src={process.env.PUBLIC_URL + "/cat-logo.png"} />
+          <a className="navbar-brand text-white logo" href="#" >
+            <img src={process.env.PUBLIC_URL + "/cat-logo.png"} alt="" />
             GitYourDetails
           </a>
           <button
@@ -49,7 +49,7 @@ const Header = () => {
               <li>
                 <div className="change-theme mt-2 font-size-13">
                   <button onClick={changeTheme}>
-                    <img className="mr-1" src={process.env.PUBLIC_URL + imageUrl}/>
+                    <img className="mr-1" src={process.env.PUBLIC_URL + imageUrl} alt=""/>
                     {dayStatus ? "Night Mode" : "Day Mode"}
                   </button>
                 </div>

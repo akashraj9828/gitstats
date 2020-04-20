@@ -25,3 +25,5 @@ yarn-error.log*
 
 
 /graphql_payload
+
+yarn.lock
