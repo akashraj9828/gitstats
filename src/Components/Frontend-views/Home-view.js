@@ -9,7 +9,7 @@ const Home = (props) => {
       <BasicInformation username={props.match.params.username}/>
       <section className="pt-5 pb-5">
         <div className="">
-              <h1 className="underline">My AWESOME projects</h1>
+              <h1 className="font-size-20">My Awesome projects</h1>
               <div className="">
                 <Pinned username={props.match.params.username}/>
               </div>
