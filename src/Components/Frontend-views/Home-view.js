@@ -2,11 +2,19 @@ import React from "react";
 import Layout from "../Layout/Layout";
 import BasicInformation from './BasicInfo-view'
 import Repository from './Repository-view'
-
+import Pinned from "./Pinned-view"
 const Home = (props) => {
   return (
     <Layout>
       <BasicInformation username={props.match.params.username}/>
+      <section className="pt-5 pb-5">
+        <div className="">
+              <h1 className="underline">My AWESOME projects</h1>
+              <div className="">
+                <Pinned username={props.match.params.username}/>
+              </div>
+        </div>
+      </section>
       <section className="pt-5 pb-5">
         <div className="row">
             <div className="col-sm-4">
@@ -32,6 +40,7 @@ const Home = (props) => {
             </div>
         </div>
       </section>
+      
     </Layout>
   );
 };
