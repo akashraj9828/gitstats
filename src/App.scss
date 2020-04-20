@@ -86,9 +86,17 @@ button {
 }
 
 .search {
+	transition: all 0.3s;
+	width: 80px;
 	border: none;
+	margin-right: 20px;
 	font-size: 14px;
 	background: transparent;
+	&:focus {
+	width: 200px;
+	transition: all 0.3s;
+
+	}
 	& {
 		outline: none;
 		color: #BEBFC1;
@@ -151,13 +159,13 @@ button {
 	}
 }
 
-.follow-details {
-	.btn {
-		img {
-			width: 22px;
-			margin-left: 7px;
-		}
-	}
+.follow-details img{
+	width: 22px;
+    margin-left: 7px;
+    background: #fff;
+    padding: 2px;
+    border-radius: 34px;
+    height: 21px;
 }
 
 .btn-primary.outline {
@@ -195,4 +203,18 @@ button {
 	img {
 		width: 15px;
 	}
+}
+
+.total-badge {
+	max-width: 120px;
+    background: #2196F3;
+    width: 32px;
+    border-radius: 3px;
+    padding: 0 7px;
+    font-size: 12px;
+    color: #fff;
+    height: 15px;
+    line-height: 15px;
+    text-align: center;
+    margin-top: 10px !important;
 }

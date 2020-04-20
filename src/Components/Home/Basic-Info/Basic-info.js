@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios';
-// import {BASE_URL_API} from "/src/config"
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
 const BasicInformation = () => {
   const [userInfo, setInfo] = useState();
   const BASE_URL_API = window.BASE_URL_API
@@ -13,19 +13,20 @@ const BasicInformation = () => {
     const userData = responce.data;
     setInfo(userData.data.user);
   }
+
   //On load bind data with UI
   useEffect(() => {
-    getUserInfo()
-  }, [])
+    getUserInfo();
+  }, []);
 
   return (
     <section className="pt-5">
-      {userInfo ?
+      {userInfo ? 
         <div className="card p-4">
           <div className="row">
             <div className="left-image-avtar">
               <div className="member-image">
-                <img src={userInfo.avatarUrl} alt=""/>
+                <img src={userInfo.avatarUrl} />
               </div>
             </div>
             <div className="col-sm-5">
@@ -33,66 +34,51 @@ const BasicInformation = () => {
                 <h2 className="font-size-21 mb-3 ">{userInfo.name}</h2>
                 <p className="font-size-13 mb-1">{userInfo.bio}</p>
                 <p className="font-size-13 mb-1">
-                  <i
-                    className="fa fa-envelope-o email"
-                    aria-hidden="true"
-                  ></i>
+                  <i className="fa fa-envelope-o email" aria-hidden="true"></i>
                   {userInfo.email ? userInfo.email : "No email added"}
                 </p>
-                <p className="font-size-13">
+                <p className="font-size-13 mb-1">
                   <i className="fa fa-github git-icon" aria-hidden="true"></i>
-                  <a
-                    className="text-dark"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={userInfo.url}
-                  >
+                  <a className="text-dark" target="_blank" href={userInfo.url}>
                     {userInfo && userInfo.login}
                   </a>
+                </p>
+                <p className="font-size-13 mb-1">
+                  <i class="fa fa-map-marker git-icon" aria-hidden="true"></i>
+                  {userInfo.location}
                 </p>
               </div>
             </div>
             <div className="col-sm-5">
               <div className="d-flex follow-details justify-content-end text-right">
                 <div>
-                  <button type="button" className="btn btn-primary">
-                    Fllowers
-                      <img src={process.env.PUBLIC_URL + "/img/octocat.png"}  alt=""/>
-                  </button>
-                  <p className="font-size-12 mb-0 mt-1">
+                Fllowers  <img src={process.env.PUBLIC_URL + "/img/octocat.png"} />
+                  <p className="font-size-12 mb-0 mt-1 total-badge">
                     {userInfo["followers"].totalCount}
                   </p>
                 </div>
                 <div className="ml-5">
-                  <button type="button" className="btn btn-primary outline">
-                    <span>Fllowing</span>
-                    <img src={process.env.PUBLIC_URL + "/img/octocat.png"}  alt=""/>
-                  </button>
-                  <p className="font-size-12 mb-0 mt-1">
+                <span>Fllowing</span>  <img src={process.env.PUBLIC_URL + "/img/octocat.png"} />
+                  <p className="font-size-12 mb-0 mt-1 total-badge">
                     {userInfo["following"].totalCount}
+                  </p>
+                </div>
+
+                <div className="ml-5">
+                <span>Repository</span>  <img src={process.env.PUBLIC_URL + "/img/octocat.png"} />
+                  <p className="font-size-12 mb-0 mt-1 total-badge">
+                  {userInfo["repositories"].totalCount}
                   </p>
                 </div>
               </div>
               <ul className="p-0 m-0 list-unstyled d-flex justify-content-end font-size-12 mt-4">
                 <li className="mr-3">
-                  {" "}
-                  <i
-                    style={{ color: "#40b14e" }}
-                    className="fa fa-bookmark"
-                    aria-hidden="true"
-                  ></i>{" "}
-                    Total Repo :{" "}
-                  <span className="font-weight-bold">
-                    {userInfo && userInfo["repositories"].totalCount}
-                  </span>
-                </li>
-                <li className="mr-3">
                   <i
                     style={{ color: "#FF9800" }}
                     className="fa fa-comment"
                     aria-hidden="true"
-                  ></i>{" "}
-                    Total Commit : <span className="font-weight-bold">973</span>
+                  ></i>
+                  Total Commit : <span className="font-weight-bold">973</span>
                 </li>
                 <li>
                   <i
@@ -100,21 +86,17 @@ const BasicInformation = () => {
                     className="fa fa-star"
                     aria-hidden="true"
                   ></i>{" "}
-                    Total Star : <span className="font-weight-bold">23</span>
+                  Total Star : <span className="font-weight-bold">23</span>
                 </li>
               </ul>
             </div>
           </div>
         </div>
-        :
-        "loading"}
+      : 
+        "loading"
+      }
     </section>
   );
+};
 
-}
-
-
-
-
-
-export default BasicInformation
+export default BasicInformation;
