@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const BasicInformation = () => {
+const BasicInformation = (props) => {
   const [userInfo, setInfo] = useState();
   const BASE_URL_API = window.BASE_URL_API
-  const username = "akashraj9828"
+  // const username = "akashraj9828"
+  const username=props.username
   const FULL_API_URL = BASE_URL_API + username;
 
 
@@ -26,7 +27,7 @@ const BasicInformation = () => {
           <div className="row">
             <div className="left-image-avtar">
               <div className="member-image">
-                <img src={userInfo.avatarUrl} />
+                <img src={userInfo.avatarUrl} alt={`${username}`} />
               </div>
             </div>
             <div className="col-sm-5 text-left">
@@ -44,7 +45,7 @@ const BasicInformation = () => {
                   </a>
                 </p>
                 <p className="font-size-13 mb-1">
-                  <i class="fa fa-map-marker git-icon" aria-hidden="true"></i>
+                  <i className="fa fa-map-marker git-icon" aria-hidden="true"></i>
                   {userInfo.location}
                 </p>
               </div>
