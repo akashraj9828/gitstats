@@ -33,7 +33,6 @@ const getRepoUrl = window.API_BASE_URL+"repos/akashraj9828/MDQ6VXNlcjI5Nzk2Nzg1"
 
 return(
 <div>
-    <h3>Repository Details</h3>
     <p>total commit : {totalCommit? totalCommit: "Loading..."}</p>
    <p>total repo : {repoDdata? repoDdata.length: "Loading..."}</p>
    <p>total star : {totalStargazers ? totalStargazers : "Loading..."}</p>
