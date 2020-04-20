@@ -20,7 +20,7 @@ const BasicInformation = () => {
   }, []);
 
   return (
-    <section className="pt-5">
+    <section className="pt-5 text-center">
       {userInfo ? 
         <div className="card p-4">
           <div className="row">
@@ -29,7 +29,7 @@ const BasicInformation = () => {
                 <img src={userInfo.avatarUrl} />
               </div>
             </div>
-            <div className="col-sm-5">
+            <div className="col-sm-5 text-left">
               <div className="user-details pl-2">
                 <h2 className="font-size-21 mb-3 ">{userInfo.name}</h2>
                 <p className="font-size-13 mb-1">{userInfo.bio}</p>
@@ -93,7 +93,7 @@ const BasicInformation = () => {
           </div>
         </div>
       : 
-        "loading"
+        "Pleas wait ..."
       }
     </section>
   );

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const Header = () => {
   let [dayStatus, setTheme] = useState(true);
   let [imageUrl, setImageUrl] = useState("img/sun.png");
-  const [searchString, setSearchString] = useState()
+  const [searchString, setSearchString] = useState("")
   let body = document.querySelector("body");
 
   const changeTheme = () => {
