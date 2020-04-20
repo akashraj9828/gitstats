@@ -10,7 +10,7 @@ const Home = (props) => {
       <section className="pt-5 pb-5">
         <div className="row">
             <div className="col-sm-4">
-              <h3 className="font-size-15">Most Active</h3>
+              <h3 className="font-size-15">Repository Details</h3>
               <div className="card p-3">
               <Repository/>
               </div>
