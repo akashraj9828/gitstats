@@ -1,10 +1,9 @@
 import React from 'react';
-import Home from './Components/Home/Home';
+import Home from'./Components/Frontend-views/Home-view'
 import Header from './Components/Header/Header'
 import './App.scss';
 import { BrowserRouter as Router } from "react-router-dom"
 import { Route, Switch } from "react-router"
-
 import config from "./config"
 // set all variables from config as global variable in window scope
 Object.keys(config).forEach(key => {

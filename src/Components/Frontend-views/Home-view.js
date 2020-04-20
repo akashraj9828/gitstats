@@ -1,6 +1,7 @@
 import React from "react";
 import Layout from "../Layout/Layout";
-import BasicInformation from './Basic-Info/Basic-info'
+import BasicInformation from './BasicInfo-view'
+import Repository from './Repository-view'
 
 const Home = (props) => {
   return (
@@ -11,7 +12,7 @@ const Home = (props) => {
             <div className="col-sm-4">
               <h3 className="font-size-15">Most Active</h3>
               <div className="card p-3">
-              <img src="https://next3-assets.s3.amazonaws.com/activities/1321/backgrounds-1495419125-graphs_a4_72dpi.gif" alt=""/>
+              <Repository/>
               </div>
             </div>
 
