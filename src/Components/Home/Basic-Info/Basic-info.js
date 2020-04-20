@@ -5,7 +5,7 @@ const BasicInformation = (props) => {
   const [userInfo, setInfo] = useState();
   const BASE_URL_API = window.BASE_URL_API
   // const username = "akashraj9828"
-  const username=props.username
+  const username=props.username ? props.username : "torvalds"
   const FULL_API_URL = BASE_URL_API + username;
 
 
