@@ -31,7 +31,7 @@ const BasicInformation = () => {
             </div>
             <div className="col-sm-5 text-left">
               <div className="user-details pl-2">
-                <h2 className="font-size-21 mb-3 ">{userInfo.name}</h2>
+                <h2 className="font-size-21 mb-3 ">{userInfo.name} {userInfo.isDeveloperProgramMember ?<img style={{width:15}} src={process.env.PUBLIC_URL + "/img/official.png"} />:""}</h2>
                 <p className="font-size-13 mb-1">{userInfo.bio}</p>
                 <p className="font-size-13 mb-1">
                   <i className="fa fa-envelope-o email" aria-hidden="true"></i>
@@ -52,13 +52,13 @@ const BasicInformation = () => {
             <div className="col-sm-5">
               <div className="d-flex follow-details justify-content-end text-right">
                 <div>
-                Fllowers  <img src={process.env.PUBLIC_URL + "/img/octocat.png"} />
+                Followers  <img src={process.env.PUBLIC_URL + "/img/octocat.png"} />
                   <p className="font-size-12 mb-0 mt-1 total-badge">
                     {userInfo["followers"].totalCount}
                   </p>
                 </div>
                 <div className="ml-5">
-                <span>Fllowing</span>  <img src={process.env.PUBLIC_URL + "/img/octocat.png"} />
+                <span>Following</span>  <img src={process.env.PUBLIC_URL + "/img/octocat.png"} />
                   <p className="font-size-12 mb-0 mt-1 total-badge">
                     {userInfo["following"].totalCount}
                   </p>
