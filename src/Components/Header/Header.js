@@ -2,16 +2,17 @@ import React, { useState } from "react";
 
 const Header = () => {
   let [dayStatus, setTheme] = useState(true);
-  let [imageUrl, setImageUrl] = useState("img/moon.png");
+  let [imageUrl, setImageUrl] = useState("img/sun.png");
+  const [searchString, setSearchString] = useState()
   let body = document.querySelector("body");
 
   const changeTheme = () => {
     if (dayStatus) {
-      body.classList = "night-mode";
-      setImageUrl("/img/sun.png");
-    } else {
       body.classList = "";
       setImageUrl("/img/moon.png");
+    } else {
+      body.classList = "night-mode";
+      setImageUrl("/img/sun.png");
     }
     setTheme(!dayStatus);
   };
@@ -43,6 +44,8 @@ const Header = () => {
                     type="text"
                     className="search"
                     placeholder="Search..."
+                    value={searchString}
+                    onChange={(event)=> setSearchString(event.target.value)}
                   />
                 </a>
               </li>
@@ -50,7 +53,7 @@ const Header = () => {
                 <div className="change-theme mt-2 font-size-13">
                   <button onClick={changeTheme}>
                     <img className="mr-1" src={process.env.PUBLIC_URL + imageUrl}/>
-                    {dayStatus ? "Night Mode" : "Day Mode"}
+                    {dayStatus ? "Day Mode" : "Night Mode"}
                   </button>
                 </div>
               </li>
