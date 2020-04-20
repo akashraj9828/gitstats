@@ -2,10 +2,10 @@ import React from "react";
 import Layout from "../Layout/Layout";
 import BasicInformation from './Basic-Info/Basic-info'
 
-const Home = () => {
+const Home = (props) => {
   return (
     <Layout>
-      <BasicInformation/>
+      <BasicInformation username={props.location.pathname}/>
       <section className="pt-5 pb-5">
         <div className="row">
             <div className="col-sm-4">

@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const BasicInformation = () => {
+const BasicInformation = (props) => {
   const [userInfo, setInfo] = useState();
   const BASE_URL_API = window.BASE_URL_API
-  const username = "akashraj9828"
+  const username = props.username != '/' ? props.username : "/akashraj9828"
   const FULL_API_URL = BASE_URL_API + username;
-
 
   const getUserInfo = async () => {
     let responce = await axios.get(FULL_API_URL);
@@ -44,7 +43,7 @@ const BasicInformation = () => {
                   </a>
                 </p>
                 <p className="font-size-13 mb-1">
-                  <i class="fa fa-map-marker git-icon" aria-hidden="true"></i>
+                  <i className="fa fa-map-marker git-icon" aria-hidden="true"></i>
                   {userInfo.location}
                 </p>
               </div>
