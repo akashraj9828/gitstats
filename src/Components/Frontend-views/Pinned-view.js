@@ -24,7 +24,7 @@ const Pinned = () => {
                     <h6 className="card-title text-center"> {repo.nameWithOwner}</h6>
                     <div className="row text-center mt-3">
                         <div className="col-md-4">
-                            {"-"}
+                            {repo.defaultBranchRef.target.history.totalCount}
                             <br />
                                 Commits
                             </div>
