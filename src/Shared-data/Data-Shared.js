@@ -5,22 +5,32 @@ Object.keys(config).forEach(key => {
   window[key] = config[key];
 });
 
+let username = ""
+
+//get Name
+ function getUsername (value){
+  username = value != '/' ? value.substr(1) : "akashraj9828"
+}
+
 //common variables
 const API_BASE_URL = window.API_BASE_URL
-// const username = props.username ? props.username : "akashraj9828"
-const API_FULL_URL = API_BASE_URL + "akashraj9828";
 
 //Network call for Basic User Details View
 const getUserInfo = async () => {
-  let response = await axios.get(API_FULL_URL);
+  let response = await axios.get(API_BASE_URL+username);
   const userData = response.data;
-  //calling caculation method
+  getRepositoryInfo(userData.data.user.id)
    return userData;
 };
 
+async function setId(){
+  let test = await getUserInfo();
+console.log(test)
+}
+
 //Network CALL For Repository Data View
-const getRepositoryInfo = async () => {
-  let response = await axios.get(API_BASE_URL + "repos/akashraj9828/MDQ6VXNlcjE0OTU5");
+const getRepositoryInfo = async (id) => {
+  let response = await axios.get(`${API_BASE_URL}repos/${username}/MDQ6VXNlcjc3NDE2`);
    const repository_data = response.data;
   return repository_data
 };
@@ -53,7 +63,8 @@ const getPinnedRepo = async () => {
     getUserInfo,
     getRepositoryInfo,
     totalBasicCalculation,
-    getPinnedRepo
+    getPinnedRepo,
+    getUsername
   }
 
 

@@ -4,7 +4,6 @@ import Header from './Components/Header/Header'
 import './App.scss';
 import { BrowserRouter as Router } from "react-router-dom"
 import { Route, Switch } from "react-router"
-import config from "./config"
 
 
 function App() {
