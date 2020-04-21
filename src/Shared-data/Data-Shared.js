@@ -23,21 +23,19 @@ const getUserInfo = async () => {
    return userData;
 };
 
-async function setId(){
-  let test = await getUserInfo();
-console.log(test)
-}
+
 
 //Network CALL For Repository Data View
 const getRepositoryInfo = async (id) => {
-  let response = await axios.get(`${API_BASE_URL}repos/${username}/MDQ6VXNlcjc3NDE2`);
+  let userId = id==undefined ? "MDQ6VXNlcjkxMTQ5OTA=" : id
+  let response = await axios.get(`${API_BASE_URL}repos/${username}/${userId}`);
    const repository_data = response.data;
   return repository_data
 };
 
 //Network CALL For Pinned Repository
 const getPinnedRepo = async () => {
-  let response = await axios.get(API_BASE_URL+"pinned/akashraj9828");
+  let response = await axios.get(`${API_BASE_URL}pinned/${username}`);
   const pinned_data = response.data;
   return pinned_data 
 };
