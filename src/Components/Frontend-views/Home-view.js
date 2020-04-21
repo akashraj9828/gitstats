@@ -23,7 +23,6 @@ const Home = (props) => {
               <Repository/>
               </div>
             </div>
-
             <div className="col-sm-4">
             <h3 className="font-size-15">Technologies</h3>
               <div className="card p-3">
@@ -31,7 +30,6 @@ const Home = (props) => {
 
               </div>
             </div>
-
             <div className="col-sm-4">
             <h3 className="font-size-15">Most Used Lanauage</h3>
               <div className="card p-3">
@@ -40,7 +38,6 @@ const Home = (props) => {
             </div>
         </div>
       </section>
-      
     </Layout>
   );
 };

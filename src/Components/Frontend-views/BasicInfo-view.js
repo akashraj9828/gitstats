@@ -1,21 +1,17 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, {useEffect, useState} from "react";
+import sharedData from '../../Shared-data/Data-Shared'
 
-const BasicInformation = (props) => {
+const BasicInformation = () => {
   const [userInfo, setInfo] = useState();
-  const API_BASE_URL = window.API_BASE_URL
-  const username = props.username ? props.username : "akashraj9828"
-  const API_FULL_URL = API_BASE_URL + username;
-
-  const getUserInfo = async () => {
-    let response = await axios.get(API_FULL_URL);
-    const userData = response.data;
-    setInfo(userData.data.user);
-  }
-
-  //On load bind data with UI
+  
+   //On load bind data with UI
   useEffect(() => {
-    getUserInfo();
+    const getUsersInformation = async () => {
+      let responce = await sharedData.getUserInfo();
+      let data = await responce
+      setInfo(data.data.user)
+    }
+    getUsersInformation()
   }, []);
 
   return (

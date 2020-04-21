@@ -1,25 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import axios from "axios";
+import sharedData from '../../Shared-data/Data-Shared'
 
-const Pinned = (props) => {
+const Pinned = () => {
     const [repoData, setRepoData] = useState([]);
-    const username = props.username ? props.username : "akashraj9828"
-    const getRepoUrl = window.API_BASE_URL + "pinned/" + username
-
-    const getPinnedRepo = async () => {
-        let response = await axios.get(getRepoUrl);
-        const pinned_data = response.data;
-        setRepoData(pinned_data.data.user.pinnedRepositories.nodes);
-    };
-
-
     useEffect(() => {
-        getPinnedRepo();
+       const  getPinnedrepoMethod = async () => {
+        let responce = await sharedData.getPinnedRepo();
+         setRepoData(responce.data.user.pinnedRepositories.nodes);
+        }
+        getPinnedrepoMethod()
     }, []);
 
+
+    //HTML VIEW JSX DATA BIND
     let pinned_view = repoData.map((repo) =>
         <div key={repo.name} className="col-md-4 my-3">
-
             <div className="card h-100 rounded">
                 <div className="card-block py-3 px-4">
                     <h6 className="card-title text-center"> {repo.nameWithOwner}</h6>
@@ -45,14 +40,11 @@ const Pinned = (props) => {
             </div>
         </div>
     )
-
     return (
         <div className="row">
             {repoData ? pinned_view : <h3 className="text-center p-5">Loading</h3>}
         </div>
     )
-
-
 }
 
 export default Pinned
