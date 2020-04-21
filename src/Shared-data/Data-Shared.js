@@ -31,7 +31,9 @@ const getUserInfo = async () => {
 const getRepositoryInfo = async (id) => {
   let userId = id==undefined ? "MDQ6VXNlcjkxMTQ5OTA=" : id
   let response = await axios.get(`${API_BASE_URL}repos/${username}/${userId}`);
+
   if(response){
+  totalBasicCalculation(response.data.data.user);
    const repository_data = response.data;
    return repository_data
   }
@@ -49,20 +51,23 @@ const getPinnedRepo = async () => {
 };
 
 //Total Basic Calculation View
-  const totalBasicCalculation = async () => {
-    let repoInfo = await getRepositoryInfo();
-    let repoNodes = await repoInfo.data.user['repositories'].nodes;
+  const totalBasicCalculation = async (data) => {
+ 
+    let repoNodes = data && data.repositories.nodes;
     //Total commit
-    let totalcommit = repoNodes.reduce((sum, commit) => sum += commit.contributions.target.userCommits.totalCount,0);
+    let totalcommit = data && repoNodes.reduce((sum, commit) => sum += commit.contributions.target.userCommits.totalCount,0);
       //Get total Stargazers
-    let totalstargazer = repoNodes.reduce((sum, stargazers) => sum + stargazers["stargazers"].totalCount, 0);
+    let totalstargazer = data && repoNodes.reduce((sum, stargazers) => sum + stargazers["stargazers"].totalCount, 0);
       //Get total fork
-    let totalFork = repoNodes.filter(fork => fork.isFork == true);
-   return {
+    let totalFork = await data && repoNodes.filter(fork => fork.isFork == true);
+    
+   return  {
     totalcommit : totalcommit,
     stargazer : totalstargazer, 
     totalFork: totalFork,
-    totalrepo : repoNodes.length}
+    totalrepo : data &&repoNodes.length
+  }
+
   }
 
   export default {
@@ -70,7 +75,7 @@ const getPinnedRepo = async () => {
     getRepositoryInfo,
     totalBasicCalculation,
     getPinnedRepo,
-    getUsername
+    getUsername,
   }
 
 

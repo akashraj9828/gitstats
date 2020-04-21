@@ -23,7 +23,7 @@ const BasicInformation = () => {
     }
 
      getUsersCalculateData()
-    getUsersInformation();
+     getUsersInformation();
   }, []);
 
   return (

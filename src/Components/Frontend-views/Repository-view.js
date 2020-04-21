@@ -17,7 +17,7 @@ return  (
   <div>
     <p>total commit : {repoDdata && repoDdata.totalcommit}</p>
     <p>total Stargazer {repoDdata && repoDdata.stargazer}</p>
-    <p>total fork {repoDdata['totalFork'] && repoDdata['totalFork'].length}</p>
+    {/* <p>total fork {repoDdata['totalFork'] && repoDdata['totalFork'].length}</p> */}
     <p>total repo : {repoDdata && repoDdata.totalrepo}</p>
   </div>
 )
