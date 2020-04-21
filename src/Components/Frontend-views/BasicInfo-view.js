@@ -1,17 +1,27 @@
 import React, {useEffect, useState} from "react";
-import sharedData from '../../Shared-data/Data-Shared'
+import SharedData from '../../Shared-data/Data-Shared'
 
 const BasicInformation = () => {
   const [userInfo, setInfo] = useState();
-  
+  const [calculateData, setCalculate] = useState()
    //On load bind data with UI
   useEffect(() => {
+
+    //Normal basic details
     const getUsersInformation = async () => {
-      let responce = await sharedData.getUserInfo();
+      let responce = await SharedData.getUserInfo();
       let data = await responce
-      setInfo(data.data.user)
+      setInfo(data.data.user)    
     }
-    getUsersInformation()
+    //Getting calculate data
+    const getUsersCalculateData = async () => {
+      let responce = await SharedData.totalBasicCalculation();
+      let data = await responce
+      setCalculate(data)    
+    }
+
+    getUsersCalculateData()
+    getUsersInformation();
   }, []);
 
   return (
@@ -73,7 +83,7 @@ const BasicInformation = () => {
                     className="fa fa-comment"
                     aria-hidden="true"
                   ></i>
-                  Total Commit : <span className="font-weight-bold">973</span>
+                  Total Commit : <span className="font-weight-bold">{calculateData && calculateData.totalcommit}</span>
                 </li>
                 <li>
                   <i
@@ -81,7 +91,7 @@ const BasicInformation = () => {
                     className="fa fa-star"
                     aria-hidden="true"
                   ></i>{" "}
-                  Total Star : <span className="font-weight-bold">23</span>
+                  Total Star : <span className="font-weight-bold">{calculateData && calculateData.stargazer}</span>
                 </li>
               </ul>
             </div>

@@ -1,4 +1,3 @@
-import React from "react";
 import axios from "axios";
 import config from '../config/index'
 
@@ -15,7 +14,8 @@ const API_FULL_URL = API_BASE_URL + "akashraj9828";
 const getUserInfo = async () => {
   let response = await axios.get(API_FULL_URL);
   const userData = response.data;
-  return userData;
+  //calling caculation method
+   return userData;
 };
 
 //Network CALL For Repository Data View
@@ -48,7 +48,6 @@ const getPinnedRepo = async () => {
     totalFork: totalFork,
     totalrepo : repoNodes.length}
   }
-
 
   export default {
     getUserInfo,
