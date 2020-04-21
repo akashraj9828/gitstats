@@ -11,7 +11,9 @@ const BasicInformation = () => {
     const getUsersInformation = async () => {
       let responce = await SharedData.getUserInfo();
       let data = await responce
-      setInfo(data.data.user)    
+      if(data){
+        setInfo(data.data.user)    
+      }
     }
     //Getting calculate data
     const getUsersCalculateData = async () => {
@@ -20,7 +22,7 @@ const BasicInformation = () => {
       setCalculate(data)    
     }
 
-    getUsersCalculateData()
+     getUsersCalculateData()
     getUsersInformation();
   }, []);
 

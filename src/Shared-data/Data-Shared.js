@@ -19,7 +19,9 @@ const API_BASE_URL = window.API_BASE_URL
 const getUserInfo = async () => {
   let response = await axios.get(API_BASE_URL+username);
   const userData = response.data;
-  getRepositoryInfo(userData.data.user.id)
+  if(userData){
+   getRepositoryInfo(userData.data.user.id)
+  }
    return userData;
 };
 
@@ -29,15 +31,21 @@ const getUserInfo = async () => {
 const getRepositoryInfo = async (id) => {
   let userId = id==undefined ? "MDQ6VXNlcjkxMTQ5OTA=" : id
   let response = await axios.get(`${API_BASE_URL}repos/${username}/${userId}`);
+  if(response){
    const repository_data = response.data;
-  return repository_data
+   return repository_data
+  }
 };
 
 //Network CALL For Pinned Repository
 const getPinnedRepo = async () => {
-  let response = await axios.get(`${API_BASE_URL}pinned/${username}`);
-  const pinned_data = response.data;
-  return pinned_data 
+    try {
+    let response = await axios.get(`${API_BASE_URL}pinned/${username}`);
+    const pinned_data = await response.data;
+    return pinned_data 
+    } catch (error) {
+      console.log(error)
+    }
 };
 
 //Total Basic Calculation View

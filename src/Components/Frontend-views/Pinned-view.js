@@ -5,8 +5,12 @@ const Pinned = () => {
     const [repoData, setRepoData] = useState([]);
     useEffect(() => {
        const  getPinnedrepoMethod = async () => {
-        let responce = await sharedData.getPinnedRepo();
-         setRepoData(responce.data.user.pinnedRepositories.nodes);
+            try {
+                let responce = await sharedData.getPinnedRepo();
+                setRepoData(responce.data.user.pinnedRepositories.nodes);
+            } catch (error) {
+                console.log(error)
+            }
         }
         getPinnedrepoMethod()
     }, []);
