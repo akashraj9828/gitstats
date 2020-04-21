@@ -2,13 +2,10 @@ import React from "react";
 
 function BasicInformation(props) {
 
-  // console.log("---: BasicInformation -> props", props);
-
   if (Object.keys(props.basicInfo).length === 0) {
-    // console.log("---: BasicInformation -> props.basicInfo", props.basicInfo);
-    // log
     return <div>Loading....</div>
   }
+  
   let userInfo = props.basicInfo.data.user
   let calculateData=props.aggregateData
 

@@ -4,10 +4,10 @@ const Repository = (props) => {
   const repoData=props.repoData 
   return (
     <div>
-      <p>total commit : {repoData && repoData.totalCommit}</p>
-      <p>total Stargazer {repoData && repoData.totalStar}</p>
-      <p>total fork {repoData.totalFork}</p>
-      <p>total repo : {repoData.totalRepo}</p>
+      <p>Total commits : {repoData.totalCommit}</p>
+      <p>Total Stars : {repoData.totalStar}</p>
+      <p>Total Forks : {repoData.totalFork}</p>
+      <p>Total Repos : {repoData.totalRepo}</p>
     </div>
   )
 }
