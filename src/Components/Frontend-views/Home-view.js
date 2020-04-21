@@ -3,16 +3,15 @@ import Layout from "../Layout/Layout";
 import BasicInformation from './BasicInfo-view'
 import Repository from './Repository-view'
 import Pinned from "./Pinned-view"
-import shareData from '../../Shared-data/Data-Shared'
+import DataProvider from '../../Data-provider'
 
 class Home extends React.Component{
   
   constructor(){
-
     super()
   }
   render(){
-    shareData.getUsername(this.props.match.url)
+    DataProvider.setUsername(this.props.match.params.username)
     return (
       <Layout>
         <BasicInformation username={this.props.match.params.username}/>

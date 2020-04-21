@@ -1,27 +1,28 @@
 import React, {useEffect, useState} from "react";
-import SharedData from '../../Shared-data/Data-Shared'
+import DataProvider from '../../Data-provider'
 
 const BasicInformation = () => {
   const [userInfo, setInfo] = useState();
+  const [userId, setId] = useState();
   const [calculateData, setCalculate] = useState()
    //On load bind data with UI
   useEffect(() => {
-
     //Normal basic details
     const getUsersInformation = async () => {
-      let responce = await SharedData.getUserInfo();
+      let responce = await DataProvider.getUserInfo();
       let data = await responce
-      setInfo(data.data.user)    
+      setInfo(data.data.user) 
+      setId(data.data.user.id)   
     }
     //Getting calculate data
     const getUsersCalculateData = async () => {
-      let responce = await SharedData.totalBasicCalculation();
+      let responce = await DataProvider.totalBasicCalculation(userId);
       let data = await responce
       setCalculate(data)    
     }
 
-    getUsersCalculateData()
     getUsersInformation();
+    getUsersCalculateData()
   }, []);
 
   return (

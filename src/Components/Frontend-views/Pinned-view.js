@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import sharedData from '../../Shared-data/Data-Shared'
+import DataProvider from '../../Data-provider'
 
 const Pinned = () => {
     const [repoData, setRepoData] = useState([]);
     useEffect(() => {
        const  getPinnedrepoMethod = async () => {
-        let responce = await sharedData.getPinnedRepo();
+        let responce = await DataProvider.getPinnedRepo();
          setRepoData(responce.data.user.pinnedRepositories.nodes);
         }
         getPinnedrepoMethod()
     }, []);
 
-
+    // "defaultBranchRef": {
+    //     "name": "master",
+    //     "target": {
+    //     "history": {
+    //     "totalCount": 16
+    //     }
+    //     }
     //HTML VIEW JSX DATA BIND
     let pinned_view = repoData.map((repo) =>
         <div key={repo.name} className="col-md-4 my-3">
@@ -20,7 +26,7 @@ const Pinned = () => {
                     <h6 className="card-title text-center"> {repo.nameWithOwner}</h6>
                     <div className="row text-center mt-3">
                         <div className="col-md-4">
-                            {"-"}
+                            {repo.defaultBranchRef.target.history.totalCount}
                             <br />
                                 Commits
                             </div>
