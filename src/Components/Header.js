@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {ReactComponent as GitStatsLogo} from '../Images/logo.svg';
 
 function Header() {
     let [dayStatus, setTheme] = useState(true);
@@ -22,8 +23,8 @@ function Header() {
             <div className="container">
                 <nav className="navbar navbar-expand-lg">
                     <a className="navbar-brand text-white logo" href="#" >
-                        <img src={process.env.PUBLIC_URL + "/cat-logo.png"} alt="" />
-            GitYourDetails
+                        <GitStatsLogo height={30}/>
+                        {/* <img src={process.env.PUBLIC_URL + "/cat-logo.png"} alt="" /> */}
           </a>
                     <button
                         className="navbar-toggler"

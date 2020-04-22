@@ -1,5 +1,5 @@
 import React from "react";
-import  Loader  from "../Extras/Loader"
+import Loader from "../Extras/Loader"
 function BasicInformation(props) {
 
   if (Object.keys(props.basicInfo).length === 0) {
@@ -8,9 +8,6 @@ function BasicInformation(props) {
 
   let userInfo = props.basicInfo.data.user
   let calculateData = props.aggregateData
-  console.log("---: BasicInformation -> calculateData", calculateData);
-
-
 
   return (
     <section className="pt-5 text-center">
@@ -23,8 +20,10 @@ function BasicInformation(props) {
           </div>
           <div className="col-sm-5 text-left">
             <div className="user-details pl-2">
-              <h2 className="font-size-21 mb-3 ">{userInfo.name} {userInfo.isDeveloperProgramMember ? <img style={{ width: 15 }} alt="DeveloperProgramMember" src={process.env.PUBLIC_URL + "/img/official.png"} /> : ""}</h2>
-              <p className="font-size-13 mb-1">{userInfo.bio}</p>
+              <h2 className="font-size-21 mb-0">{userInfo.name} </h2>
+              {userInfo.isDeveloperProgramMember ? <img style={{ width: 20 }} alt="DeveloperProgramMember" src={process.env.PUBLIC_URL + "/img/dev.png"} /> : ""}
+              {userInfo.isCampusExpert ? <img style={{ width: 20 }} alt="CampusExpert" src={process.env.PUBLIC_URL + "/img/campus_expert.png"} /> : ""}
+              <p className="font-size-13 mb-1 mt-3">{userInfo.bio}</p>
               <p className="font-size-13 mb-1">
                 <i className="fa fa-envelope-o email" aria-hidden="true"></i>
                 {userInfo.email ? userInfo.email : "No email added"}
@@ -42,45 +41,52 @@ function BasicInformation(props) {
             </div>
           </div>
           <div className="col-sm-5">
-            <div className="d-flex follow-details justify-content-end text-right">
-              <div>
-                Followers
-                <p className="font-size-12 mb-0 mt-1 total-badge mx-auto">
+
+            <div className="row">
+              <div className="col">
+                <p className="text-center m-0">
                   {userInfo.followers.totalCount}
                 </p>
+                Followers
               </div>
-              <div className="ml-5">
-                <span>Following</span>
-                <p className="font-size-12 mb-0 mt-1 total-badge mx-auto">
+              <div className="col">
+                <p className="text-center m-0">
                   {userInfo.following.totalCount}
                 </p>
+                <span>Following</span>
               </div>
 
-              <div className="ml-5">
-                <span>Repository</span>
-                <p className="font-size-12 mb-0 mt-1 total-badge mx-auto">
+              <div className="col">
+                <p className="text-center m-0">
                   {userInfo.repositories.totalCount}
                 </p>
+                <span>Repository</span>
               </div>
             </div>
 
-            <ul className="p-0 m-0 list-unstyled d-flex justify-content-end font-size-12 mt-4">
-              <li className="px-2">
-                <span className="font-weight-bold">{calculateData.totalCommit ? calculateData.totalCommit : Loader.text_loading}</span>
-                <br />
-                 Commits
-              </li>
-              <li className="px-2">
-                <span className="font-weight-bold">{calculateData.totalStar ? calculateData.totalStar : Loader.text_loading}</span>
-                <br />
-                Stars
-              </li>
-              <li className="px-2">
-                <span className="font-weight-bold">{calculateData.totalFork ? calculateData.totalFork : Loader.text_loading}</span>
-                <br />
-                Forks
-              </li>
-            </ul>
+            <div className="row pt-3">
+              <div className="col">
+                <p className="text-center m-0">
+                  {calculateData.totalCommit!==undefined ? calculateData.totalCommit : Loader.text_loading}
+                </p>
+                Commits
+              </div>
+              <div className="col">
+                <p className="text-center m-0">
+                  {calculateData.totalStar!==undefined ? calculateData.totalStar : Loader.text_loading}
+                </p>
+                <span>Stars</span>
+              </div>
+
+              <div className="col">
+                <p className="text-center m-0">
+                  {calculateData.totalFork!==undefined ? calculateData.totalFork : Loader.text_loading}
+                </p>
+                <span>Forks</span>
+              </div>
+            </div>
+
+
           </div>
         </div>
       </div>

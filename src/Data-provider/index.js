@@ -164,7 +164,6 @@ async function graphCaclulations(language_data){
 
 
   var out={data_size_wise,data_count_wise}
-  console.log("---: graphCaclulations -> out", out);
   return out;
 }
 

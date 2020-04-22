@@ -80,8 +80,6 @@ class Home extends React.Component {
               languageCountGraphData: data.data_count_wise,
               languageCountGraphDataLoaded: true,
             })
-            console.log("---: Home -> componentDidMount -> data", data);
-
           })
         })
       })
