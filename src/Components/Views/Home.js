@@ -13,7 +13,7 @@ class Home extends React.Component {
     super(props)
     let username = "akashraj9828";
     try {
-      username = props.match.params.username
+      username =props.match.params.username? props.match.params.username : "akashraj9828";
 
     } catch (error) {
     }

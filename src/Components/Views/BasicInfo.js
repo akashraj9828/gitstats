@@ -43,21 +43,21 @@ function BasicInformation(props) {
           <div className="col-sm-5">
             <div className="d-flex follow-details justify-content-end text-right">
               <div>
-                Followers  <img src={process.env.PUBLIC_URL + "/img/octocat.png"} alt="git" />
-                <p className="font-size-12 mb-0 mt-1 total-badge">
+                Followers
+                <p className="font-size-12 mb-0 mt-1 total-badge mx-auto">
                   {userInfo.followers.totalCount}
                 </p>
               </div>
               <div className="ml-5">
-                <span>Following</span>  <img src={process.env.PUBLIC_URL + "/img/octocat.png"} alt="git" />
-                <p className="font-size-12 mb-0 mt-1 total-badge">
+                <span>Following</span>
+                <p className="font-size-12 mb-0 mt-1 total-badge mx-auto">
                   {userInfo.following.totalCount}
                 </p>
               </div>
 
               <div className="ml-5">
-                <span>Repository</span>  <img src={process.env.PUBLIC_URL + "/img/octocat.png"} alt="git" />
-                <p className="font-size-12 mb-0 mt-1 total-badge">
+                <span>Repository</span>
+                <p className="font-size-12 mb-0 mt-1 total-badge mx-auto">
                   {userInfo.repositories.totalCount}
                 </p>
               </div>
