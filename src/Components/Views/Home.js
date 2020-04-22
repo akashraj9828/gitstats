@@ -82,8 +82,8 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-          <Header />
         <Layout>
+        <MyBarChart/>
           {/* CONDITIONAL REDERING OF BASIC INFO */}
           {this.state.basicLoaded ? <BasicInformation basicInfo={this.state.basicInfo} aggregateData={this.state.aggregateData} /> : "loading..."}
           <section className="pt-5 pb-5">
@@ -116,7 +116,6 @@ class Home extends React.Component {
                 <div className="card p-3">
                   {/* CONDITIONAL REDERING OF LANGUAGE ANALYSYS(BY SIZE) INFO */}
                   {this.state.languageDataLoaded ? <Language languageData={this.state.languageData} type="size" /> : "loading..."}
-                  <MyBarChart/>
                 </div>
               </div>
             </div>
