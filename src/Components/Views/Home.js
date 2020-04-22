@@ -5,7 +5,7 @@ import Repository from './Repository'
 import Pinned from "./Pinned"
 import DataProvider from "../../Data-provider"
 import Language from "./Language";
-
+import MyBarChart from './BarChart'
 
 class Home extends React.Component {
 
@@ -82,6 +82,7 @@ class Home extends React.Component {
   render() {
     return (
       <div>
+          <Header />
         <Layout>
           {/* CONDITIONAL REDERING OF BASIC INFO */}
           {this.state.basicLoaded ? <BasicInformation basicInfo={this.state.basicInfo} aggregateData={this.state.aggregateData} /> : "loading..."}
@@ -115,6 +116,7 @@ class Home extends React.Component {
                 <div className="card p-3">
                   {/* CONDITIONAL REDERING OF LANGUAGE ANALYSYS(BY SIZE) INFO */}
                   {this.state.languageDataLoaded ? <Language languageData={this.state.languageData} type="size" /> : "loading..."}
+                  <MyBarChart/>
                 </div>
               </div>
             </div>
