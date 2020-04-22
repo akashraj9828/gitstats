@@ -21,8 +21,8 @@ function BasicInformation(props) {
           <div className="col-sm-5 text-left">
             <div className="user-details pl-2">
               <h2 className="font-size-21 mb-0">{userInfo.name} </h2>
-              {userInfo.isDeveloperProgramMember ? <img style={{ width: 20 }} alt="DeveloperProgramMember" src={process.env.PUBLIC_URL + "/img/dev.png"} /> : ""}
-              {userInfo.isCampusExpert ? <img style={{ width: 20 }} alt="CampusExpert" src={process.env.PUBLIC_URL + "/img/campus_expert.png"} /> : ""}
+              {userInfo.isDeveloperProgramMember ? <img className="mr-2" style={{ width: 20 }} alt="DeveloperProgramMember" src={process.env.PUBLIC_URL + "/img/dev.png"} /> : ""}
+              {userInfo.isCampusExpert ? <img className="mr-2" style={{ width: 20 }} alt="CampusExpert" src={process.env.PUBLIC_URL + "/img/campus_expert.png"} /> : ""}
               <p className="font-size-13 mb-1 mt-3">{userInfo.bio}</p>
               <p className="font-size-13 mb-1">
                 <i className="fa fa-envelope-o email" aria-hidden="true"></i>

@@ -1,11 +1,44 @@
-import { ResponsivePie } from '@nivo/pie'
+import { ResponsiveBar } from '@nivo/bar'
 import React, { Fragment } from "react"
+import DataProvider from "../../Data-provider"
 // make sure parent container have a defined height when using
 // responsive component, otherwise height will be 0 and
 // no chart will be rendered.
 // website examples showcase many properties,
 // you'll often use just a few of them.
-function BarChart({ data, height, width, max_slices }) {
+
+// use "accumulate_data" only when showing language by size Dont use it other wise
+// accumulate_data will add all the remaining data and show it in the graph as "Others"
+function BarChart({ data, height, width, max_bars, accumulate_remaining }) {
+
+    // data = [
+    //     {
+    //         "repo": "github",
+    //         "stars": 18,
+    //         "starsColor": "hsl(223, 70%, 50%)",
+    //         "forks": 11,
+    //         "forksColor": "hsl(268, 70%, 50%)",
+    //     },
+    //     {
+    //         "repo": "buthub",
+    //         "stars": 12,
+    //         "starsColor": "hsl(223, 70%, 50%)",
+    //         "forks": 8,
+    //         "forksColor": "hsl(268, 70%, 50%)",
+
+    //     },
+    //     {
+    //         "repo": "shithub",
+    //         "stars": 10,
+    //         "starsColor": "hsl(223, 70%, 50%)",
+    //         "forks": 14,
+    //         "forksColor": "hsl(268, 70%, 50%)",
+
+    //     },
+
+    // ]
+
+    data = data.slice(0, max_bars)
 
     if (data.length < 2) {
         return (
@@ -15,7 +48,6 @@ function BarChart({ data, height, width, max_slices }) {
                     textAlign: "center",
                     alignItems: "center"
                 }}>
-
                     <h6 className="text-center mt-3 w-100">
                         <span style={{ color: "gray" }}>Not enough Data to analyze :-/  </span>
                     </h6>
@@ -23,44 +55,57 @@ function BarChart({ data, height, width, max_slices }) {
             </div>
         )
     }
-    const getColor = elem => {
-        return elem.color ? elem.color : "#89e051"
+
+    // function to extract color from data
+    const getColor = (elem) => {
+        return elem.data[elem.id + "Color"] ? elem.data[elem.id + "Color"] : "grey"
     }
 
-    if (max_slices) {
-        data = data.slice(0, max_slices)
+    let textColor="#999999" //greyish works for both mode dark and light
+    let gridColor="#00800054" //very light green
+    let theme = {
+        textColor: textColor,
+        background: "transparent",
+        axis: {
+            fontSize: "14px",
+            tickColor: "red",
+            ticks: {
+                line: {
+                    stroke: "transparent" //ticks color
+                },
+                text: {
+                    fill: textColor // markings on x/y axis
+                }
+            },
+            legend: {
+                text: {
+                    fill: textColor // name on x and y axis
+                }
+            }
+        },
+        grid: {
+            line: {
+                stroke: gridColor //grid color
+            }
+        }
+
     }
 
-    let Chart = <ResponsivePie
+    let Chart = <ResponsiveBar
+        theme={theme}
         data={data}
-        sortByValue={true}
-        margin={{ top: 0, right: 200, bottom: 0, left: 50 }}
-        innerRadius={0.5}
-        padAngle={0.7}
-        cornerRadius={3}
+        keys={["stars", "forks"]}
+        indexBy="repo"
+        margin={{ top: 50, right: 50, bottom: 50, left: 50 }}
+        padding={0.3}
+        groupMode="grouped"
         colors={getColor}
-        borderWidth={1}
-        borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
-        enableRadialLabels={false}
-        radialLabelsSkipAngle={10}
-        radialLabelsLink={false}
-        radialLabelsTextXOffset={6}
-        radialLabelsTextColor={getColor}
-        enableSlicesLabels={false}
-        slicesLabel="id"
-        radialLabelsLinkColor={{ from: 'color' }}
-        slicesLabelsSkipAngle={10}
-        slicesLabelsTextColor="#fff"
-        animate={true}
-        motionStiffness={90}
-        motionDamping={15}
-        tooltip={(e) => <div style={{ color: "#5b6166" }}>{e.label} : {e.parsed} </div>}
         defs={[
             {
                 id: 'dots',
                 type: 'patternDots',
                 background: 'inherit',
-                color: 'rgba(255, 255, 255, 0.3)',
+                color: '#38bcb2',
                 size: 4,
                 padding: 1,
                 stagger: true
@@ -69,7 +114,7 @@ function BarChart({ data, height, width, max_slices }) {
                 id: 'lines',
                 type: 'patternLines',
                 background: 'inherit',
-                color: 'rgba(255, 255, 255, 0.3)',
+                color: '#eed312',
                 rotation: -45,
                 lineWidth: 6,
                 spacing: 10
@@ -82,41 +127,166 @@ function BarChart({ data, height, width, max_slices }) {
                 },
                 id: 'dots'
             },
-
             {
                 match: {
                     style: 'lines'
                 },
                 id: 'lines'
-            },
-
-
+            }
         ]}
+        // borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
+        borderColor="white"
+        borderWidth={3}
+        axisTop={null}
+        axisRight={null}
+        // axisLeft={null}
+        // enableGridX={false}
+        // enableGridY={false}
+        axisBottom={{
+            tickSize: 5,
+            tickPadding: 5,
+            tickRotation: -10,
+            legend: 'Repos',
+            legendPosition: 'middle',
+            legendOffset: 32
+        }}
+        axisLeft={{
+            // tickSize: 5,
+            // tickPadding: 5,
+            // tickRotation: 0,
+            // legend: 'Count',
+            // legendColor: "white",
+            legendPosition: 'middle',
+            legendOffset: -40
+        }}
+        enableLabel={false}
+        labelSkipWidth={12}
+        labelSkipHeight={12}
+        enablelabelText={false}
+        // labelTextColor="#eee" //inside graph
+        tex
+        tooltip={(e) => {
+            console.log(e);
+            return <div style={{ color: "#5b6166" }}>{e.data.label} <br /> {e.data.parsed} </div>
+        }
+        }
+
+
+
 
         legends={[
             {
-                anchor: 'right',
-                direction: 'column',
-                translateX: 150,
-                translateY: 0,
+                dataFrom: 'keys',
+                anchor: 'top',
+                direction: 'row',
+                justify: false,
+                translateX: 0,
+                translateY: -40,
+                itemsSpacing: 4,
                 itemWidth: 100,
-                itemHeight: 25,
-                itemTextColor: '#999',
-                symbolSize: 18,
-                symbolShape: 'circle',
+                itemHeight: 20,
+                itemOpacity: 0.85,
+                symbolSize: 20,
+                itemTextColor: textColor,
+                effects: [
+                    {
+                        on: 'hover',
+                        style: {
+                            itemOpacity: 1
+                        }
+                    }
+                ]
             }
         ]}
+        animate={true}
+        motionStiffness={90}
+        motionDamping={15}
     />
+
     return <Fragment>
         <div style={{ height: height, width: width ? width : "auto" }}> {Chart} </div>
-        <div>
-            <h6 className="text-center mt-3">
-                {data[0] && <Fragment> Most Used language is <span style={{ color: data[0].color }}> {data[0].label} </span></Fragment>}
-                {data[1] && <Fragment> followed by <span style={{ color: data[1].color }}> {data[1].label} </span></Fragment>}
-                {data[2] && <Fragment> & <span style={{ color: data[2].color }}> {data[2].label} </span></Fragment>}
-            </h6>
-        </div>
+
     </Fragment>
 }
 
 export default BarChart
+
+
+
+
+// <ResponsiveBar 
+// data={data}
+// // sortByValue={true}
+// margin={{ top: 0, right: 200, bottom: 0, left: 50 }}
+// innerRadius={0.5}
+// padAngle={0.7}
+// cornerRadius={3}
+// colors={getColor}
+// borderWidth={1}
+// borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
+// enableRadialLabels={false}
+// radialLabelsSkipAngle={10}
+// radialLabelsLink={false}
+// radialLabelsTextXOffset={6}
+// radialLabelsTextColor={getColor}
+// enableSlicesLabels={false}
+// slicesLabel="id"
+// radialLabelsLinkColor={{ from: 'color' }}
+// slicesLabelsSkipAngle={10}
+// slicesLabelsTextColor="#fff"
+// animate={true}
+// motionStiffness={90}
+// motionDamping={15}
+// tooltip={(e) => <div style={{ color: "#5b6166" }}>{e.label} : {e.parsed} </div>}
+// defs={[
+//     {
+//         id: 'dots',
+//         type: 'patternDots',
+//         background: 'inherit',
+//         color: 'rgba(255, 255, 255, 0.3)',
+//         size: 4,
+//         padding: 1,
+//         stagger: true
+//     },
+//     {
+//         id: 'lines',
+//         type: 'patternLines',
+//         background: 'inherit',
+//         color: 'rgba(255, 255, 255, 0.3)',
+//         rotation: -45,
+//         lineWidth: 6,
+//         spacing: 10
+//     }
+// ]}
+// fill={[
+//     {
+//         match: {
+//             style: 'dots'
+//         },
+//         id: 'dots'
+//     },
+
+//     {
+//         match: {
+//             style: 'lines'
+//         },
+//         id: 'lines'
+//     },
+
+
+// ]}
+
+// legends={[
+//     {
+//         anchor: 'right',
+//         direction: 'column',
+//         translateX: 150,
+//         translateY: 0,
+//         itemWidth: 100,
+//         itemHeight: 25,
+//         itemTextColor: '#999',
+//         symbolSize: 18,
+//         symbolShape: 'circle',
+//     }
+// ]}
+// />

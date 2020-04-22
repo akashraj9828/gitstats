@@ -1,10 +1,11 @@
-import React from "react";
+import React, { Fragment } from "react";
 import Layout from "../Layout";
 import BasicInformation from './BasicInfo'
 import Repository from './Repository'
 import Pinned from "./Pinned"
 import DataProvider from "../../Data-provider"
 import Language from "./Language";
+import PieChart from "../Charts/PieChart";
 import BarChart from "../Charts/BarChart";
 import Loader from "../Extras/Loader";
 
@@ -23,21 +24,27 @@ class Home extends React.Component {
     // state of entire page is managed here
     this.state = {
       username: username,
-      user_id: "",
-      basicInfo: {},
-      pinnedInfo: {},
-      repoInfo: {},
-      aggregateData: {},
-      languageData: {},
+      user_id: "", //userid
+      basicInfo: {}, //basic info // name // email // followers //following ,etc
+      pinnedInfo: {}, //pinned repos
+      repoInfo: {}, // all repos upto 100
+      aggregateData: {}, // total commits// total stars// total forks
+      languageData: {}, // lanuage size wise data// language count wise data/ language color data
+      repoAnalysisData: {}, // [{repo_name:y,commits:x,forks:x,stars:x}] array of repos simplified
       basicLoaded: false,
       repoLoaded: false,
       pinnedLoaded: false,
       aggregateDataLoaded: false,
+      repoAnalysisDataLoaded: false,
       languageDataLoaded: false,
-      languageSizeGraphData: [],
-      languageSizeGraphDataLoaded: false,
-      languageCountGraphData: [],
-      languageCountGraphDataLoaded: false,
+      languageGraphDataSize: [], //language data size wise for pie chart
+      languageGraphDataSizeLoaded: false,
+      languageGraphDataCount: [], //language data repo count wise for pie chart
+      languageGraphDataCountLoaded: false,
+      repoGraphDataCommitWise: [], //repo data commit wise for pie chart
+      repoGraphDataCommitWiseLoaded: false,
+      repoGraphDataPopularityWise: [], //language data populatiry wise for bar graph chart
+      repoGraphDataPopularityWiseLoaded: false,
     }
   }
 
@@ -72,16 +79,32 @@ class Home extends React.Component {
             languageData: data,
             languageDataLoaded: true
           })
-
-          DataProvider.graphCaclulations(this.state.languageData).then((data) => {
+          // Language Graph Calculations
+          DataProvider.languageGraphCaclulations(this.state.languageData).then((data) => {
             this.setState({
-              languageSizeGraphData: data.data_size_wise,
-              languageSizeGraphDataLoaded: true,
-              languageCountGraphData: data.data_count_wise,
-              languageCountGraphDataLoaded: true,
+              languageGraphDataSize: data.data_size_wise,
+              languageGraphDataSizeLoaded: true,
+              languageGraphDataCount: data.data_count_wise,
+              languageGraphDataCountLoaded: true,
             })
           })
         })
+
+        // PERFORM Advanced REPO ANALYSIS // COMMITED PER REPO // STARS and FORKS PER REPO
+        DataProvider.advancedRepoAnalysis(this.state.repoInfo).then((data) => {
+          this.setState({ repoAnalysisData: data, repoAnalysisDataLoaded: true })
+          DataProvider.repoBarGraphCalculation(this.state.repoAnalysisData).then((data) => {
+
+            this.setState({
+              repoGraphDataCommitWise: data.data_commit_wise,
+              repoGraphDataCommitWiseLoaded: true,
+              repoGraphDataPopularityWise: data.data_popularity_wise,
+              repoGraphDataPopularityWiseLoaded: true,
+            })
+          })
+        })
+
+
       })
     })
 
@@ -100,38 +123,77 @@ class Home extends React.Component {
         <Layout>
           {/* CONDITIONAL REDERING OF BASIC INFO */}
           {this.state.basicLoaded ? <BasicInformation basicInfo={this.state.basicInfo} aggregateData={this.state.aggregateData} /> : Loader.section_loading}
+          {/* PINNED SECTION */}
           <section className="pt-5 ">
             <div className="row">
               <div className="col-12">
-              <h1 className="font-size-20 w-100">My Awesome projects</h1>
+                <h1 className="font-size-20 w-100">My Awesome projects</h1>
               </div>
-                {/* CONDITIONAL REDERING OF PINNED REPO INFO */}
-                {this.state.pinnedLoaded ? <Pinned pinnedRepos={this.state.pinnedInfo} /> : Loader.section_loading}
+              {/* CONDITIONAL REDERING OF PINNED REPO INFO */}
+              {this.state.pinnedLoaded ? <Pinned pinnedRepos={this.state.pinnedInfo} /> : Loader.section_loading}
             </div>
           </section>
+          {/* LANGUAGE SECTION */}
           <section className="pt-5 ">
             <div className="row">
-            <div className="col-sm-6 mt-3">
+              <div className="col-sm-6 mt-3">
                 <h3 className="font-size-15 w-100">Language analysis Size wise</h3>
                 {/* height:"calc( 100% - 20px ) because h3 above take 20px but i wanted card to be equal to the col-height */}
-                <div className="card p-3 rounded" style={{height:"calc( 100% - 20px )"}}>
+                <div className="card p-3 rounded" style={{ height: "calc( 100% - 20px )" }}>
                   {/* CONDITIONAL REDERING OF LANGUAGE ANALYSYS(BY SIZE) INFO */}
-                  {this.state.languageSizeGraphDataLoaded ? <BarChart data={this.state.languageSizeGraphData} height={350} max_slices={7} /> : Loader.section_loading}
+                  {this.state.languageGraphDataSizeLoaded ?
+                    <Fragment>
+                      <PieChart data={this.state.languageGraphDataSize} height={250} max_slices={6} accumulate_remaining={true} />
+                      {/* Extra info about pie chart */}
+                      <div>
+                        <h6 className="text-center mt-3">
+                          {this.state.languageGraphDataSize[0] && <Fragment> Most Used language is <span style={{ color: this.state.languageGraphDataSize[0].color }}> {this.state.languageGraphDataSize[0].id} </span></Fragment>}
+                          {this.state.languageGraphDataSize[1] && <Fragment> followed by <span style={{ color: this.state.languageGraphDataSize[1].color }}> {this.state.languageGraphDataSize[1].id} </span></Fragment>}
+                          {this.state.languageGraphDataSize[2] && <Fragment> & <span style={{ color: this.state.languageGraphDataSize[2].color }}> {this.state.languageGraphDataSize[2].id} </span></Fragment>}
+                        </h6>
+                      </div>
+                    </Fragment>
+                    : Loader.section_loading}
                   {/* {this.state.languageDataLoaded ? <Language languageData={this.state.languageData} type="size" /> : Loader.section_loading} */}
                 </div>
               </div>
               <div className="col-sm-6 mt-3">
                 <h3 className="font-size-15 w-100">Language analysis Repo wise</h3>
-                <div className="card p-3 rounded" style={{height:"calc( 100% - 20px )"}}>
+                <div className="card p-3 rounded" style={{ height: "calc( 100% - 20px )" }}>
                   {/* CONDITIONAL REDERING OF LANGUAGE ANALYSYS(BY COUNT) INFO */}
-                  {this.state.languageCountGraphDataLoaded ? <BarChart data={this.state.languageCountGraphData} height={350} max_slices={7} /> : Loader.section_loading}
+                  {this.state.languageGraphDataCountLoaded ?
+                    <Fragment>
+                      <PieChart data={this.state.languageGraphDataCount} height={250} max_slices={6} />
+                      {/* Extra info about pie chart */}
+                      <div>
+                        <h6 className="text-center mt-3">
+                          {this.state.languageGraphDataCount[0] && <Fragment> Most Used language is <span style={{ color: this.state.languageGraphDataCount[0].color }}> {this.state.languageGraphDataCount[0].id} </span></Fragment>}
+                          {this.state.languageGraphDataCount[1] && <Fragment> followed by <span style={{ color: this.state.languageGraphDataCount[1].color }}> {this.state.languageGraphDataCount[1].id} </span></Fragment>}
+                          {this.state.languageGraphDataCount[2] && <Fragment> & <span style={{ color: this.state.languageGraphDataCount[2].color }}> {this.state.languageGraphDataCount[2].id} </span></Fragment>}
+                        </h6>
+                      </div>
+                    </Fragment>
+                    : Loader.section_loading}
                   {/* {this.state.languageDataLoaded ? <Language languageData={this.state.languageData} type="count" /> : Loader.section_loading} */}
                 </div>
               </div>
-             
-              
             </div>
           </section>
+          {/* REPO SECTION */}
+          <section className="pt-5 ">
+            <div className="row">
+              <div className="col-12">
+                <h1 className="font-size-20 w-100">My Popular projects</h1>
+              </div>
+              <div className="col-12">
+              <div className="card p-3 rounded">
+                {/* Popular repos bar graph */}
+                {this.state.repoGraphDataPopularityWiseLoaded ? <BarChart data={this.state.repoGraphDataPopularityWise} height={250} max_bars={6} /> : Loader.section_loading}
+              </div>
+              </div>
+            </div>
+          </section>
+
         </Layout>
       </div>
     );
