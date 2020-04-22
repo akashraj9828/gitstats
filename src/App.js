@@ -8,7 +8,7 @@ import { Route, Switch } from "react-router"
 
 function App() {
   return (
-    <div className="App">
+    <div className="App pb-4">
       <Header />
       <Router>
         <Switch>

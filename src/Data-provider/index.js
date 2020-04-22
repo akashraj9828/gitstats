@@ -110,15 +110,70 @@ async function languageAnalysis(repoInfo) {
   return {
     "language_size_data": sortObject(language_size_data),
     "language_count_data": sortObject(language_count_data),
-    "language_color_data": language_color_data
+    "language_color_data": language_color_data,
+    "language_size_data_unsorted":language_size_data,
+    "language_count_data_unsorted":language_count_data,
+  }
+}
+
+// helper function to convert bytes to human readable format
+function readableBytes(num) {
+  var neg = num < 0;
+  var units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+  if (neg){
+      num = -num;
+  }
+  if (num < 1){
+      return (neg ? '-' : '') + num + ' B';
+  }
+  var exponent = Math.min(Math.floor(Math.log(num) / Math.log(1000)), units.length - 1);
+  num = Number((num / Math.pow(1000, exponent)).toFixed(2));
+  var unit = units[exponent];
+  return (neg ? '-' : '') + num + ' ' + unit;
+}
+
+async function graphCaclulations(language_data){
+
+  var data_size_wise=[]
+  var data_count_wise=[]
+  var toggle;
+  const {language_size_data,language_count_data,language_color_data}=language_data
+  for(let i=0;i<language_size_data.length;i++){
+      let language=language_size_data[i]
+      toggle=!toggle;
+      data_size_wise.push({
+        "id": language.key,
+        "label": language.key,
+        "value": language.value,
+        "parsed": readableBytes(language.value),
+        "color": language_color_data[language.key],
+        "style":  toggle?"lines":"dots"
+      }) 
+
+      language=language_count_data[i]
+      data_count_wise.push({
+        "id": language.key,
+        "label": language.key,
+        "value": language.value,
+        "parsed": language.value +" repos",
+        "color": language_color_data[language.key],
+        "style":  toggle?"lines":"dots"
+      }) 
+    
   }
 
 
+  var out={data_size_wise,data_count_wise}
+  console.log("---: graphCaclulations -> out", out);
+  return out;
 }
+
+
 export default {
   getUserInfo,
   getRepositoryInfo,
   totalBasicCalculation,
   getPinnedRepo,
   languageAnalysis,
+  graphCaclulations,
 }

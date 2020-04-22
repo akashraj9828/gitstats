@@ -1,19 +1,20 @@
 import React from "react";
-
+import  Loader  from "../Extras/Loader"
 function BasicInformation(props) {
 
   if (Object.keys(props.basicInfo).length === 0) {
-    return <div>Loading....</div>
+    return Loader.section_loading
   }
 
   let userInfo = props.basicInfo.data.user
   let calculateData = props.aggregateData
+  console.log("---: BasicInformation -> calculateData", calculateData);
 
 
 
   return (
     <section className="pt-5 text-center">
-      <div className="card p-4">
+      <div className="card p-4 rounded">
         <div className="row">
           <div className="left-image-avtar">
             <div className="member-image">
@@ -62,22 +63,22 @@ function BasicInformation(props) {
                 </p>
               </div>
             </div>
+
             <ul className="p-0 m-0 list-unstyled d-flex justify-content-end font-size-12 mt-4">
-              <li className="mr-3">
-                <i
-                  style={{ color: "#FF9800" }}
-                  className="fa fa-comment"
-                  aria-hidden="true"
-                ></i>
-           Total Commit : <span className="font-weight-bold">{calculateData.totalCommit}</span>
+              <li className="px-2">
+                <span className="font-weight-bold">{calculateData.totalCommit ? calculateData.totalCommit : Loader.text_loading}</span>
+                <br />
+                 Commits
               </li>
-              <li>
-                <i
-                  style={{ color: "#00BCD4" }}
-                  className="fa fa-star"
-                  aria-hidden="true"
-                ></i>
-           Total Star : <span className="font-weight-bold">{calculateData.totalStar}</span>
+              <li className="px-2">
+                <span className="font-weight-bold">{calculateData.totalStar ? calculateData.totalStar : Loader.text_loading}</span>
+                <br />
+                Stars
+              </li>
+              <li className="px-2">
+                <span className="font-weight-bold">{calculateData.totalFork ? calculateData.totalFork : Loader.text_loading}</span>
+                <br />
+                Forks
               </li>
             </ul>
           </div>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{ Fragment } from 'react'
 
 const Pinned = (props) => {
 
@@ -32,10 +32,24 @@ const Pinned = (props) => {
             </div>
         </div>
     )
+
+    let no_repo_msg= <div style={{ height: "150px", width: "auto" }}>
+    <div className="" style={{
+        flexDirection: "row",
+        textAlign: "center",
+        alignItems: "center"
+    }}>
+
+        <h6 className="text-center mt-3 w-100">
+            <span style={{ color: "gray" }}>No pinned repos to analyze :-/  </span>
+        </h6>
+    </div>
+</div>
+
     return (
-        <div className="row">
-            {repoData.length>0 ? pinned_view : <h3 className="text-center p-5"> No pinned repos :/ </h3>}
-        </div>
+        <Fragment>
+            {repoData.length>0 ? pinned_view : no_repo_msg}
+        </Fragment>
     )
 }
 
