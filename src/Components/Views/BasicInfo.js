@@ -5,9 +5,9 @@ function BasicInformation(props) {
   if (Object.keys(props.basicInfo).length === 0) {
     return <div>Loading....</div>
   }
-  
+
   let userInfo = props.basicInfo.data.user
-  let calculateData=props.aggregateData
+  let calculateData = props.aggregateData
 
 
 
@@ -17,12 +17,12 @@ function BasicInformation(props) {
         <div className="row">
           <div className="left-image-avtar">
             <div className="member-image">
-              <img src={userInfo.avatarUrl} />
+              <img src={userInfo.avatarUrl} alt={userInfo.login} />
             </div>
           </div>
           <div className="col-sm-5 text-left">
             <div className="user-details pl-2">
-              <h2 className="font-size-21 mb-3 ">{userInfo.name} {userInfo.isDeveloperProgramMember ? <img style={{ width: 15 }} src={process.env.PUBLIC_URL + "/img/official.png"} /> : ""}</h2>
+              <h2 className="font-size-21 mb-3 ">{userInfo.name} {userInfo.isDeveloperProgramMember ? <img style={{ width: 15 }} alt="DeveloperProgramMember" src={process.env.PUBLIC_URL + "/img/official.png"} /> : ""}</h2>
               <p className="font-size-13 mb-1">{userInfo.bio}</p>
               <p className="font-size-13 mb-1">
                 <i className="fa fa-envelope-o email" aria-hidden="true"></i>
@@ -30,7 +30,7 @@ function BasicInformation(props) {
               </p>
               <p className="font-size-13 mb-1">
                 <i className="fa fa-github git-icon" aria-hidden="true"></i>
-                <a className="text-dark" target="_blank" href={userInfo.url}>
+                <a className="text-dark" target="_blank" rel="noopener noreferrer" href={userInfo.url}>
                   {userInfo.login}
                 </a>
               </p>
@@ -43,20 +43,20 @@ function BasicInformation(props) {
           <div className="col-sm-5">
             <div className="d-flex follow-details justify-content-end text-right">
               <div>
-                Followers  <img src={process.env.PUBLIC_URL + "/img/octocat.png"} />
+                Followers  <img src={process.env.PUBLIC_URL + "/img/octocat.png"} alt="git" />
                 <p className="font-size-12 mb-0 mt-1 total-badge">
                   {userInfo.followers.totalCount}
                 </p>
               </div>
               <div className="ml-5">
-                <span>Following</span>  <img src={process.env.PUBLIC_URL + "/img/octocat.png"} />
+                <span>Following</span>  <img src={process.env.PUBLIC_URL + "/img/octocat.png"} alt="git" />
                 <p className="font-size-12 mb-0 mt-1 total-badge">
                   {userInfo.following.totalCount}
                 </p>
               </div>
 
               <div className="ml-5">
-                <span>Repository</span>  <img src={process.env.PUBLIC_URL + "/img/octocat.png"} />
+                <span>Repository</span>  <img src={process.env.PUBLIC_URL + "/img/octocat.png"} alt="git" />
                 <p className="font-size-12 mb-0 mt-1 total-badge">
                   {userInfo.repositories.totalCount}
                 </p>
@@ -76,7 +76,7 @@ function BasicInformation(props) {
                   style={{ color: "#00BCD4" }}
                   className="fa fa-star"
                   aria-hidden="true"
-                ></i>{" "}
+                ></i>
            Total Star : <span className="font-weight-bold">{calculateData.totalStar}</span>
               </li>
             </ul>
