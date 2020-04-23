@@ -27,8 +27,10 @@ async function getRepositoryInfo(username, id) {
 
 //Search 
 async function getSearchUsers(username){
-let response = await axios.get(`https://api.github.com/search/users?q=${username}`);
-return response.data.items
+  if(username && username.length){
+    let response = await axios.get(`https://api.github.com/search/users?q=${username}`);
+    return response.data.items
+  }
 }
 
 //Network CALL For Pinned Repository

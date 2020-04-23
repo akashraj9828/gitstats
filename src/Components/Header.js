@@ -26,7 +26,7 @@ function Header() {
    async function search(event){
     setSearchString(event.target.value)
     let result = await DataProvider.getSearchUsers(event.target.value);
-    let users = result.map(user => 
+    let users = result && result.map(user => 
             <li><a href={`/${user.login}`}><img src={user.avatar_url}/> {user.login}</a></li>
     );
      setSearchUsers(users);
