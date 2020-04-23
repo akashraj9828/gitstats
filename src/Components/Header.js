@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {ReactComponent as GitStatsLogo} from '../Images/logo.svg';
+import Loader from "../Components/Extras/Loader";
 
 function Header() {
     let [dayStatus, setTheme] = useState(true);
@@ -18,7 +19,12 @@ function Header() {
         setTheme(!dayStatus);
     };
 
+    function search(){
+       window.location.href = searchString
+    }
+
     return (
+     
         <header>
             <div className="container">
                 <nav className="navbar navbar-expand-lg">
@@ -48,6 +54,8 @@ function Header() {
                                         value={searchString}
                                         onChange={(event) => setSearchString(event.target.value)}
                                     />
+                                  {/* Search icon */}
+                                    <button className="search-icon" onClick={search}>{Loader.search_icon}</button>
                                 </a>
                             </li>
                             <li>

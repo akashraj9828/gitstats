@@ -16,6 +16,16 @@ $buttonPrimary: #54A3FF;
 .navbar-brand  {
 	svg{width: 120px;}
 }
+
+.search-icon {
+    background: transparent;
+    border: none;
+    color: #636261;
+	cursor: pointer;
+	&:focus {
+		outline: none;
+	}
+}
 .night-mode {
 	a{
 		color: #fff !important;
