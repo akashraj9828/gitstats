@@ -1,6 +1,5 @@
 import { ResponsiveBar } from '@nivo/bar'
 import React, { Fragment } from "react"
-import DataProvider from "../../Data-provider"
 // make sure parent container have a defined height when using
 // responsive component, otherwise height will be 0 and
 // no chart will be rendered.
