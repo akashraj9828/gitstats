@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import {ReactComponent as GitStatsLogo} from '../Images/logo.svg';
 import DataProvider from "../Data-provider/index"
+import ScrollToBottom from 'react-scroll-to-bottom';
+import Loader from '../Components/Extras/Loader'
 
 function Header() {
-    var users = "";
     let [dayStatus, setTheme] = useState(true);
     let [imageUrl, setImageUrl] = useState("img/sun.png");
-    const [searchString, setSearchString] = useState("")
+    let [searchUsers, setSearchUsers] = useState();
+    const [searchString, setSearchString] = useState()
     let body = document.querySelector("body");
 
     function changeTheme() {
@@ -23,14 +25,14 @@ function Header() {
    async function search(event){
     setSearchString(event.target.value)
     let result = await DataProvider.getSearchUsers(event.target.value);
-    users = result.map(user => <p>{user.login}</p>);
+    let users = result.map(user => 
+            <li><a href={`/${user.login}`}><img src={user.avatar_url}/> {user.login}</a></li>
+    );
+     setSearchUsers(users);
     }
 
     return (
         <header>
-             <div className="Search-result">
-                  {users}
-                </div>
             <div className="container">
                 <nav className="navbar navbar-expand-lg">
                     <a className="navbar-brand text-white logo" href="#" >
@@ -50,7 +52,7 @@ function Header() {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarNavDropdown">
                         <ul className="navbar-nav ml-auto">
-                            <li className="nav-item active">
+                            <li className="nav-item active active nav-item position-relative">
                                 <a className="nav-link text-light-gray" href="#">
                                     <input
                                         type="text"
@@ -59,9 +61,15 @@ function Header() {
                                         value={searchString}
                                         onChange={search}
                                     />
-                                  {/* Search icon */}
-                                 
                                 </a>
+                               {searchUsers &&  <div className="Search-result"> 
+                                <ul class="search-result">
+                                <ScrollToBottom>
+                                {searchUsers.length > 0 ? searchUsers : Loader.section_loading}
+                                </ScrollToBottom>
+                                   
+                                    </ul>
+                                    </div>} 
                             </li>
                             <li>
                                 <div className="change-theme mt-2 font-size-13">
