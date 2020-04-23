@@ -3,7 +3,7 @@ import {ReactComponent as GitStatsLogo} from '../Images/logo.svg';
 import DataProvider from "../Data-provider/index"
 
 function Header() {
-    var users = []
+    var users = "";
     let [dayStatus, setTheme] = useState(true);
     let [imageUrl, setImageUrl] = useState("img/sun.png");
     const [searchString, setSearchString] = useState("")
@@ -22,13 +22,15 @@ function Header() {
 
    async function search(event){
     setSearchString(event.target.value)
-    let res = await DataProvider.getSearchUsers(event.target.value)
-    let users = res.map(item => console.log(item))
+    let result = await DataProvider.getSearchUsers(event.target.value);
+    users = result.map(user => <p>{user.login}</p>);
     }
 
     return (
-     
         <header>
+             <div className="Search-result">
+                  {users}
+                </div>
             <div className="container">
                 <nav className="navbar navbar-expand-lg">
                     <a className="navbar-brand text-white logo" href="#" >
@@ -58,9 +60,7 @@ function Header() {
                                         onChange={search}
                                     />
                                   {/* Search icon */}
-                                  <div className="Search-result">
-                                    
-                                  </div>
+                                 
                                 </a>
                             </li>
                             <li>
