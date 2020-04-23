@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import {ReactComponent as GitStatsLogo} from '../Images/logo.svg';
-import Loader from "../Components/Extras/Loader";
+import DataProvider from "../Data-provider/index"
 
 function Header() {
+    var users = []
     let [dayStatus, setTheme] = useState(true);
     let [imageUrl, setImageUrl] = useState("img/sun.png");
     const [searchString, setSearchString] = useState("")
@@ -19,8 +20,10 @@ function Header() {
         setTheme(!dayStatus);
     };
 
-    function search(){
-       window.location.href = searchString
+   async function search(event){
+    setSearchString(event.target.value)
+    let res = await DataProvider.getSearchUsers(event.target.value)
+    let users = res.map(item => console.log(item))
     }
 
     return (
@@ -52,10 +55,12 @@ function Header() {
                                         className="search"
                                         placeholder="Search..."
                                         value={searchString}
-                                        onChange={(event) => setSearchString(event.target.value)}
+                                        onChange={search}
                                     />
                                   {/* Search icon */}
-                                    <button className="search-icon" onClick={search}>{Loader.search_icon}</button>
+                                  <div className="Search-result">
+                                    
+                                  </div>
                                 </a>
                             </li>
                             <li>

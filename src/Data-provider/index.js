@@ -25,6 +25,12 @@ async function getRepositoryInfo(username, id) {
   return repository_data
 };
 
+//Search 
+async function getSearchUsers(username){
+let response = await axios.get(`https://api.github.com/search/users?q=${username}`);
+return response.data.items
+}
+
 //Network CALL For Pinned Repository
 async function getPinnedRepo(username) {
   let response = await axios.get(`${API_BASE_URL}pinned/${username}`);
@@ -263,5 +269,6 @@ export default {
   languageGraphCaclulations,
   toReadableBytes,
   advancedRepoAnalysis,
-  repoBarGraphCalculation
+  repoBarGraphCalculation,
+  getSearchUsers
 }
