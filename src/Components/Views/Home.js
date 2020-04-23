@@ -1,10 +1,8 @@
 import React, { Fragment } from "react";
 import Layout from "../Layout";
 import BasicInformation from './BasicInfo'
-import Repository from './Repository'
 import Pinned from "./Pinned"
 import DataProvider from "../../Data-provider"
-import Language from "./Language";
 import PieChart from "../Charts/PieChart";
 import BarChart from "../Charts/BarChart";
 import Loader from "../Extras/Loader";
