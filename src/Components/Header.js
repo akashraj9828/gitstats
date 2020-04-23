@@ -3,10 +3,11 @@ import {ReactComponent as GitStatsLogo} from '../Images/logo.svg';
 import DataProvider from "../Data-provider/index"
 
 function Header() {
-    var users = "";
+    // var users = [];
     let [dayStatus, setTheme] = useState(true);
     let [imageUrl, setImageUrl] = useState("img/sun.png");
     const [searchString, setSearchString] = useState("")
+    const [users, setUsers] = useState("")
     let body = document.querySelector("body");
 
     function changeTheme() {
@@ -23,7 +24,10 @@ function Header() {
    async function search(event){
     setSearchString(event.target.value)
     let result = await DataProvider.getSearchUsers(event.target.value);
-    users = result.map(user => <p>{user.login}</p>);
+    let temp = result.map(user => <p key={user.login}>{user.login}</p>);
+    setUsers(temp)
+    console.log(users);
+    
     }
 
     return (
