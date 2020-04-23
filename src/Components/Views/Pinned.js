@@ -1,4 +1,4 @@
-import React,{ Fragment } from 'react'
+import React, { Fragment } from 'react'
 
 const Pinned = (props) => {
 
@@ -27,28 +27,28 @@ const Pinned = (props) => {
                                 Stars
                             </div>
                     </div>
-                    <h6 className="text-center mt-3">The main language is <span style={{ color: repo.languages.nodes[0].color}}>{repo.languages.nodes[0].name}</span></h6>
+                    <h6 className="text-center mt-3">The main language is <span style={{ color: repo.languages.nodes[0].color }}>{repo.languages.nodes[0].name}</span></h6>
                 </div>
             </div>
         </div>
     )
 
-    let no_repo_msg= <div style={{ height: "150px", width: "auto" }}>
-    <div className="" style={{
-        flexDirection: "row",
-        textAlign: "center",
-        alignItems: "center"
-    }}>
-
-        <h6 className="text-center mt-3 w-100">
-            <span style={{ color: "gray" }}>No pinned repos to analyze :-/  </span>
-        </h6>
+    let no_repo_msg = <div className="col-12" style={{ height: "150px", width: "auto" }}>
+        <div className="h-100" style={{
+            display:"flex",
+            flexDirection: "row",
+            textAlign: "center",
+            alignItems: "center"
+        }}>
+            <h6 className="text-center mt-3 w-100">
+                <span style={{ color: "gray" }}>No pinned repos to analyze :-/  </span>
+            </h6>
+        </div>
     </div>
-</div>
 
     return (
         <Fragment>
-            {repoData.length>0 ? pinned_view : no_repo_msg}
+            {repoData.length > 0 ? pinned_view : no_repo_msg}
         </Fragment>
     )
 }
