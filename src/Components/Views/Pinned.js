@@ -1,4 +1,4 @@
-import React,{ Fragment } from 'react'
+import React, { Fragment } from 'react'
 
 const Pinned = (props) => {
 
@@ -27,7 +27,7 @@ const Pinned = (props) => {
                                 Stars
                             </div>
                     </div>
-                    <h6 className="text-center mt-3">The main language is <span style={{ color: repo.languages.nodes[0].color}}>{repo.languages.nodes[0].name}</span></h6>
+                    <h6 className="text-center mt-3">The main language is <span style={{ color: repo.languages.nodes[0].color }}>{repo.languages.nodes[0].name}</span></h6>
                 </div>
             </div>
         </div>
@@ -44,11 +44,11 @@ const Pinned = (props) => {
             <span style={{ color: "gray" }}>No pinned repos to analyze ☹️☹️  </span>
         </h6>
     </div>
-</div>
+    </div>
 
     return (
         <Fragment>
-            {repoData.length>0 ? pinned_view : no_repo_msg}
+            {repoData.length > 0 ? pinned_view : no_repo_msg}
         </Fragment>
     )
 }
