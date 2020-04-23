@@ -12,6 +12,10 @@ h1,h2,h3,h4,h5 {
 $blueheader: #24292E;
 $buttonPrimary: #54A3FF;
 
+
+.navbar-brand  {
+	svg{width: 120px;}
+}
 .night-mode {
 	a{
 		color: #fff !important;

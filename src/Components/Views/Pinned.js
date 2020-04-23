@@ -33,15 +33,15 @@ const Pinned = (props) => {
         </div>
     )
 
-    let no_repo_msg= <div style={{ height: "150px", width: "auto" }}>
+    let no_repo_msg= <div className="col-sm-12">
     <div className="" style={{
         flexDirection: "row",
         textAlign: "center",
         alignItems: "center"
     }}>
 
-        <h6 className="text-center mt-3 w-100">
-            <span style={{ color: "gray" }}>No pinned repos to analyze :-/  </span>
+        <h6 className="mt-3 w-100 text-left">
+            <span style={{ color: "gray" }}>No pinned repos to analyze ☹️☹️  </span>
         </h6>
     </div>
 </div>
