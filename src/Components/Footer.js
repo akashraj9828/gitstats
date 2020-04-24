@@ -20,7 +20,7 @@ function Footer() {
 
     return (
         <footer>
-            <div className="pt-5 mt-3">
+            <div className="pt-5 mt-3 pb-2">
                     <h5 className="logo w-100 d-block text-center" href="#" >
                         Made With <i className="fa fa-heart text-danger"></i> by <a href="http://github.com/akashraj9828" target="_blank" rel="noopener noreferrer">@akashraj9828</a> and <a href="http://github.com/amirsohel007" target="_blank" rel="noopener noreferrer">@amirshohel007</a> 
                         {/* <img src={process.env.PUBLIC_URL + "/cat-logo.png"} alt="" /> */}
