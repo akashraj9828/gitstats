@@ -289,7 +289,7 @@ button {
 .search_icon {
     position: absolute;
 	top: 16px;
-    right: 42px;
+    right: 62px;
     background: transparent;
     border: none;
     color: #9b9ea0;
@@ -306,4 +306,8 @@ button {
 		transition: all 0.4s;
 		overflow: visible;
 	}
+}
+
+@media (max-width:767px){
+	.Search-result {width: 100%;}
 }
