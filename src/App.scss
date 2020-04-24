@@ -343,7 +343,10 @@ button {
 }
 
 footer {
-    position: absolute;
-	bottom: 0;
-	height: 30px;
+	position: absolute;
+    bottom: 0;
+    height: 30px;
+    width: 100%;
+    text-align: center;
+    left: 0;
 }
