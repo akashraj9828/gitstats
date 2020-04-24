@@ -85,8 +85,6 @@ function BasicInformation(props) {
                 <span>Forks</span>
               </div>
             </div>
-
-
           </div>
         </div>
       </div>

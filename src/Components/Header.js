@@ -77,11 +77,11 @@ function Header() {
                   </a>
                   {searchUsers && (
                     <div className="Search-result">
-                      <ul class="search-result">
+                      <ul className="search-result">
                         <ScrollToBottom>
                           {searchUsers.length > 0
                             ? searchUsers
-                            : Loader.section_loading}
+                            : Loader.user_not_found}
                         </ScrollToBottom>
                       </ul>
                     </div>

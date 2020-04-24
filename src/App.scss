@@ -278,10 +278,7 @@ button {
 .css-y1c0xs, [data-css-y1c0xs] {
 	max-height: 190px;
 }
-.css-13azwyo .p-5 {
-	padding: 10px !important;
-	font-size: 13px; 
-}
+
 
 .mobile-theme {
     position: absolute;
@@ -314,11 +311,18 @@ button {
 
 
 @media (max-width:767px){
+	.search {width: 100%;}
+	.search-result p {
+		font-size: 13px;
+		padding: 10px !important;
+		margin: 0 !important;
+	}
 	.mob-font-size-13 {font-size: 13px;}
 	.search-wrapper {
 		height: 0;
 		transition: all 0.4s;
 		overflow: hidden;
+		margin-right: 0;
 	}
 	.search_icon{display: block;} 
 	.Search-result {width: 100%;}
@@ -333,3 +337,13 @@ button {
 }
 
 
+.app-wrapper {
+	position: relative;
+    min-height: calc(100vh - 170px);
+}
+
+footer {
+    position: absolute;
+	bottom: 0;
+	height: 30px;
+}

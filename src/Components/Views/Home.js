@@ -6,6 +6,8 @@ import DataProvider from "../../Data-provider"
 import PieChart from "../Charts/PieChart";
 import BarChart from "../Charts/BarChart";
 import Loader from "../Extras/Loader";
+import Footer from '../Footer'
+
 
 
 class Home extends React.Component {
@@ -116,8 +118,9 @@ class Home extends React.Component {
 
 
       <div>
-        {this.state.basicLoaded && this.state.basicInfo ? 
+       
         <Layout>
+        {this.state.basicLoaded && this.state.basicInfo ? <div>
           {/* CONDITIONAL REDERING OF BASIC INFO */}
           {this.state.basicLoaded ? <BasicInformation basicInfo={this.state.basicInfo} aggregateData={this.state.aggregateData} /> : Loader.section_loading}
           {/* PINNED SECTION */}
@@ -190,7 +193,10 @@ class Home extends React.Component {
               </div>
             </div>
           </section>
-        </Layout> : Loader.user_not_found}
+      </div> : Loader.user_not_found}
+        <Footer/>
+        </Layout> 
+     
       </div>
     );
   }
