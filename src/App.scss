@@ -295,12 +295,11 @@ button {
     color: #9b9ea0;
 	cursor: pointer;
 	z-index: 99;
+	display: none;
 }
 
 .search-wrapper {
-    height: 0;
-    transition: all 0.4s;
-	overflow: hidden;
+	margin-right: 60px;
 	&.open{
 		height: auto;
 		transition: all 0.4s;
@@ -308,15 +307,25 @@ button {
 	}
 }
 
+
+
 @media (max-width:767px){
+	.mob-font-size-13 {font-size: 13px;}
+	.search-wrapper {
+		height: 0;
+		transition: all 0.4s;
+		overflow: hidden;
+	}
+	.search_icon{display: block;} 
 	.Search-result {width: 100%;}
 	.following-area  {padding-left: 0 !important;}
+	.following-area  {
+		p {font-size: 13px;}
+		span {
+			font-size: 13px;
+		}
+	}
+	
 }
 
-.following-area  {
-	p {font-size: 13px;}
-	span {
-		font-size: 13px;
-	}
-}
 
