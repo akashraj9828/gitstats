@@ -50,11 +50,12 @@ class Home extends React.Component {
 
     // API CALL TO GET BASIC USER INFO
     DataProvider.getUserInfo(this.state.username).then((userData) => {
-      this.setState({
-        basicInfo: userData,
-        user_id: userData.data.user.id,
-        basicLoaded: true,
-      })
+      if (userData.errors) return;
+        this.setState({
+          basicInfo: userData,
+          user_id: userData.data.user.id,
+          basicLoaded: true,
+        });
 
       // API CALL TO GET ALL REPO INFO // NESTED BECAUSE USER_ID HAS DEPENDENCY ON FIRST API CALL (getUserInfo)
       DataProvider.getRepositoryInfo(this.state.username, this.state.user_id).then((repoData) => {
@@ -101,23 +102,21 @@ class Home extends React.Component {
             })
           })
         })
-
-
       })
     })
-
     // API CALL TO GET PINNED REPOS
     DataProvider.getPinnedRepo(this.state.username).then((pinnedData) => {
       this.setState({ pinnedInfo: pinnedData, pinnedLoaded: true })
     }
     )
-
-
   }
 
   render() {
     return (
+
+
       <div>
+        {this.state.basicLoaded && this.state.basicInfo ? 
         <Layout>
           {/* CONDITIONAL REDERING OF BASIC INFO */}
           {this.state.basicLoaded ? <BasicInformation basicInfo={this.state.basicInfo} aggregateData={this.state.aggregateData} /> : Loader.section_loading}
@@ -191,8 +190,7 @@ class Home extends React.Component {
               </div>
             </div>
           </section>
-
-        </Layout>
+        </Layout> : Loader.user_not_found}
       </div>
     );
   }
