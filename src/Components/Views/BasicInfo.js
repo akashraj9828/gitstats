@@ -40,14 +40,14 @@ function BasicInformation(props) {
               </p>
             </div>
           </div>
-          <div className="col-sm-5">
+          <div className="col-sm-5 mt-4 mt-lg-0 mt-sm-0 following-area">
 
             <div className="row">
               <div className="col">
                 <p className="text-center m-0">
                   {userInfo.followers.totalCount}
                 </p>
-                Followers
+                <span>Followers</span>
               </div>
               <div className="col">
                 <p className="text-center m-0">
@@ -69,7 +69,7 @@ function BasicInformation(props) {
                 <p className="text-center m-0">
                   {calculateData.totalCommit!==undefined ? calculateData.totalCommit : Loader.text_loading}
                 </p>
-                Commits
+                <span>Commits</span>
               </div>
               <div className="col">
                 <p className="text-center m-0">

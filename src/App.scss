@@ -310,4 +310,13 @@ button {
 
 @media (max-width:767px){
 	.Search-result {width: 100%;}
+	.following-area  {padding-left: 0 !important;}
 }
+
+.following-area  {
+	p {font-size: 13px;}
+	span {
+		font-size: 13px;
+	}
+}
+
