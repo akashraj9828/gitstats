@@ -278,3 +278,32 @@ button {
 	padding: 10px !important;
 	font-size: 13px; 
 }
+
+.mobile-theme {
+    position: absolute;
+    top: 9px;
+    right: 0;
+    text-align: right;
+}
+
+.search_icon {
+    position: absolute;
+	top: 16px;
+    right: 42px;
+    background: transparent;
+    border: none;
+    color: #9b9ea0;
+	cursor: pointer;
+	z-index: 99;
+}
+
+.search-wrapper {
+    height: 0;
+    transition: all 0.4s;
+	overflow: hidden;
+	&.open{
+		height: auto;
+		transition: all 0.4s;
+		overflow: visible;
+	}
+}

@@ -23,6 +23,17 @@ function Header() {
         setTheme(!dayStatus);
     };
 
+    function openSearch(){
+      let search =  document.querySelector('.search-wrapper');
+      if(search.classList.contains('open')){
+        search.classList.remove('open')
+      }
+      else{
+        search.classList.add('open')
+      }
+
+    }
+
    async function search(event){
     setSearchString(event.target.value)
     let result = await DataProvider.getSearchUsers(event.target.value);
@@ -51,10 +62,11 @@ function Header() {
             >
               <span className="navbar-toggler-icon"></span>
             </button>
-            <div className="collapse navbar-collapse" id="navbarNavDropdown">
+            <div className=" navbar-collapse" id="navbarNavDropdown">
+            <button onClick={openSearch} className="search_icon">{Loader.search_icon}</button>
               <ul className="navbar-nav ml-auto">
-                <li className="nav-item active active nav-item position-relative">
-                  <a className="nav-link text-light-gray" href="#">
+                <li className="nav-item active active nav-item position-relative search-wrapper">
+                  <a className="nav-link text-light-gray">
                     <DebounceInput
                       minLength={2}
                       debounceTimeout={500}
@@ -75,7 +87,7 @@ function Header() {
                     </div>
                   )}
                 </li>
-                <li>
+                <li className="mobile-theme">
                   <div className="change-theme mt-2 font-size-13">
                     <button onClick={changeTheme}>
                       <img
@@ -83,7 +95,7 @@ function Header() {
                         src={process.env.PUBLIC_URL + imageUrl}
                         alt=""
                       />
-                      {dayStatus ? "Night Mode" : "Day Mode"}
+                      <span className="d-none d-lg-inline-block d-sm-inline-block">{dayStatus ? "Night Mode" : "Day Mode"}</span>
                     </button>
                   </div>
                 </li>
