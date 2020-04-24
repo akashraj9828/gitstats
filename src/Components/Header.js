@@ -1,15 +1,14 @@
 import React, { useState } from "react";
-import {ReactComponent as GitStatsLogo} from '../Images/logo.svg';
+import { ReactComponent as GitStatsLogo } from '../Images/logo.svg';
 import DataProvider from "../Data-provider/index"
 import ScrollToBottom from 'react-scroll-to-bottom';
 import Loader from '../Components/Extras/Loader'
-import {DebounceInput} from 'react-debounce-input';
+import { DebounceInput } from 'react-debounce-input';
 
 function Header() {
     let [dayStatus, setTheme] = useState(true);
     let [imageUrl, setImageUrl] = useState("img/sun.png");
     let [searchUsers, setSearchUsers] = useState();
-    const [searchString, setSearchString] = useState()
     let body = document.querySelector("body");
 
     function changeTheme() {
@@ -23,87 +22,91 @@ function Header() {
         setTheme(!dayStatus);
     };
 
-    function openSearch(){
-      let search =  document.querySelector('.search-wrapper');
-      if(search.classList.contains('open')){
-        search.classList.remove('open')
-      }
-      else{
-        search.classList.add('open')
-      }
-
+    function openSearch() {
+        let search = document.querySelector('.search-wrapper');
+        if (search.classList.contains('open')) {
+            search.classList.remove('open')
+        }
+        else {
+            search.classList.add('open')
+            // focus search bar when clicked too
+            document.getElementById("search_bar").focus()
+        }
     }
 
-   async function search(event){
-    setSearchString(event.target.value)
-    let result = await DataProvider.getSearchUsers(event.target.value);
-    let users = result && result.map(user => 
-            <li><a href={`/${user.login}`}><img src={user.avatar_url}/> {user.login}</a></li>
-    );
-     setSearchUsers(users);
+    // To-Do
+    // #1\ when search bar looses focus hide the search results
+    // #2\ search bar present in left most side in desktop version // move to right
+    // #3\ the weird sliding of search results when seach input goes out of focus // will be fixed by #1
+    // #4\ on initial load it show "no user found" until the api call completes // instead show loading
+    // #5\ make a landing page with search feature
+    // #6\ proper linking of listed repos and emails and git usernames
+    // #7\ add few more detailed graphs (active on x week day) (contribution to projects other then own) 
+    // 8#\ simplify cacluation code. (I'll fix it.) 
+    // 9#\ handle the case if our api server is down 404,500 errors
+
+
+    async function search(event) {
+        let result = await DataProvider.getSearchUsers(event.target.value);
+        let users = result && result.map(user =>
+            <li key={user.login}><a href={`/${user.login}`}><img src={user.avatar_url} alt={user.login}/> {user.login}</a></li>
+        );
+        setSearchUsers(users);
     }
 
     return (
-      <header>
-        <div className="container">
-          <nav className="navbar navbar-expand-lg">
-            <a className="navbar-brand text-white logo" href="#">
-              <GitStatsLogo height={30} />
-              {/* <img src={process.env.PUBLIC_URL + "/cat-logo.png"} alt="" /> */}
-            </a>
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarNavDropdown"
-              aria-controls="navbarNavDropdown"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className=" navbar-collapse" id="navbarNavDropdown">
-            <button onClick={openSearch} className="search_icon">{Loader.search_icon}</button>
-              <ul className="navbar-nav ml-auto">
-                <li className="nav-item active active nav-item position-relative search-wrapper">
-                  <a className="nav-link text-light-gray">
-                    <DebounceInput
-                      minLength={2}
-                      debounceTimeout={500}
-                      className="search"
-                      placeholder="Search..."
-                      onChange={search}
-                    />
-                  </a>
-                  {searchUsers && (
-                    <div className="Search-result">
-                      <ul className="search-result">
-                        <ScrollToBottom>
-                          {searchUsers.length > 0
-                            ? searchUsers
-                            : Loader.user_not_found}
-                        </ScrollToBottom>
-                      </ul>
+        <header>
+            <div className="container">
+                <nav className="navbar navbar-expand-lg">
+                    <a className="navbar-brand text-white logo">
+                        <GitStatsLogo height={30} />
+                        {/* <img src={process.env.PUBLIC_URL + "/cat-logo.png"} alt="" /> */}
+                    </a>
+                    <div className="" id="navbarNavDropdown">
+                        <button onClick={openSearch} className="search_icon">{Loader.search_icon}</button>
+                        <ul className="navbar-nav ml-auto">
+                            <li className="nav-item active active nav-item position-relative search-wrapper">
+                                <a className="nav-link text-light-gray">
+                                    <DebounceInput
+                                        minLength={2}
+                                        debounceTimeout={500}
+                                        className="search"
+                                        placeholder="Search..."
+                                        onChange={search}
+                                        id="search_bar"
+                                    />
+                                </a>
+                                {searchUsers && (
+                                    <div className="Search-result">
+                                        <ul className="search-result">
+                                            {/*No Need to scroll to bottom  */}
+                                            {/* best match is always at top */}
+                                            {/* <ScrollToBottom> */}
+                                            {searchUsers.length > 0
+                                                ? searchUsers
+                                                : Loader.user_not_found}
+                                            {/* </ScrollToBottom> */}
+                                        </ul>
+                                    </div>
+                                )}
+                            </li>
+                            <li className="mobile-theme">
+                                <div className="change-theme mt-2 font-size-13">
+                                    <button onClick={changeTheme}>
+                                        <img
+                                            className="mr-1"
+                                            src={process.env.PUBLIC_URL + imageUrl}
+                                            alt=""
+                                        />
+                                        <span className="d-none d-lg-inline-block d-sm-inline-block">{dayStatus ? "Night Mode" : "Day Mode"}</span>
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
-                  )}
-                </li>
-                <li className="mobile-theme">
-                  <div className="change-theme mt-2 font-size-13">
-                    <button onClick={changeTheme}>
-                      <img
-                        className="mr-1"
-                        src={process.env.PUBLIC_URL + imageUrl}
-                        alt=""
-                      />
-                      <span className="d-none d-lg-inline-block d-sm-inline-block">{dayStatus ? "Night Mode" : "Day Mode"}</span>
-                    </button>
-                  </div>
-                </li>
-              </ul>
+                </nav>
             </div>
-          </nav>
-        </div>
-      </header>
+        </header>
     );
 };
 

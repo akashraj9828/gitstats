@@ -13,12 +13,14 @@ function BasicInformation(props) {
     <section className="pt-5 text-center">
       <div className="card p-4 rounded">
         <div className="row">
-          <div className="left-image-avtar">
-            <div className="member-image">
-              <img src={userInfo.avatarUrl} alt={userInfo.login} />
-            </div>
+          <div className="col-md-2">
+          {/* <div className="left-image-avtar"> */}
+            {/* <div className="member-image"> */}
+              <img className="img-fluid img" style={{minWidth:130,maxWidth:150,height:"auto"}} src={userInfo.avatarUrl} alt={userInfo.login} />
+            {/* </div> */}
+          {/* </div> */}
           </div>
-          <div className="col-sm-5 text-left">
+          <div className="col-md-5 text-left">
             <div className="user-details pl-2">
               <h2 className="font-size-21 mb-0 mt-3 mt-lg-0 mt-sm-0">{userInfo.name} </h2>
               {userInfo.isDeveloperProgramMember ? <img className="mr-2" style={{ width: 20 }} alt="DeveloperProgramMember" src={process.env.PUBLIC_URL + "/img/dev.png"} /> : ""}
@@ -40,23 +42,23 @@ function BasicInformation(props) {
               </p>
             </div>
           </div>
-          <div className="col-sm-5 mt-4 mt-lg-0 mt-sm-0 following-area">
+          <div className="col-md-5 mt-4 mt-lg-0 mt-sm-0 following-area">
 
             <div className="row">
-              <div className="col">
+              <div className="col-4">
                 <p className="text-center m-0">
                   {userInfo.followers.totalCount}
                 </p>
                 <span>Followers</span>
               </div>
-              <div className="col">
+              <div className="col-4">
                 <p className="text-center m-0">
                   {userInfo.following.totalCount}
                 </p>
                 <span>Following</span>
               </div>
 
-              <div className="col">
+              <div className="col-4">
                 <p className="text-center m-0">
                   {userInfo.repositories.totalCount}
                 </p>
@@ -65,20 +67,20 @@ function BasicInformation(props) {
             </div>
 
             <div className="row pt-3">
-              <div className="col">
+              <div className="col-4">
                 <p className="text-center m-0">
                   {calculateData.totalCommit!==undefined ? calculateData.totalCommit : Loader.text_loading}
                 </p>
                 <span>Commits</span>
               </div>
-              <div className="col">
+              <div className="col-4">
                 <p className="text-center m-0">
                   {calculateData.totalStar!==undefined ? calculateData.totalStar : Loader.text_loading}
                 </p>
                 <span>Stars</span>
               </div>
 
-              <div className="col">
+              <div className="col-4">
                 <p className="text-center m-0">
                   {calculateData.totalFork!==undefined ? calculateData.totalFork : Loader.text_loading}
                 </p>
