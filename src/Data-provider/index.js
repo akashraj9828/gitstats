@@ -40,6 +40,14 @@ async function getPinnedRepo(username) {
   return pinned_data
 };
 
+//Network CALL For History of commits 
+async function getCommitHistory(username) {
+  let response = await axios.get(`${API_BASE_URL}history/${username}`);
+  const pinned_data = response.data;
+  return pinned_data
+};
+
+
 
 //Total Basic Calculations  totalCommit, totalStar, totalFork, totalRepo
 async function totalBasicCalculation(repoInfo) {
@@ -272,6 +280,13 @@ async function repoBarGraphCalculation(repoInfo) {
 }
 
 
+async function commitGraphDataDayWise(commitHistoryData){
+// console.log("---: commitGraphDataDayWise -> commitHistoryData", commitHistoryData);
+  
+
+}
+
+
 export default {
   getUserInfo,
   getRepositoryInfo,
@@ -282,5 +297,7 @@ export default {
   toReadableBytes,
   advancedRepoAnalysis,
   repoBarGraphCalculation,
-  getSearchUsers
+  getSearchUsers,
+  getCommitHistory,
+  commitGraphDataDayWise
 }

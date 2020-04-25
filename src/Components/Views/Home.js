@@ -42,6 +42,10 @@ class Home extends React.Component {
       repoGraphDataCommitWiseLoaded: false,
       repoGraphDataPopularityWise: [], //language data populatiry wise for bar graph chart
       repoGraphDataPopularityWiseLoaded: false,
+      commitHistoryData: [], //commit data for all years day wise
+      commitHistoryDataLoaded: false,
+      commitHistoryGraphData: [], //commit data accumulated for each day of week [monday,tuesday,...sunday] from all times
+      commitHistoryGraphDataLoaded: false,
       initialPageLoad: Loader.section_loading, //For loading application at first time
     };
   }
@@ -120,6 +124,17 @@ class Home extends React.Component {
     // API CALL TO GET PINNED REPOS
     DataProvider.getPinnedRepo(this.state.username).then((pinnedData) => {
       this.setState({ pinnedInfo: pinnedData, pinnedLoaded: true });
+    });
+    // API CALL TO GET COMMIT HISTORY OF ALL TIMES
+    DataProvider.getCommitHistory(this.state.username).then((commitData) => {
+      console.log(commitData);
+      this.setState({ commitHistoryData: commitData, commitHistoryDataLoaded: true });
+      DataProvider.commitGraphDataDayWise(commitData).then((data)=>{
+        this.setState({
+          commitHistoryGraphData:data,
+          commitHistoryGraphDataLoaded:true,
+        })
+      })
     });
   }
 
