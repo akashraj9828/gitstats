@@ -219,6 +219,13 @@ async function repoBarGraphCalculation(repoInfo) {
   var data_commit_wise = []
   var data_popularity_wise = []
   var toggle=false;
+  let color_pallet=[
+    "#f47560",
+    "#e8c1a0",
+  "#f1e15b",
+  "#e8a838",
+  "#61cdbb",
+  "#97e3d5",]
   const {
     sorted_by_commits,
     sorted_by_popularity
@@ -227,20 +234,23 @@ async function repoBarGraphCalculation(repoInfo) {
     let repo = sorted_by_commits[i]
     toggle = !toggle;
     data_commit_wise.push({
-      "id": repo.name,
+      "id": repo.name +` (${repo.commits} commits)`,
       "label": repo.name,
       "commits": repo.commits,
-      "parsed": repo.name +` (${repo.commits} commits)`, // the data we'll see when hovered on chart
+      "value": repo.commits,
+      "parsed":`${repo.commits} commits`, // the data we'll see when hovered on chart
       // color user chart default
+      "color":color_pallet[i%color_pallet.length],
       "style": toggle ? "lines" : "dots"
     })
     
     repo = sorted_by_popularity[i]
     data_popularity_wise.push({
-      "id": repo.name,
+      "id": repo.name+` (${repo.stars} Stars , ${repo.forks} Forks)`,
       "label": repo.name,
       "repo": repo.name,
       "stars": repo.stars,
+      "color":color_pallet[i%color_pallet.length],
       "starsColor": "yellow",
       "forks": repo.forks,
       "forksColor": "purple",

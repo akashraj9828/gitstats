@@ -135,7 +135,7 @@ function BarChart({ data, height, width, max_bars, accumulate_remaining }) {
         ]}
         // borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
         borderColor="white"
-        borderWidth={3}
+        borderWidth={1}
         axisTop={null}
         axisRight={null}
         // axisLeft={null}

@@ -120,7 +120,7 @@ function PieChart({ data, height, width, max_slices,accumulate_remaining }) {
             {
                 anchor: 'right',
                 direction: 'column',
-                translateX: 150,
+                translateX: 130,
                 translateY: 0,
                 itemWidth: 100,
                 itemHeight: 25,
