@@ -29,21 +29,20 @@ function Header() {
         }
         else {
             search.classList.add('open')
-            // focus search bar when clicked too
-            document.getElementById("search_bar").focus()
         }
     }
 
+    function closeSearch(){
+        let searchContainer = document.querySelector('.search-wrapper');
+        searchContainer.classList.remove('open')
+    }
+
     // To-Do
-    // #1\ when search bar looses focus hide the search results
-    // #2\ search bar present in left most side in desktop version // move to right
     // #3\ the weird sliding of search results when seach input goes out of focus // will be fixed by #1
-    // #4\ on initial load it show "no user found" until the api call completes // instead show loading
     // #5\ make a landing page with search feature
-    // #6\ proper linking of listed repos and emails and git usernames
     // #7\ add few more detailed graphs (active on x week day) (contribution to projects other then own) 
     // 8#\ simplify cacluation code. (I'll fix it.) 
-    // 9#\ handle the case if our api server is down 404,500 errors
+    // 9#\ handle the case if our api server is down 404,500 errors 
 
 
     async function search(event) {
@@ -62,7 +61,7 @@ function Header() {
                         <GitStatsLogo height={30} />
                         {/* <img src={process.env.PUBLIC_URL + "/cat-logo.png"} alt="" /> */}
                     </a>
-                    <div className="" id="navbarNavDropdown">
+                    <div className="navbar-collapse" id="navbarNavDropdown">
                         <button onClick={openSearch} className="search_icon">{Loader.search_icon}</button>
                         <ul className="navbar-nav ml-auto">
                             <li className="nav-item active active nav-item position-relative search-wrapper">
@@ -73,6 +72,7 @@ function Header() {
                                         className="search"
                                         placeholder="Search..."
                                         onChange={search}
+                                        onBlur={() => closeSearch()}
                                         id="search_bar"
                                     />
                                 </a>
