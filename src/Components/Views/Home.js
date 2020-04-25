@@ -16,7 +16,7 @@ class Home extends React.Component {
       username = props.match.params.username
         ? props.match.params.username
         : "akashraj9828";
-    } catch (error) {}
+    } catch (error) { }
 
     // state of entire page is managed here
     this.state = {
@@ -52,6 +52,9 @@ class Home extends React.Component {
 
   componentDidMount() {
     // API CALL TO GET BASIC USER INFO
+    // PINNED REPOS merged into this api as well.
+    // Reduces api call from 3 to 2
+
     DataProvider.getUserInfo(this.state.username).then((userData) => {
       if (userData.errors) {
         this.setState({
@@ -63,6 +66,8 @@ class Home extends React.Component {
         basicInfo: userData,
         user_id: userData.data.user.id,
         basicLoaded: true,
+        pinnedInfo: userData, //  few extra data is stored here but no worries
+        pinnedLoaded: true
       });
 
       // API CALL TO GET ALL REPO INFO // NESTED BECAUSE USER_ID HAS DEPENDENCY ON FIRST API CALL (getUserInfo)
@@ -75,22 +80,38 @@ class Home extends React.Component {
           repoLoaded: true,
         });
 
-        // PERFORM BASIC CALCULATIONS // COMMIT COUNT // STARS COUNT // FORK COUNT // TOTAL REPO COUNT
-        DataProvider.totalBasicCalculation(this.state.repoInfo).then((data) => {
-          this.setState({
-            aggregateData: data,
-            aggregateDataLoaded: true,
-          });
-        });
+        // PERFORM BASIC CALCULATIONS and LANGUAGE ANALYSIS  and REPO CALCULATIONS
+        // Basic calculations: COMMIT COUNT // STARS COUNT // FORK COUNT // TOTAL REPO COUNT //
+        // Language calculations: size data // repo count by language data // language color data // 
+        // Repo calculations: // COMMITS PER REPO // STARS and FORKS PER REPO
 
-        // PERFORM LANGUAGE ANALYSIS // BY SIZE // BY REPO COUNT
-        DataProvider.languageAnalysis(this.state.repoInfo).then((data) => {
+        DataProvider.profileAnalysis(this.state.repoInfo).then((data) => {
           this.setState({
-            languageData: data,
+            aggregateData:data.basic_calculations,
+            aggregateDataLoaded: true,
+            languageData: data.language_calculations,
             languageDataLoaded: true,
+            repoAnalysisData: data.repo_calculations,
+            repoAnalysisDataLoaded: true,
+          }, () => {
+            // API CALL TO GET COMMIT HISTORY OF ALL TIMES
+            DataProvider.getCommitHistory(this.state.username).then((commitData) => {
+              this.setState({ commitHistoryData: commitData, commitHistoryDataLoaded: true });
+              DataProvider.commitGraphDataDayWise(commitData).then((data) => {
+                this.setState({
+                  commitHistoryGraphData: data.week_graph_data,
+                  commitHistoryGraphDataLoaded: true,
+                  aggregateData:{...this.state.aggregateData,totalCommit:data.total_commit_all_years},
+                  top2days:data.top2days
+
+                })
+              })
+            });
+
           });
+
           // Language Graph Calculations
-          DataProvider.languageGraphCaclulations(this.state.languageData).then(
+          DataProvider.languageGraphCaclulations(this.state.languageData, this.state.repoAnalysisData).then(
             (data) => {
               this.setState({
                 languageGraphDataSize: data.data_size_wise,
@@ -98,16 +119,11 @@ class Home extends React.Component {
                 languageGraphDataCount: data.data_count_wise,
                 languageGraphDataCountLoaded: true,
               });
-            }
-          );
-        });
+            });
 
-        // PERFORM Advanced REPO ANALYSIS // COMMITED PER REPO // STARS and FORKS PER REPO
-        DataProvider.advancedRepoAnalysis(this.state.repoInfo).then((data) => {
-          this.setState({
-            repoAnalysisData: data,
-            repoAnalysisDataLoaded: true,
-          });
+          // Repo graph Calculations
+          // PERFORM Advanced REPO ANALYSIS // COMMITED PER REPO // STARS and FORKS PER REPO
+          // Repo info: 
           DataProvider.repoBarGraphCalculation(
             this.state.repoAnalysisData
           ).then((data) => {
@@ -120,246 +136,153 @@ class Home extends React.Component {
           });
         });
       });
-    });
-    // API CALL TO GET PINNED REPOS
-    DataProvider.getPinnedRepo(this.state.username).then((pinnedData) => {
-      this.setState({ pinnedInfo: pinnedData, pinnedLoaded: true });
-    });
-    // API CALL TO GET COMMIT HISTORY OF ALL TIMES
-    DataProvider.getCommitHistory(this.state.username).then((commitData) => {
-      console.log(commitData);
-      this.setState({ commitHistoryData: commitData, commitHistoryDataLoaded: true });
-      DataProvider.commitGraphDataDayWise(commitData).then((data)=>{
-        this.setState({
-          commitHistoryGraphData:data,
-          commitHistoryGraphDataLoaded:true,
-        })
-      })
+
+
     });
   }
 
   render() {
     return (
+
+
       <div>
+
         <Layout>
-          {this.state.basicLoaded && this.state.basicInfo ? (
-            <div>
-              {/* CONDITIONAL REDERING OF BASIC INFO */}
-              {this.state.basicLoaded ? (
-                <BasicInformation
-                  basicInfo={this.state.basicInfo}
-                  aggregateData={this.state.aggregateData}
-                />
-              ) : (
-                Loader.section_loading
-              )}
-              {/* PINNED SECTION */}
-              <section className="pt-5 ">
-                <div className="row">
-                  <div className="col-12">
-                    <h1 className="font-size-20 w-100">My Awesome projects</h1>
-                  </div>
-                  {/* CONDITIONAL REDERING OF PINNED REPO INFO */}
-                  {this.state.pinnedLoaded ? (
-                    <Pinned pinnedRepos={this.state.pinnedInfo} />
-                  ) : (
-                    Loader.section_loading
-                  )}
-                </div>
-              </section>
-              {/* LANGUAGE SECTION */}
-              <section className="pt-5 ">
-                <div className="row">
-                  <div className="col-sm-6 mt-3">
-                    <h3 className="font-size-15 w-100">
-                      Language analysis Size wise
-                    </h3>
-                    {/* height:"calc( 100% - 20px ) because h3 above take 20px but i wanted card to be equal to the col-height */}
-                    <div
-                      className="card p-3 rounded"
-                      style={{ height: "calc( 100% - 20px )" }}
-                    >
-                      {/* CONDITIONAL REDERING OF LANGUAGE ANALYSYS(BY SIZE) INFO */}
-                      {this.state.languageGraphDataSizeLoaded ? (
-                        <Fragment>
-                          <PieChart
-                            data={this.state.languageGraphDataSize}
-                            height={250}
-                            max_slices={6}
-                            accumulate_remaining={true}
-                          />
-                          {/* Extra info about pie chart */}
-                          <div>
-                            <h6 className="text-center mt-3">
-                              {this.state.languageGraphDataSize[0] && (
-                                <Fragment>
-                                  {" "}
-                                  Most Used language is{" "}
-                                  <span
-                                    style={{
-                                      color: this.state.languageGraphDataSize[0]
-                                        .color,
-                                    }}
-                                  >
-                                    {" "}
-                                    {
-                                      this.state.languageGraphDataSize[0].id
-                                    }{" "}
-                                  </span>
-                                </Fragment>
-                              )}
-                              {this.state.languageGraphDataSize[1] && (
-                                <Fragment>
-                                  {" "}
-                                  followed by{" "}
-                                  <span
-                                    style={{
-                                      color: this.state.languageGraphDataSize[1]
-                                        .color,
-                                    }}
-                                  >
-                                    {" "}
-                                    {
-                                      this.state.languageGraphDataSize[1].id
-                                    }{" "}
-                                  </span>
-                                </Fragment>
-                              )}
-                              {this.state.languageGraphDataSize[2] && (
-                                <Fragment>
-                                  {" "}
-                                  &{" "}
-                                  <span
-                                    style={{
-                                      color: this.state.languageGraphDataSize[2]
-                                        .color,
-                                    }}
-                                  >
-                                    {" "}
-                                    {
-                                      this.state.languageGraphDataSize[2].id
-                                    }{" "}
-                                  </span>
-                                </Fragment>
-                              )}
-                            </h6>
-                          </div>
-                        </Fragment>
-                      ) : (
-                        Loader.section_loading
-                      )}
-                      {/* {this.state.languageDataLoaded ? <Language languageData={this.state.languageData} type="size" /> : Loader.section_loading} */}
-                    </div>
-                  </div>
-                  <div className="col-sm-6 mt-3">
-                    <h3 className="font-size-15 w-100">
-                      Language analysis Repo wise
-                    </h3>
-                    <div
-                      className="card p-3 rounded"
-                      style={{ height: "calc( 100% - 20px )" }}
-                    >
-                      {/* CONDITIONAL REDERING OF LANGUAGE ANALYSYS(BY COUNT) INFO */}
-                      {this.state.languageGraphDataCountLoaded ? (
-                        <Fragment>
-                          <PieChart
-                            data={this.state.languageGraphDataCount}
-                            height={250}
-                            max_slices={6}
-                          />
-                          {/* Extra info about pie chart */}
-                          <div>
-                            <h6 className="text-center mt-3">
-                              {this.state.languageGraphDataCount[0] && (
-                                <Fragment>
-                                  {" "}
-                                  Most Used language is{" "}
-                                  <span
-                                    style={{
-                                      color: this.state
-                                        .languageGraphDataCount[0].color,
-                                    }}
-                                  >
-                                    {" "}
-                                    {
-                                      this.state.languageGraphDataCount[0].id
-                                    }{" "}
-                                  </span>
-                                </Fragment>
-                              )}
-                              {this.state.languageGraphDataCount[1] && (
-                                <Fragment>
-                                  {" "}
-                                  followed by{" "}
-                                  <span
-                                    style={{
-                                      color: this.state
-                                        .languageGraphDataCount[1].color,
-                                    }}
-                                  >
-                                    {" "}
-                                    {
-                                      this.state.languageGraphDataCount[1].id
-                                    }{" "}
-                                  </span>
-                                </Fragment>
-                              )}
-                              {this.state.languageGraphDataCount[2] && (
-                                <Fragment>
-                                  {" "}
-                                  &{" "}
-                                  <span
-                                    style={{
-                                      color: this.state
-                                        .languageGraphDataCount[2].color,
-                                    }}
-                                  >
-                                    {" "}
-                                    {
-                                      this.state.languageGraphDataCount[2].id
-                                    }{" "}
-                                  </span>
-                                </Fragment>
-                              )}
-                            </h6>
-                          </div>
-                        </Fragment>
-                      ) : (
-                        Loader.section_loading
-                      )}
-                      {/* {this.state.languageDataLoaded ? <Language languageData={this.state.languageData} type="count" /> : Loader.section_loading} */}
-                    </div>
+          {this.state.basicLoaded && this.state.basicInfo ? <div>
+            {/* CONDITIONAL REDERING OF BASIC INFO */}
+            {this.state.basicLoaded ? <BasicInformation basicInfo={this.state.basicInfo} aggregateData={this.state.aggregateData} /> : Loader.section_loading}
+
+            {/* LANGUAGE SECTION */}
+            <section className="pt-5 ">
+              <div className="row">
+                <div className="col-sm-6 mt-3">
+                  <h3 className="font-size-15 w-100">Language analysis Size wise</h3>
+                  {/* height:"calc( 100% - 20px ) because h3 above take 20px but i wanted card to be equal to the col-height */}
+                  <div className="card p-3 rounded" style={{ height: "calc( 100% - 20px )" }}>
+                    {/* CONDITIONAL REDERING OF LANGUAGE ANALYSYS(BY SIZE) INFO */}
+                    {this.state.languageGraphDataSizeLoaded ?
+                      <Fragment>
+                        <PieChart data={this.state.languageGraphDataSize} height={250} max_slices={6} accumulate_remaining={true} />
+                        {/* Extra info about pie chart */}
+                        <div>
+                          <h6 className="text-center mt-3">
+                            {this.state.languageGraphDataSize[0] && <Fragment> Most written language is <span style={{ color: this.state.languageGraphDataSize[0].color }}> {this.state.languageGraphDataSize[0].id} </span></Fragment>}
+                            {this.state.languageGraphDataSize[1] && <Fragment> followed by <span style={{ color: this.state.languageGraphDataSize[1].color }}> {this.state.languageGraphDataSize[1].id} </span></Fragment>}
+                            {this.state.languageGraphDataSize[2] && <Fragment> & <span style={{ color: this.state.languageGraphDataSize[2].color }}> {this.state.languageGraphDataSize[2].id} </span></Fragment>}
+                          </h6>
+                        </div>
+                      </Fragment>
+                      : Loader.section_loading}
+                    {/* {this.state.languageDataLoaded ? <Language languageData={this.state.languageData} type="size" /> : Loader.section_loading} */}
                   </div>
                 </div>
-              </section>
-              {/* REPO SECTION */}
-              <section className="pt-5 ">
-                <div className="row">
-                  <div className="col-12">
-                    <h1 className="font-size-20 w-100">My Popular projects</h1>
-                  </div>
-                  <div className="col-12">
-                    <div className="card p-3 rounded">
-                      {/* Popular repos bar graph */}
-                      {this.state.repoGraphDataPopularityWiseLoaded ? (
-                        <BarChart
-                          data={this.state.repoGraphDataPopularityWise}
-                          height={250}
-                          max_bars={6}
-                        />
-                      ) : (
-                        Loader.section_loading
-                      )}
-                    </div>
+                <div className="col-sm-6 mt-3">
+                  <h3 className="font-size-15 w-100">Language analysis Repo wise</h3>
+                  <div className="card p-3 rounded" style={{ height: "calc( 100% - 20px )" }}>
+                    {/* CONDITIONAL REDERING OF LANGUAGE ANALYSYS(BY COUNT) INFO */}
+                    {this.state.languageGraphDataCountLoaded ?
+                      <Fragment>
+                        <PieChart data={this.state.languageGraphDataCount} height={250} max_slices={6} />
+                        {/* Extra info about pie chart */}
+                        <div>
+                          <h6 className="text-center mt-3">
+                            {this.state.languageGraphDataCount[0] && <Fragment> Most Used language is <span style={{ color: this.state.languageGraphDataCount[0].color }}> {this.state.languageGraphDataCount[0].id} </span></Fragment>}
+                            {this.state.languageGraphDataCount[1] && <Fragment> followed by <span style={{ color: this.state.languageGraphDataCount[1].color }}> {this.state.languageGraphDataCount[1].id} </span></Fragment>}
+                            {this.state.languageGraphDataCount[2] && <Fragment> & <span style={{ color: this.state.languageGraphDataCount[2].color }}> {this.state.languageGraphDataCount[2].id} </span></Fragment>}
+                          </h6>
+                        </div>
+                      </Fragment>
+                      : Loader.section_loading}
+                    {/* {this.state.languageDataLoaded ? <Language languageData={this.state.languageData} type="count" /> : Loader.section_loading} */}
                   </div>
                 </div>
-              </section>
-            </div>
-          ) : (
-            this.state.initialPageLoad
-          )}
+              </div>
+            </section>
+
+            {/* PINNED SECTION */}
+            <section className="pt-5 ">
+              <div className="row">
+                <div className="col-12">
+                  <h1 className="font-size-20 w-100">My Awesome projects</h1>
+                </div>
+                {/* CONDITIONAL REDERING OF PINNED REPO INFO */}
+                {this.state.pinnedLoaded ? <Pinned pinnedRepos={this.state.pinnedInfo} /> : Loader.section_loading}
+              </div>
+            </section>
+
+
+            {/* REPO SECTION */}
+            <section className="pt-5 ">
+              <div className="row">
+                <div className="col-sm-6 mt-3">
+                  <h3 className="font-size-15 w-100">Commit analysis</h3>
+                  <div className="card p-3 rounded" style={{ height: "calc( 100% - 20px )" }}>
+                    {/* CONDITIONAL REDERING OF COMMIT ANALYSYS(repo wise) INFO */}
+                    {this.state.repoGraphDataCommitWiseLoaded ?
+                      <Fragment>
+                        <PieChart data={this.state.repoGraphDataCommitWise} height={250} max_slices={10} />
+                        {/* Extra info about pie chart */}
+                        <div>
+                          <h6 className="text-center mt-3">
+                            {this.state.repoGraphDataCommitWise[0] && <Fragment> Most Commits are done in <span style={{ color: this.state.repoGraphDataCommitWise[0].color }}> {this.state.repoGraphDataCommitWise[0].id} </span></Fragment>}
+                          </h6>
+                        </div>
+                      </Fragment>
+                      : Loader.section_loading}
+                  </div>
+                </div>
+                <div className="col-sm-6 mt-3">
+                  <h3 className="font-size-15 w-100">My Popular projects</h3>
+                  <div className="card p-3 rounded" style={{ height: "calc( 100% - 20px )" }} >
+                    {/* CONDITIONAL REDERING OF LANGUAGE ANALYSYS(BY COUNT) INFO */}
+                    {this.state.repoGraphDataPopularityWiseLoaded ?
+                      <Fragment>
+                        {this.state.repoGraphDataPopularityWiseLoaded ? <BarChart data={this.state.repoGraphDataPopularityWise} height={250} max_bars={6} keys={["stars", "forks"]} indexBy={"repo"} /> : Loader.section_loading}
+                        {/* Extra info about pie chart */}
+                        <div>
+                          <h6 className="text-center mt-3">
+                            {this.state.repoGraphDataPopularityWise[0] && <Fragment> Most Famous repo is <span style={{ color: this.state.repoGraphDataPopularityWise[0].color }}> {this.state.repoGraphDataPopularityWise[0].id} </span></Fragment>}
+                          </h6>
+                        </div>
+                      </Fragment>
+                      : Loader.section_loading}
+
+                    {/* Popular repos bar graph */}
+                    {/* {this.state.repoGraphDataPopularityWiseLoaded ? <BarChart data={this.state.repoGraphDataPopularityWise} height={250} max_bars={6} /> : Loader.section_loading} */}
+                  </div>
+                </div>
+
+
+              </div>
+            </section>
+
+            <section className="pt-5">
+              <div className="row">
+                <div className="col-sm-12 mt-3">
+                  <h3 className="font-size-15 w-100">When am I most productive?</h3>
+                  <div className="card p-3 rounded" style={{ height: "calc( 100% - 20px )" }} >
+                    {/* CONDITIONAL REDERING OF WEEK DAY ACTIVITY */}
+                    {this.state.commitHistoryDataLoaded ?
+                      <Fragment>
+                        {this.state.commitHistoryDataLoaded ? <BarChart data={this.state.commitHistoryGraphData} height={250} max_bars={7} keys={["commit"]} indexBy={"day"} /> : Loader.section_loading}
+                        {/* Extra info about Week days chart */}
+                        <div>
+                          <h6 className="text-center mt-3">
+                            {this.state.commitHistoryGraphData[0] && <Fragment> I am most productive on <span style={{ color: this.state.commitHistoryGraphData[this.state.top2days[0]].commitColor }}> {this.state.commitHistoryGraphData[this.state.top2days[0]].day} </span> and <span style={{ color: this.state.commitHistoryGraphData[this.state.top2days[1]].commitColor }}> {this.state.commitHistoryGraphData[this.state.top2days[1]].day} </span> </Fragment>}
+                          </h6>
+                        </div>
+                      </Fragment>
+                      : Loader.section_loading}
+
+                  </div>
+                </div>
+
+              </div>
+            </section>
+          </div> : Loader.user_not_found}
           <Footer />
         </Layout>
+
       </div>
     );
   }

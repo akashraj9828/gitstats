@@ -1,41 +1,10 @@
 import { ResponsiveBar } from '@nivo/bar'
 import React, { Fragment } from "react"
-// make sure parent container have a defined height when using
-// responsive component, otherwise height will be 0 and
-// no chart will be rendered.
-// website examples showcase many properties,
-// you'll often use just a few of them.
 
-// use "accumulate_data" only when showing language by size Dont use it other wise
-// accumulate_data will add all the remaining data and show it in the graph as "Others"
-function BarChart({ data, height, width, max_bars, accumulate_remaining }) {
+// keys actual data eg ["count","stars","forks"]
+// indexBy is the key which contains labels
+function BarChart({ data, height, width, max_bars, keys, indexBy, }) {
 
-    // data = [
-    //     {
-    //         "repo": "github",
-    //         "stars": 18,
-    //         "starsColor": "hsl(223, 70%, 50%)",
-    //         "forks": 11,
-    //         "forksColor": "hsl(268, 70%, 50%)",
-    //     },
-    //     {
-    //         "repo": "buthub",
-    //         "stars": 12,
-    //         "starsColor": "hsl(223, 70%, 50%)",
-    //         "forks": 8,
-    //         "forksColor": "hsl(268, 70%, 50%)",
-
-    //     },
-    //     {
-    //         "repo": "shithub",
-    //         "stars": 10,
-    //         "starsColor": "hsl(223, 70%, 50%)",
-    //         "forks": 14,
-    //         "forksColor": "hsl(268, 70%, 50%)",
-
-    //     },
-
-    // ]
 
     data = data.slice(0, max_bars)
 
@@ -60,8 +29,9 @@ function BarChart({ data, height, width, max_bars, accumulate_remaining }) {
         return elem.data[elem.id + "Color"] ? elem.data[elem.id + "Color"] : "grey"
     }
 
-    let textColor="#999999" //greyish works for both mode dark and light
-    let gridColor="#00800054" //very light green
+
+    let textColor = "#999999" //greyish works for both mode dark and light
+    let gridColor = "#00800054" //very light green
     let theme = {
         textColor: textColor,
         background: "transparent",
@@ -93,8 +63,8 @@ function BarChart({ data, height, width, max_bars, accumulate_remaining }) {
     let Chart = <ResponsiveBar
         theme={theme}
         data={data}
-        keys={["stars", "forks"]}
-        indexBy="repo"
+        keys={keys ? keys : ["stars", "forks"]}
+        indexBy={indexBy ? indexBy : "repo"}
         margin={{ top: 50, right: 50, bottom: 50, left: 50 }}
         padding={0.3}
         groupMode="grouped"
