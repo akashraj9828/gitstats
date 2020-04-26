@@ -6,20 +6,26 @@ import { DebounceInput } from 'react-debounce-input';
 import { Link } from "react-router-dom";
 
 function Header() {
-    let [dayStatus, setTheme] = useState(true);
     let [imageUrl, setImageUrl] = useState("img/sun.png");
     let [searchUsers, setSearchUsers] = useState();
     let body = document.querySelector("body");
 
-    function changeTheme() {
-        if (dayStatus) {
-            body.classList = "day-mode";
-            setImageUrl("/img/moon.png");
-        } else {
-            body.classList = "night-mode";
+    //Initial load theme set
+    if(localStorage.getItem('theme') == 'light'){
+        body.classList.remove('night-mode');
+        imageUrl = "img/moon.png"
+    }
+
+    function changeTheme() {    
+        if (localStorage.getItem('theme') == 'light') {
+            localStorage.setItem('theme', 'dark');
+            body.classList.add('night-mode');
             setImageUrl("/img/sun.png");
+        } else {
+            localStorage.setItem('theme', 'light');
+            body.classList.remove('night-mode');
+            setImageUrl("/img/moon.png");
         }
-        setTheme(!dayStatus);
     };
 
     function openSearch() {
@@ -96,7 +102,7 @@ function Header() {
                                             src={process.env.PUBLIC_URL + imageUrl}
                                             alt=""
                                         />
-                                        <span className="d-none d-lg-inline-block d-sm-inline-block">{dayStatus ? "Night Mode" : "Day Mode"}</span>
+                                        <span className="d-none d-lg-inline-block d-sm-inline-block">{localStorage.getItem('theme') == 'light' ? "Night Mode" : "Day Mode"}</span>
                                     </button>
                                 </div>
                             </li>
