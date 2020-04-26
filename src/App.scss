@@ -34,6 +34,9 @@ $space_bg:url(https://desktop.github.com/images/star-bg.svg) no-repeat;
 	position: relative;
 	background: $space_bg;
 	background-size: cover;
+	footer {
+		bottom: 15px;
+	}
 }
 
 .day-mode{
@@ -64,10 +67,9 @@ $space_bg:url(https://desktop.github.com/images/star-bg.svg) no-repeat;
 	footer{
 		background: $dark_bg;
 		a{
-			color:#2196f3!important;
+			color:#5bd0a4!important;
 		}
 	}
-	
 }
 
 
@@ -366,6 +368,7 @@ button {
 				padding: 10px;
 				font-size: 13px;
 				transition: all 0.3s;
+				color: #fff;
 
 				&:hover {
 					background: #24292f;

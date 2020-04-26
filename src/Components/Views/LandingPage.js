@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import DataProvider from '../../Data-provider/index'
 import { DebounceInput } from 'react-debounce-input';
+import Footer from '../Footer'
 
 import GithubLink from "./Components/GithubLink"
 const LandingPage = () => {
@@ -31,7 +32,7 @@ const LandingPage = () => {
                             style={{
                                 maxWidth: 600,
                                 width: "100%",
-                                minWidth: 300
+                                minWidth: 400
                             }}
 
                         />
@@ -50,6 +51,7 @@ const LandingPage = () => {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }
