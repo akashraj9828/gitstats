@@ -7,7 +7,7 @@ import PieChart from "../Charts/PieChart";
 import BarChart from "../Charts/BarChart";
 import Loader from "../Extras/Loader";
 import Footer from "../Footer";
-
+import Share from './Share'
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -69,6 +69,7 @@ class Home extends React.Component {
         pinnedInfo: userData, //  few extra data is stored here but no worries
         pinnedLoaded: true
       });
+      
 
       // API CALL TO GET ALL REPO INFO // NESTED BECAUSE USER_ID HAS DEPENDENCY ON FIRST API CALL (getUserInfo)
       DataProvider.getRepositoryInfo(
@@ -146,9 +147,9 @@ class Home extends React.Component {
 
 
       <div>
-
         <Layout>
           {this.state.basicLoaded && this.state.basicInfo ? <div>
+            <Share data={this.state.basicInfo}/>
             {/* CONDITIONAL REDERING OF BASIC INFO */}
             {this.state.basicLoaded ? <BasicInformation basicInfo={this.state.basicInfo} aggregateData={this.state.aggregateData} /> : Loader.section_loading}
 
@@ -279,7 +280,7 @@ class Home extends React.Component {
 
               </div>
             </section>
-          </div> : Loader.user_not_found}
+          </div> : this.state.initialPageLoad}
           <Footer />
         </Layout>
 

@@ -12,6 +12,10 @@ h1,h2,h3,h4,h5 {
 $blueheader: #24292E;
 $buttonPrimary: #54A3FF;
 
+.app-wrapper {
+	position: relative;
+    min-height: calc(100vh - 170px);
+}
 
 .navbar-brand  {
 	svg{width: 120px;}
@@ -310,8 +314,18 @@ button {
 }
 
 
-
+// Media Query for mobile devices
 @media (max-width:767px){
+	.share-icons {
+		right: 10px;
+		z-index: 9;
+		left: initial !important;
+		button{
+			svg{
+				width: 17px;
+			}
+		}
+	}
 	.search {width: 100%;}
 	.search-result p {
 		font-size: 13px;
@@ -338,10 +352,6 @@ button {
 }
 
 
-.app-wrapper {
-	position: relative;
-    min-height: calc(100vh - 170px);
-}
 
 footer {
 	position: absolute;
@@ -350,4 +360,28 @@ footer {
     width: 100%;
     text-align: center;
     left: 0;
+}
+
+
+.Search-result::-webkit-scrollbar {
+	width: 6px;
+}
+   
+  .Search-result::-webkit-scrollbar-track {
+	box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+   
+  .Search-result::-webkit-scrollbar-thumb {
+	background-color: #5bd0a4;
+    outline: 1px solid #5bd0a4;
+    border-radius: 12px;
+  }
+
+  .share-icons {
+	  button{
+		  display: block
+	  }
+    position: fixed;
+    left: 10px;
+    top: 40%;
 }

@@ -1,5 +1,8 @@
 import React from "react";
 import Loader from "../Extras/Loader"
+
+
+
 function BasicInformation(props) {
 
   if (Object.keys(props.basicInfo).length === 0) {
@@ -13,7 +16,7 @@ function BasicInformation(props) {
     <section className="pt-5 text-center">
       <div className="card p-4 rounded">
         <div className="row">
-          <div className="col-md-2">
+          <div className="col-md-2 text-left">
           {/* <div className="left-image-avtar"> */}
             {/* <div className="member-image"> */}
               <img className="img-fluid img" style={{minWidth:130,maxWidth:150,height:"auto"}} src={userInfo.avatarUrl} alt={userInfo.login} />

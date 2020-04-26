@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { ReactComponent as GitStatsLogo } from '../Images/logo.svg';
 import DataProvider from "../Data-provider/index"
-import ScrollToBottom from 'react-scroll-to-bottom';
 import Loader from '../Components/Extras/Loader'
 import { DebounceInput } from 'react-debounce-input';
 
@@ -81,11 +80,9 @@ function Header() {
                                         <ul className="search-result">
                                             {/*No Need to scroll to bottom  */}
                                             {/* best match is always at top */}
-                                            {/* <ScrollToBottom> */}
                                             {searchUsers.length > 0
                                                 ? searchUsers
                                                 : Loader.user_not_found}
-                                            {/* </ScrollToBottom> */}
                                         </ul>
                                     </div>
                                 )}
