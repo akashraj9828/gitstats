@@ -55,6 +55,7 @@ $buttonPrimary: #54A3FF;
 			border-radius: 70px;
 			border: none;
 			margin-top: 25px;
+			background: #fff;
 			transition: all 0.3s;
 			padding: 20px;
   		    color: #1a1a1b;
@@ -377,6 +378,7 @@ button {
 		height: 42px;
 		padding: 20px;
 		font-size: 13px;
+		width: 85%;
 	}
 
 	.lending-page  {
@@ -395,7 +397,7 @@ button {
 		left: initial !important;
 		button{
 			svg{
-				width: 17px;
+				width: 21px;
 			}
 		}
 	}
