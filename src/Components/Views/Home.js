@@ -62,6 +62,7 @@ class Home extends React.Component {
         });
         return;
       }
+      document.title = userData.data.user.name + " | GitStats"
       this.setState({
         basicInfo: userData,
         user_id: userData.data.user.id,
