@@ -8,6 +8,8 @@ import BarChart from "../Charts/BarChart";
 import Loader from "../Extras/Loader";
 import Footer from "../Footer";
 import Share from './Share'
+import Header from '../Header'
+
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -148,6 +150,7 @@ class Home extends React.Component {
 
 
       <div>
+        <Header />
         <Layout>
           {this.state.basicLoaded && this.state.basicInfo ? <div>
             <Share data={this.state.basicInfo}/>

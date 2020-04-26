@@ -8,13 +8,61 @@ h1,h2,h3,h4,h5 {
 
 }
 
+.search-inner .Search-result {
+    width: 93%;
+    top: 75px;
+    margin: auto;
+    left: 0;
+    right: 0;
+}
+
 /* Global color decleartion */
 $blueheader: #24292E;
 $buttonPrimary: #54A3FF;
 
+.lending-page {
+    min-height: 100vh;
+    position: relative;
+    background: url(https://desktop.github.com/images/star-bg.svg) no-repeat;
+	background-size: cover;
+}
+
+
 .app-wrapper {
 	position: relative;
     min-height: calc(100vh - 170px);
+}
+
+.search-inner {
+    max-width: 630px;
+    margin: auto;
+}
+.content-area {
+	width: 70%;
+    height: 100vh;
+    margin: auto;
+    text-align: center;
+    display: flex;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -15%;
+	div{
+		h1{margin-bottom: 20px;}
+		input {
+			width: 100%;
+			height: 50px;
+			border-radius: 70px;
+			border: none;
+			margin-top: 25px;
+			transition: all 0.3s;
+			padding: 20px;
+  		    color: #1a1a1b;
+			&:focus{
+				outline: none;
+			}
+		}
+	}
 }
 
 .navbar-brand  {
@@ -258,6 +306,7 @@ button {
 		padding: 0;
 		list-style: none;
 		margin: 0;
+		text-align: left;
 		li{
 			a{
 				display: block;
@@ -316,6 +365,30 @@ button {
 
 // Media Query for mobile devices
 @media (max-width:767px){
+	.content-area >div {
+		padding: 20px !important;
+	}
+	.lending-page .content-area h1 {
+		font-size: 25px;
+	}
+
+
+	.content-area div input {
+		height: 42px;
+		padding: 20px;
+		font-size: 13px;
+	}
+
+	.lending-page  {
+		background-position: right;
+	}
+
+
+	.lending-page .content-area p {
+		line-height: 28px;
+	}
+
+	.content-area {width: 100%;}
 	.share-icons {
 		right: 10px;
 		z-index: 9;
