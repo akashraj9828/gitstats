@@ -41,7 +41,7 @@ const Pinned = (props) => {
     }}>
 
         <h6 className="mt-3 w-100 text-left">
-            <span style={{ color: "gray" }}>No pinned repos to analyze ☹️☹️  </span>
+            <span style={{ color: "gray" }}>No pinned repos to analyze <span role="img" aria-label="sad-face">☹️☹️</span></span>
         </h6>
     </div>
     </div>

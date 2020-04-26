@@ -51,6 +51,8 @@ class Home extends React.Component {
       initialPageLoad: Loader.section_loading, //For loading application at first time
       userActivity: [],
       userActivityLoaded: false,
+      week_dict: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+
     };
   }
 
@@ -167,6 +169,48 @@ class Home extends React.Component {
             {/* CONDITIONAL REDERING OF BASIC INFO */}
             {this.state.basicLoaded ? <BasicInformation basicInfo={this.state.basicInfo} aggregateData={this.state.aggregateData} /> : Loader.section_loading}
 
+  {/* REPO SECTION */}
+  <section className="pt-5 ">
+              <div className="row">
+              <div className="col-sm-6 mt-3">
+                  <h3 className="font-size-15 w-100">My Recent activities</h3>
+                  <div className="card p-3 rounded" style={{
+                    height: "calc( 100%-20px)",
+                    // height: "100%",
+                    maxHeight: "376px",
+                    overflow: "auto"
+                  }} >
+                    {/*Will show 30 recent activity by user */}
+                    {this.state.userActivityLoaded ?
+                      <Fragment>
+                        <UserActivity data={this.state.userActivity} />
+                      </Fragment>
+                      : Loader.section_loading}
+                  </div>
+                </div>
+                
+                <div className="col-sm-6 mt-3">
+                  <h3 className="font-size-15 w-100">Commit analysis</h3>
+                  <div className="card p-3 rounded" style={{ height: "calc( 100% - 20px )" }}>
+                    {/* CONDITIONAL REDERING OF COMMIT ANALYSYS(repo wise) INFO */}
+                    {this.state.repoGraphDataCommitWiseLoaded ?
+                      <Fragment>
+                        <PieChart data={this.state.repoGraphDataCommitWise} height={250} max_slices={10} />
+                        {/* Extra info about pie chart */}
+                        <div>
+                          <h6 className="text-center mt-3">
+                            {this.state.repoGraphDataCommitWise[0] && <Fragment> Most Commits are done in <span style={{ color: this.state.repoGraphDataCommitWise[0].color }}> {this.state.repoGraphDataCommitWise[0].id} </span></Fragment>}
+                          </h6>
+                        </div>
+                      </Fragment>
+                      : Loader.section_loading}
+                  </div>
+                </div>
+
+              </div>
+            </section>
+
+
             {/* LANGUAGE SECTION */}
             <section className="pt-5 ">
               <div className="row">
@@ -226,46 +270,7 @@ class Home extends React.Component {
             </section>
 
 
-            {/* REPO SECTION */}
-            <section className="pt-5 ">
-              <div className="row">
-                <div className="col-sm-6 mt-3">
-                  <h3 className="font-size-15 w-100">Commit analysis</h3>
-                  <div className="card p-3 rounded" style={{ height: "calc( 100% - 20px )" }}>
-                    {/* CONDITIONAL REDERING OF COMMIT ANALYSYS(repo wise) INFO */}
-                    {this.state.repoGraphDataCommitWiseLoaded ?
-                      <Fragment>
-                        <PieChart data={this.state.repoGraphDataCommitWise} height={250} max_slices={10} />
-                        {/* Extra info about pie chart */}
-                        <div>
-                          <h6 className="text-center mt-3">
-                            {this.state.repoGraphDataCommitWise[0] && <Fragment> Most Commits are done in <span style={{ color: this.state.repoGraphDataCommitWise[0].color }}> {this.state.repoGraphDataCommitWise[0].id} </span></Fragment>}
-                          </h6>
-                        </div>
-                      </Fragment>
-                      : Loader.section_loading}
-                  </div>
-                </div>
-                <div className="col-sm-6 mt-3">
-                  <h3 className="font-size-15 w-100">My Recent activity</h3>
-                  <div className="card p-3 rounded" style={{ 
-                    height: "calc( 100% - 20px )",
-                    maxHeight: "350px" ,
-                    overflow:"auto"
-                    }} >
-                    {/*Will show 30 recent activity by user */}
-                    {this.state.userActivityLoaded ?
-                      <Fragment>
-                        <UserActivity data={this.state.userActivity}/>
-                      </Fragment>
-                      : Loader.section_loading}
-                  </div>
-                </div>
-
-
-              </div>
-            </section>
-
+          
             {/* PRODUCTIVITY SECTION */}
             <section className="pt-5">
               <div className="row">
@@ -279,7 +284,7 @@ class Home extends React.Component {
                         {/* Extra info about Week days chart */}
                         <div>
                           <h6 className="text-center mt-3">
-                            {this.state.commitHistoryGraphData[0] && <Fragment> I am most productive on <span style={{ color: this.state.commitHistoryGraphData[this.state.top2days[0]].commitColor }}> {this.state.commitHistoryGraphData[this.state.top2days[0]].day} </span> and <span style={{ color: this.state.commitHistoryGraphData[this.state.top2days[1]].commitColor }}> {this.state.commitHistoryGraphData[this.state.top2days[1]].day} </span> </Fragment>}
+                            {this.state.commitHistoryGraphData[0] && <Fragment> I am most productive on <span style={{ color: this.state.commitHistoryGraphData[this.state.top2days[0]].commitColor }}> {this.state.week_dict[this.state.top2days[0]]} </span> and <span style={{ color: this.state.commitHistoryGraphData[this.state.top2days[1]].commitColor }}> {this.state.week_dict[this.state.top2days[1]]} </span> </Fragment>}
                           </h6>
                         </div>
                       </Fragment>

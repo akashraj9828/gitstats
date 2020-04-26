@@ -326,7 +326,8 @@ async function repoBarGraphCalculation(repoInfo) {
 async function commitGraphDataDayWise(commitHistoryData) {
   // 0-6 represents monday-sunday
   // 6-sat 0-sunday
-  let week_dict = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+  let week_dict_full = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+  let week_dict_short = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"]
   // commits throughout the week_day
   let week_commit_activity = [0, 0, 0, 0, 0, 0, 0]
   // intensity throughout the week_day
@@ -357,8 +358,8 @@ async function commitGraphDataDayWise(commitHistoryData) {
       }
     }
     week_graph_data.push({
-      "day": week_dict[week_day],
-      "label": week_dict[week_day],
+      "day": week_dict_short[week_day],
+      "label": week_dict_short[week_day],
 
 
       "commit": week_commit_activity[week_day],
@@ -375,7 +376,7 @@ async function commitGraphDataDayWise(commitHistoryData) {
 
 
   return {
-    week_dict,
+    week_dict_full,
     week_commit_activity,
     week_intensity_activity,
     week_graph_data, // this 

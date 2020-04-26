@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import DataProvider from '../../Data-provider/index'
 import { DebounceInput } from 'react-debounce-input';
 
+import GithubLink from "./Components/GithubLink"
 const LandingPage = () => {
     let [searchUsers, setSearchUsers] = useState();
 
@@ -16,16 +17,22 @@ const LandingPage = () => {
 
     return (
         <div className="landing-page">
+        <GithubLink color={"#caa981"} />
             <div className="content-area">
                 <div className="m-auto p-5">
-                    <h1 className="font-weight-bold mb-3" >Analysis Any Git profile</h1>
-                    <p className="font-size-14">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable</p>
+                    <h1 className="font-weight-bold mb-3" >Git-Stats</h1>
+                    <p className="font-size-14">An open-source GitHub contribution analyzer </p>
                     <div className="search-inner position-relative">
                         <DebounceInput
                             minLength={2}
                             debounceTimeout={500}
-                            placeholder="Find people..."
+                            placeholder="Find github users..."
                             onChange={search}
+                            style={{
+                                maxWidth: 600,
+                                width: "100%",
+                                minWidth: 300
+                            }}
 
                         />
 
