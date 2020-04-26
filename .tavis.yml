@@ -1,0 +1,22 @@
+sudo:
+  false
+language: node_js
+node_js:
+        - 10
+branches:
+  only:
+    - dev2
+
+# cache:
+#     directories:
+#         - "node_modules"
+
+install:
+  - npm i yarn -g
+
+# before_script:
+#   - openssl aes-256-cbc -a -d -in key.pem.enc -out key.pem -k $ENC_KEY
+
+script:
+  # - bash ./deploy.sh
+  - yarn run build
