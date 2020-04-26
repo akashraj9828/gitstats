@@ -9,7 +9,7 @@ Object.keys(config).forEach(key => {
 
 const Share =  (props) => {
     return (
-      <div className="share-icons">
+      <div className="share-icons rounded">
         <FacebookShareButton url={"https://gitstats-stage.herokuapp.com/"+ props.data.data.user.login}>
           <FacebookIcon size={28} round={true} />
         </FacebookShareButton>

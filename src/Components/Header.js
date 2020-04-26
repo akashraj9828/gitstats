@@ -3,6 +3,7 @@ import { ReactComponent as GitStatsLogo } from '../Images/logo.svg';
 import DataProvider from "../Data-provider/index"
 import Loader from '../Components/Extras/Loader'
 import { DebounceInput } from 'react-debounce-input';
+import { Link } from "react-router-dom";
 
 function Header() {
     let [dayStatus, setTheme] = useState(true);
@@ -12,7 +13,7 @@ function Header() {
 
     function changeTheme() {
         if (dayStatus) {
-            body.classList = "";
+            body.classList = "day-mode";
             setImageUrl("/img/moon.png");
         } else {
             body.classList = "night-mode";
@@ -56,10 +57,10 @@ function Header() {
         <header>
             <div className="container">
                 <nav className="navbar navbar-expand-lg">
-                    <a className="navbar-brand text-white logo">
+                    <Link className="navbar-brand text-white logo" to="/">
                         <GitStatsLogo height={30} />
                         {/* <img src={process.env.PUBLIC_URL + "/cat-logo.png"} alt="" /> */}
-                    </a>
+                    </Link>
                     <div className="navbar-collapse" id="navbarNavDropdown">
                         <button onClick={openSearch} className="search_icon">{Loader.search_icon}</button>
                         <ul className="navbar-nav ml-auto">

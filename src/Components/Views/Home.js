@@ -237,23 +237,11 @@ class Home extends React.Component {
                   </div>
                 </div>
                 <div className="col-sm-6 mt-3">
-                  <h3 className="font-size-15 w-100">My Popular projects</h3>
+                  <h3 className="font-size-15 w-100">My Recent activity</h3>
                   <div className="card p-3 rounded" style={{ height: "calc( 100% - 20px )" }} >
-                    {/* CONDITIONAL REDERING OF LANGUAGE ANALYSYS(BY COUNT) INFO */}
-                    {this.state.repoGraphDataPopularityWiseLoaded ?
-                      <Fragment>
-                        {this.state.repoGraphDataPopularityWiseLoaded ? <BarChart data={this.state.repoGraphDataPopularityWise} height={250} max_bars={6} keys={["stars", "forks"]} indexBy={"repo"} /> : Loader.section_loading}
-                        {/* Extra info about pie chart */}
-                        <div>
-                          <h6 className="text-center mt-3">
-                            {this.state.repoGraphDataPopularityWise[0] && <Fragment> Most Famous repo is <span style={{ color: this.state.repoGraphDataPopularityWise[0].color }}> {this.state.repoGraphDataPopularityWise[0].id} </span></Fragment>}
-                          </h6>
-                        </div>
-                      </Fragment>
-                      : Loader.section_loading}
+                    {/*Will show 30 recent activity by user */}
+                    {Loader.section_loading}
 
-                    {/* Popular repos bar graph */}
-                    {/* {this.state.repoGraphDataPopularityWiseLoaded ? <BarChart data={this.state.repoGraphDataPopularityWise} height={250} max_bars={6} /> : Loader.section_loading} */}
                   </div>
                 </div>
 
@@ -285,8 +273,8 @@ class Home extends React.Component {
               </div>
             </section>
           </div> : this.state.initialPageLoad}
-          <Footer />
         </Layout>
+        <Footer />
 
       </div>
     );
