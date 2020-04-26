@@ -9,7 +9,7 @@ import Loader from "../Extras/Loader";
 import Footer from "../Footer";
 import Share from './Share'
 import Header from '../Header'
-
+import UserActivity from "./UserActvity"
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -49,6 +49,8 @@ class Home extends React.Component {
       commitHistoryGraphData: [], //commit data accumulated for each day of week [monday,tuesday,...sunday] from all times
       commitHistoryGraphDataLoaded: false,
       initialPageLoad: Loader.section_loading, //For loading application at first time
+      userActivity: [],
+      userActivityLoaded: false,
     };
   }
 
@@ -72,7 +74,7 @@ class Home extends React.Component {
         pinnedInfo: userData, //  few extra data is stored here but no worries
         pinnedLoaded: true
       });
-      
+
 
       // API CALL TO GET ALL REPO INFO // NESTED BECAUSE USER_ID HAS DEPENDENCY ON FIRST API CALL (getUserInfo)
       DataProvider.getRepositoryInfo(
@@ -91,7 +93,7 @@ class Home extends React.Component {
 
         DataProvider.profileAnalysis(this.state.repoInfo).then((data) => {
           this.setState({
-            aggregateData:data.basic_calculations,
+            aggregateData: data.basic_calculations,
             aggregateDataLoaded: true,
             languageData: data.language_calculations,
             languageDataLoaded: true,
@@ -105,8 +107,8 @@ class Home extends React.Component {
                 this.setState({
                   commitHistoryGraphData: data.week_graph_data,
                   commitHistoryGraphDataLoaded: true,
-                  aggregateData:{...this.state.aggregateData,totalCommit:data.total_commit_all_years},
-                  top2days:data.top2days
+                  aggregateData: { ...this.state.aggregateData, totalCommit: data.total_commit_all_years },
+                  top2days: data.top2days
 
                 })
               })
@@ -143,17 +145,25 @@ class Home extends React.Component {
 
 
     });
+
+    DataProvider.getUserActivity(this.state.username).then((userActivity) => {
+
+      this.setState({
+        userActivity: userActivity,
+        userActivityLoaded: true
+      })
+
+    })
+
   }
 
   render() {
     return (
-
-
       <div>
         <Header />
         <Layout>
           {this.state.basicLoaded && this.state.basicInfo ? <div>
-            <Share data={this.state.basicInfo}/>
+            <Share data={this.state.basicInfo} />
             {/* CONDITIONAL REDERING OF BASIC INFO */}
             {this.state.basicLoaded ? <BasicInformation basicInfo={this.state.basicInfo} aggregateData={this.state.aggregateData} /> : Loader.section_loading}
 
@@ -238,10 +248,17 @@ class Home extends React.Component {
                 </div>
                 <div className="col-sm-6 mt-3">
                   <h3 className="font-size-15 w-100">My Recent activity</h3>
-                  <div className="card p-3 rounded" style={{ height: "calc( 100% - 20px )" }} >
+                  <div className="card p-3 rounded" style={{ 
+                    height: "calc( 100% - 20px )",
+                    maxHeight: "350px" ,
+                    overflow:"auto"
+                    }} >
                     {/*Will show 30 recent activity by user */}
-                    {Loader.section_loading}
-
+                    {this.state.userActivityLoaded ?
+                      <Fragment>
+                        <UserActivity data={this.state.userActivity}/>
+                      </Fragment>
+                      : Loader.section_loading}
                   </div>
                 </div>
 
@@ -249,6 +266,7 @@ class Home extends React.Component {
               </div>
             </section>
 
+            {/* PRODUCTIVITY SECTION */}
             <section className="pt-5">
               <div className="row">
                 <div className="col-sm-12 mt-3">

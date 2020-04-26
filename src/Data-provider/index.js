@@ -1,47 +1,24 @@
 import axios from "axios";
+import TimeAgo from 'javascript-time-ago'
+// Load locale-specific relative date/time formatting rules.
+import en from 'javascript-time-ago/locale/en'
 import config from '../config/index'
+import {
+  toReadableBytes,
+  sortObject
+} from "./utils"
 
 Object.keys(config).forEach(key => {
   window[key] = config[key];
 });
 
+TimeAgo.addLocale(en)
+ 
+// Create relative date/time formatter.
+const timeAgo = new TimeAgo('en-US')
+
 //common variables
 const API_BASE_URL = window.API_BASE_URL
-
-// helper function to sort object by value
-function sortObject(obj) {
-  var arr = [];
-  var prop;
-  for (prop in obj) {
-    if (obj.hasOwnProperty(prop)) {
-      arr.push({
-        'key': prop,
-        'value': obj[prop]
-      });
-    }
-  }
-  arr.sort(function (a, b) {
-    return b.value - a.value;
-  });
-  return arr; // returns array [[key:val],[key:val]]
-}
-
-
-// helper function to convert bytes to human readable format
-function toReadableBytes(num) {
-  var neg = num < 0;
-  var units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-  if (neg) {
-    num = -num;
-  }
-  if (num < 1) {
-    return (neg ? '-' : '') + num + ' B';
-  }
-  var exponent = Math.min(Math.floor(Math.log(num) / Math.log(1000)), units.length - 1);
-  num = Number((num / Math.pow(1000, exponent)).toFixed(2));
-  var unit = units[exponent];
-  return (neg ? '-' : '') + num + ' ' + unit;
-}
 
 //Network call for Basic User Details and pinned repos
 async function getUserInfo(username) {
@@ -71,9 +48,44 @@ async function getSearchUsers(username) {
 //Network CALL For History of commits 
 async function getCommitHistory(username) {
   let response = await axios.get(`${API_BASE_URL}history/${username}`);
-  const pinned_data = response.data;
-  return pinned_data
+  const commit_data = response.data;
+  return commit_data
 };
+
+
+//Network CALL For User activity  
+async function getUserActivity(username) {
+  let response = await axios.get(`${API_BASE_URL}rss/${username}`);
+  const user_activity = response.data;
+  let dom = await new window.DOMParser().parseFromString(user_activity, "text/xml")
+  console.log(dom);
+  let entries = dom.getElementsByTagName("entry")
+
+  let parsed_data=[
+  ]
+
+  for (var i = 0; i < entries.length; i++) {
+    let entry=entries[i]
+    let title=entry.getElementsByTagName("title")[0].textContent
+    let image=entry.getElementsByTagName("media:thumbnail")[0].getAttribute("url")
+    let time=entry.getElementsByTagName("published")[0].textContent
+    // for relative time
+    time=timeAgo.format(new Date(time))
+
+    let one_event={
+      id:i,
+      title,
+      image,
+      time
+    }
+    parsed_data.push(one_event)
+  }
+  // console.log("---: getUserActivity -> parsed_data", parsed_data);
+
+  return parsed_data
+};
+
+
 
 
 
@@ -334,7 +346,6 @@ async function commitGraphDataDayWise(commitHistoryData) {
   let max_count = Math.max(...week_commit_activity)
 
   let top2 = [...week_commit_activity].sort((a, b) => parseInt(b) - parseInt(a)).slice(0, 2)
-  console.log("---: commitGraphDataDayWise -> top2", top2);
   let top2days = []
   for (let i = 0; i < 7; i++) {
     const week_day = i
@@ -359,9 +370,6 @@ async function commitGraphDataDayWise(commitHistoryData) {
       "style": 'dots',
     })
   }
-
-  console.log("---: commitGraphDataDayWise -> top2days", top2days);
-
 
   let total_commit_all_years = commitHistoryData.years.reduce((total, element) => total + element.total, 0)
 
@@ -388,5 +396,6 @@ export default {
   repoBarGraphCalculation,
   getSearchUsers,
   getCommitHistory,
-  commitGraphDataDayWise
+  commitGraphDataDayWise,
+  getUserActivity
 }
