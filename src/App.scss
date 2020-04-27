@@ -68,10 +68,10 @@ $space_bg:url(https://desktop.github.com/images/star-bg.svg) no-repeat;
 		background: $space_bg;
 	}
 	a {
-		color: #fff;
+		color: #fff!important;
 
-		&:hover {
-			color: #fff;
+		&.hover-white:hover {
+			color: #fff!important;
 		}
 	}
 
@@ -571,13 +571,15 @@ footer {
 
 
 .pinned-repo-links{
-	transition: 0.3s;
+	transition: 0.2s;
 	color: $black;
 	&:hover{
 		text-decoration: unset;
 		color: #bcbcbc !important;
 	}
 }
+
+
 
 // github icon animation
 .github-corner:hover .octo-arm{

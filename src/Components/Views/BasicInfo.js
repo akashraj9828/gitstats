@@ -31,7 +31,7 @@ function BasicInformation(props) {
               {userInfo.bio && <p className="font-size-13 mb-1 mt-3">{userInfo.bio}</p>}
               {userInfo.email && <p className="font-size-13 mb-1">
                 <i className="fa fa-envelope-o email" aria-hidden="true"></i>
-                <a className="text-dark" target="_blank" rel="noopener noreferrer" href={`maillto:${userInfo.email}`}>
+                <a className="text-dark hover-white" target="_blank" rel="noopener noreferrer" href={`maillto:${userInfo.email}`}>
                   {userInfo.email}
                   {/* {userInfo.login} */}
                 </a>
@@ -39,7 +39,7 @@ function BasicInformation(props) {
               }
               {userInfo.login && <p className="font-size-13 mb-1">
                 <i className="fa fa-github git-icon" aria-hidden="true"></i>
-                <a className="text-dark" target="_blank" rel="noopener noreferrer" href={userInfo.url}>
+                <a className="text-dark hover-white" target="_blank" rel="noopener noreferrer" href={userInfo.url}>
                   {userInfo.login}
                 </a>
               </p>
@@ -51,7 +51,7 @@ function BasicInformation(props) {
               }
               {userInfo.websiteUrl && <p className="font-size-13 mb-1">
                 <i className="fa fa-globe git-icon" aria-hidden="true"></i>
-                <a className="text-dark" href={userInfo.websiteUrl} target="_blank" rel="noopener noreferrer">
+                <a className="text-dark hover-white" href={userInfo.websiteUrl} target="_blank" rel="noopener noreferrer">
                   {userInfo.websiteUrl}
                 </a>
               </p>
