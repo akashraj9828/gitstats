@@ -1,23 +1,149 @@
 @import url('https://fonts.googleapis.com/css?family=Comfortaa|Montserrat:400,500|Sen&display=swap');
+
 body {
 	font-family: 'Sen', sans-serif;
 	background-color: #F5F5F5;
 }
-h1,h2,h3,h4,h5 {
+
+h1,
+h2,
+h3,
+h4,
+h5 {
 	font-family: 'Montserrat', sans-serif;
 
+}
+
+.search-inner .Search-result {
+	width: 93%;
+	top: 75px;
+	margin: auto;
+	left: 0;
+	right: 0;
 }
 
 /* Global color decleartion */
 $blueheader: #24292E;
 $buttonPrimary: #54A3FF;
+$dark_bg:#1a1a1b;
+$white:#fff;
+$black:#000;
+$space_bg:url(https://desktop.github.com/images/star-bg.svg) no-repeat;
+
+.landing-page {
+	min-height: 100vh;
+	position: relative;
+	background: $space_bg;
+	background-size: cover;
+	footer {
+		bottom: 15px;
+	}
+}
+
+.day-mode{
+	footer{
+		background: $white;
+	}
+	.Search-result {
+		background: $white!important;
+		border: solid 1px rgb(155, 153, 153);
+		.search-result {
+			li {
+				a {
+					color: $black!important;
+	
+					&:hover {
+						background: $white!important;
+					}
+				}
+			}
+		}
+	}
+}
 
 .night-mode {
-	background: #1a1a1b;
+	background: $dark_bg;
 	color: #fff !important;
+	body{
+		background: $space_bg;
+	}
+	a {
+		color: #fff !important;
+
+		&:hover {
+			color: #fff !important;
+		}
+	}
+
+
 	.card {
 		background: #24292E;
 		border-color: #171a1d;
+	}
+	footer{
+		background: $dark_bg;
+		a{
+			color:#5bd0a4!important;
+		}
+	}
+}
+
+
+
+.app-wrapper {
+	position: relative;
+	min-height: calc(100vh - 200px);
+	// min-height: 80vh;
+}
+
+.search-inner {
+	max-width: 630px;
+	margin: auto;
+}
+
+.content-area {
+	width: 70%;
+	margin: 0 auto;
+	text-align: center;
+	display: flex;
+
+	div {
+		h1 {
+			margin-bottom: 20px;
+		}
+
+		input {
+			width: 100%;
+			height: 50px;
+			border-radius: 70px;
+			border: none;
+			margin-top: 25px;
+			background: $white;
+			transition: all 0.3s;
+			padding: 20px;
+			color: #1a1a1b;
+
+			&:focus {
+				outline: none;
+			}
+		}
+	}
+}
+
+.navbar-brand {
+	svg {
+		width: 120px;
+	}
+}
+
+.search-icon {
+	background: transparent;
+	border: none;
+	color: #636261;
+	cursor: pointer;
+
+	&:focus {
+		outline: none;
 	}
 }
 
@@ -67,6 +193,10 @@ $buttonPrimary: #54A3FF;
 
 header {
 	background: $blueheader;
+	z-index: 99;
+	position: sticky;
+	top: 0;
+	border-bottom: solid 1px #9b9ea01c;
 }
 
 button {
@@ -80,9 +210,19 @@ button {
 }
 
 .search {
+	transition: all 0.3s;
+	width: 80px;
 	border: none;
+	margin-right: 20px;
 	font-size: 14px;
 	background: transparent;
+
+	&:focus {
+		width: 200px;
+		transition: all 0.3s;
+
+	}
+
 	& {
 		outline: none;
 		color: #BEBFC1;
@@ -92,6 +232,7 @@ button {
 .logo {
 	font-size: 14px;
 	font-family: 'Comfortaa', cursive;
+
 	img {
 		width: 27px;
 		margin-right: 10px;
@@ -129,6 +270,7 @@ button {
 	font-size: 14px;
 	line-height: initial;
 	padding: 9px 0;
+
 	&:focus,
 	&:active {
 		outline: none !important;
@@ -139,24 +281,26 @@ button {
 .btn-primary {
 	background-color: $buttonPrimary;
 	border-color: $buttonPrimary;
+
 	&:hover {
 		background-color: $buttonPrimary;
 		border-color: $buttonPrimary;
 	}
 }
 
-.follow-details {
-	.btn {
-		img {
-			width: 22px;
-			margin-left: 7px;
-		}
-	}
+.follow-details img {
+	width: 22px;
+	margin-left: 7px;
+	background: #fff;
+	padding: 2px;
+	border-radius: 34px;
+	height: 21px;
 }
 
 .btn-primary.outline {
 	background: transparent;
 	color: $buttonPrimary;
+
 	&:after {
 		position: absolute;
 		width: 0%;
@@ -167,9 +311,11 @@ button {
 		top: 0;
 		transition: all 0.2s;
 	}
+
 	&:hover:after {
 		width: 100%;
 	}
+
 	&:hover span,
 	&:hover img {
 		color: #fff;
@@ -180,13 +326,299 @@ button {
 
 .change-theme {
 	min-width: 110px;
+
 	button {
 		border: none;
 		background: transparent;
 		color: #fff;
 		cursor: pointer;
 	}
+
 	img {
 		width: 15px;
+	}
+}
+
+.total-badge {
+	max-width: 120px;
+	background: #2196F3;
+	width: 40px;
+	border-radius: 3px;
+	padding: 0 7px;
+	font-size: 12px;
+	color: #fff;
+	height: 15px;
+	line-height: 15px;
+	text-align: center;
+	margin-top: 10px !important;
+}
+
+.Search-result {
+	position: absolute;
+	z-index: 9;
+	background: #1a1a1b;
+	max-height: 230px;
+	width: 300px;
+	border: solid 1px #24292f;
+	// we want to enable scroll
+	overflow: auto;
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	top: 50px;
+	right: 0;
+
+	.search-result {
+		padding: 0;
+		list-style: none;
+		margin: 0;
+		text-align: left;
+
+		li {
+			a {
+				display: block;
+				padding: 10px;
+				font-size: 13px;
+				transition: all 0.3s;
+				color: #fff;
+
+				&:hover {
+					background: #24292f;
+					transition: all 0.3s;
+					text-decoration: none;
+				}
+
+				img {
+
+					width: 21px;
+					border-radius: 33px;
+					margin-right: 6px;
+				}
+			}
+		}
+	}
+}
+
+.css-y1c0xs,
+[data-css-y1c0xs] {
+	max-height: 190px;
+}
+
+
+.mobile-theme {
+	position: absolute;
+	top: 9px;
+	right: 0;
+	text-align: right;
+}
+
+.search_icon {
+	position: absolute;
+	top: 16px;
+	right: 62px;
+	background: transparent;
+	border: none;
+	color: #9b9ea0;
+	cursor: pointer;
+	z-index: 99;
+	display: none;
+}
+
+.search-wrapper {
+	margin-right: 60px;
+	transition: all 0.4s;
+
+	&.open {
+		height: 35px;
+		overflow: visible;
+	}
+}
+
+
+
+
+footer {
+	width: 100%;
+	position: absolute;
+	z-index: 10;
+}
+
+
+.Search-result::-webkit-scrollbar {
+	width: 6px;
+}
+::-webkit-scrollbar {
+	width: 6px;
+}
+.Search-result::-webkit-scrollbar-track {
+	box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+::-webkit-scrollbar-track {
+	box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+.Search-result::-webkit-scrollbar-thumb {
+	background-color: #5bd0a4;
+	outline: 1px solid #5bd0a4;
+	border-radius: 12px;
+}
+::-webkit-scrollbar-thumb {
+	background-color: #5bd0a4;
+	outline: 1px solid #5bd0a4;
+	border-radius: 12px;
+}
+.share-icons {
+	display: flex;
+	flex-direction: column;
+	z-index: 9;
+	position: fixed;
+	right: 10px;
+	bottom: 2%;
+
+	button {
+		display: block;
+		margin: 5px;
+	}
+
+}
+
+
+// Media Query for mobile devices
+// media query should be always at end of css so it can overwride default css and wont need to use !important
+@media (max-width:767px) {
+	.content-area>div {
+		padding: 20px !important;
+	}
+
+	.landing-page {
+		background-position: right;
+		min-height: 95vh;
+		
+		.content-area {
+
+			h1 {
+				font-size: 25px;
+			}
+
+			p {
+				line-height: 28px;
+			}
+		}
+	}
+
+
+	.content-area div input {
+		height: 42px;
+		padding: 20px;
+		font-size: 13px;
+		width: 85%;
+	}
+
+
+
+
+	.content-area {
+		width: 100%;
+	}
+
+
+	.search {
+		width: 100%;
+	}
+
+	.search-result p {
+		font-size: 13px;
+		padding: 10px;
+		margin: 0;
+	}
+
+	.mob-font-size-13 {
+		font-size: 13px;
+	}
+
+	.search-wrapper {
+		height: 0;
+		transition: all 0.4s;
+		overflow: hidden;
+		margin-right: 0;
+	}
+
+	.search_icon {
+		display: block;
+	}
+
+	.Search-result {
+		width: 100%;
+	}
+
+	.following-area {
+		padding-left: 0;
+	}
+
+	.following-area {
+		p {
+			font-size: 13px;
+		}
+
+		span {
+			font-size: 13px;
+		}
+	}
+
+	.share-icons {
+		flex-direction: row;
+		bottom:2%
+	}
+}
+
+
+// github icon animation
+.github-corner:hover .octo-arm{
+    animation: octocat-wave 560ms ease-in-out
+  }
+  
+  @keyframes octocat-wave {
+    0%, 100%{
+        transform: rotate(0)
+    }
+  
+    20%, 60%{
+        transform: rotate(-25deg)
+    }
+  
+    40%, 80%{
+        transform: rotate(10deg)
+    }
+  }
+  
+  @media (max-width:500px){
+    .github-corner:hover .octo-arm{
+        animation: none
+    }
+  
+    .github-corner .octo-arm{
+        animation: octocat-wave 560ms ease-in-out
+    }
+  }
+  
+.git-wrapper{
+	text-align: center;
+    padding: 1rem;
+    flex-direction: column;
+    position: absolute;
+    width: 100%;
+	top: 10px;
+	span{
+		margin-left: 2px;
+		margin-right: 2px;
+
+	}
+}
+.git-footer{
+	text-align: center;
+    padding: 0.2rem;
+    flex-direction: column;
+	span{
+		margin-left: 2px;
+		margin-right: 2px;
+
 	}
 }
