@@ -5,7 +5,8 @@ import en from 'javascript-time-ago/locale/en'
 import config from '../config/index'
 import {
   toReadableBytes,
-  sortObject
+  sortObject,
+  insertAtIndex
 } from "./utils"
 
 Object.keys(config).forEach(key => {
@@ -58,7 +59,6 @@ async function getUserActivity(username) {
   let response = await axios.get(`${API_BASE_URL}rss/${username}`);
   const user_activity = response.data;
   let dom = await new window.DOMParser().parseFromString(user_activity, "text/xml")
-  console.log(dom);
   let entries = dom.getElementsByTagName("entry")
 
   let parsed_data=[
@@ -80,8 +80,6 @@ async function getUserActivity(username) {
     }
     parsed_data.push(one_event)
   }
-  // console.log("---: getUserActivity -> parsed_data", parsed_data);
-
   return parsed_data
 };
 
@@ -99,7 +97,7 @@ async function profileAnalysis(repoInfo) {
 
   // repoNodes = list of repository objects
   let repoNodes = repoInfo.data.user.repositories.nodes;
-  let totalCommit = 0
+  // let totalCommit = 0
   let totalStar = 0
   let totalFork = 0
 
@@ -118,7 +116,7 @@ async function profileAnalysis(repoInfo) {
 
   repoNodes.forEach(repo => {
     // perform basic calculation here
-    totalCommit += repo.contributions ? repo.contributions.target.userCommits.totalCount : 0;
+    // totalCommit += repo.contributions ? repo.contributions.target.userCommits.totalCount : 0;
     totalStar += repo.stargazers ? repo.stargazers.totalCount : 0;
     totalFork += repo.forks ? repo.forks.totalCount : 0;
 
@@ -351,10 +349,10 @@ async function commitGraphDataDayWise(commitHistoryData) {
   for (let i = 0; i < 7; i++) {
     const week_day = i
     if (top2.includes(week_commit_activity[week_day])) {
-      top2days.push(i)
       const index = top2.indexOf(week_commit_activity[week_day]);
       if (index > -1) {
         top2.splice(index, 1);
+        top2days=insertAtIndex(top2days,index,i)
       }
     }
     week_graph_data.push({

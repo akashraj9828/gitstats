@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import * as Sentry from '@sentry/browser';
 import config from './config'
 
-// store config variable as soon as app loads
+// load config variable as soon as app loads
 Object.keys(config).forEach(key => {
   window[key] = config[key];
 });

@@ -27,6 +27,7 @@ $blueheader: #24292E;
 $buttonPrimary: #54A3FF;
 $dark_bg:#1a1a1b;
 $white:#fff;
+$black:#000;
 $space_bg:url(https://desktop.github.com/images/star-bg.svg) no-repeat;
 
 .landing-page {
@@ -42,6 +43,21 @@ $space_bg:url(https://desktop.github.com/images/star-bg.svg) no-repeat;
 .day-mode{
 	footer{
 		background: $white;
+	}
+	.Search-result {
+		background: $white!important;
+		border: solid 1px rgb(155, 153, 153);
+		.search-result {
+			li {
+				a {
+					color: $black!important;
+	
+					&:hover {
+						background: $white!important;
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -87,14 +103,9 @@ $space_bg:url(https://desktop.github.com/images/star-bg.svg) no-repeat;
 
 .content-area {
 	width: 70%;
-	height: 100vh;
-	margin: auto;
+	margin: 0 auto;
 	text-align: center;
 	display: flex;
-	position: absolute;
-	left: 0;
-	right: 0;
-	top: -15%;
 
 	div {
 		h1 {
@@ -414,10 +425,10 @@ button {
 
 .search-wrapper {
 	margin-right: 60px;
+	transition: all 0.4s;
 
 	&.open {
-		height: auto;
-		transition: all 0.4s;
+		height: 35px;
 		overflow: visible;
 	}
 }
@@ -480,7 +491,7 @@ footer {
 	.landing-page {
 		background-position: right;
 		min-height: 95vh;
-
+		
 		.content-area {
 
 			h1 {
@@ -588,3 +599,26 @@ footer {
     }
   }
   
+.git-wrapper{
+	text-align: center;
+    padding: 1rem;
+    flex-direction: column;
+    position: absolute;
+    width: 100%;
+	top: 10px;
+	span{
+		margin-left: 2px;
+		margin-right: 2px;
+
+	}
+}
+.git-footer{
+	text-align: center;
+    padding: 0.2rem;
+    flex-direction: column;
+	span{
+		margin-left: 2px;
+		margin-right: 2px;
+
+	}
+}

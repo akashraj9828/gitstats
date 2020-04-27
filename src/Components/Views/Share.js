@@ -10,16 +10,16 @@ Object.keys(config).forEach(key => {
 const Share =  (props) => {
     return (
       <div className="share-icons rounded">
-        <FacebookShareButton url={"https://gitstats-stage.herokuapp.com/"+ props.data.data.user.login}>
+        <FacebookShareButton url={window.location.href}>
           <FacebookIcon size={28} round={true} />
         </FacebookShareButton>
-        <TwitterShareButton url={"https://gitstats-stage.herokuapp.com/"+ props.data.data.user.login}>
+        <TwitterShareButton url={window.location.href}>
           <TwitterIcon size={28} round={true} />
         </TwitterShareButton>
-        <WhatsappShareButton url={"https://gitstats-stage.herokuapp.com/"+ props.data.data.user.login}>
+        <WhatsappShareButton url={window.location.href}>
           <WhatsappIcon size={28} round={true} />
         </WhatsappShareButton>
-        <LinkedinShareButton url={"https://gitstats-stage.herokuapp.com/"+ props.data.data.user.login}>
+        <LinkedinShareButton url={window.location.href}>
             <LinkedinIcon size={28} round={true}/>
         </LinkedinShareButton>
       </div>

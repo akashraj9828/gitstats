@@ -17,8 +17,13 @@ const LandingPage = () => {
     }
 
     return (
-        <div className="landing-page">
-        <GithubLink color={"#caa981"} />
+        <div className="landing-page d-flex justify-content-center ">
+            <GithubLink color={"#caa981"} />
+            <div className="git-wrapper">
+                <a class="github-button" href="https://github.com/akashraj9828/gitstats" data-icon="octicon-star" data-show-count="true" aria-label="Star akashraj9828/gitstats on GitHub">Star</a>
+                <a class="github-button" href="https://github.com/akashraj9828/gitstats/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork akashraj9828/gitstats on GitHub">Fork</a>
+                <a class="github-button" href="https://github.com/akashraj9828/gitstats/subscription" data-icon="octicon-eye" data-show-count="true" aria-label="Watch akashraj9828/gitstats on GitHub">Watch</a>
+            </div>
             <div className="content-area">
                 <div className="m-auto p-5">
                     <h1 className="font-weight-bold mb-3" >Git-Stats</h1>

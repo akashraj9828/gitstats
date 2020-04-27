@@ -33,7 +33,10 @@ function sortObject(obj) {
     return (neg ? '-' : '') + num + ' ' + unit;
   }
   
+const insertAtIndex = (arr, index, newItem) => [...arr.slice(0, index),newItem,...arr.slice(index)]
+
   module.exports={
       toReadableBytes,
-      sortObject
+      sortObject,
+      insertAtIndex
   }

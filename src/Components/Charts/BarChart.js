@@ -4,10 +4,7 @@ import React, { Fragment } from "react"
 // keys actual data eg ["count","stars","forks"]
 // indexBy is the key which contains labels
 function BarChart({ data, height, width, max_bars, keys, indexBy, }) {
-
-
     data = data.slice(0, max_bars)
-
     if (data.length < 2) {
         return (
             <div style={{ height: height, width: width ? width : "auto" }}>
@@ -135,7 +132,6 @@ function BarChart({ data, height, width, max_bars, keys, indexBy, }) {
         // labelTextColor="#eee" //inside graph
         tex
         tooltip={(e) => {
-            console.log(e);
             return <div style={{ color: "#5b6166" }}>{e.data.label} <br /> {e.data.parsed} </div>
         }
         }

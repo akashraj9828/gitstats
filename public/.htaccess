@@ -1,0 +1,19 @@
+# config for apache server
+
+# to enable https // if no ssl disable this
+RewriteEngine On 
+RewriteCond %{HTTPS} off 
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+###########################
+
+
+# for react routing
+# to redirect every req to index.html
+Options -MultiViews
+RewriteEngine On
+# RewriteCond %{HTTPS} off 
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.html [QSA,L]
+
+
+
