@@ -4,7 +4,7 @@ const Pinned = (props) => {
 
     // deprecated api
     // const repoData = props.pinnedRepos.data.user.pinnedRepositories.nodes
-
+ 
     const repoData = props.pinnedRepos.data.user.itemShowcase.items.nodes
     //HTML VIEW JSX DATA BIND
     let pinned_view = repoData.map((repo) =>
