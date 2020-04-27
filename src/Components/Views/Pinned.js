@@ -2,8 +2,10 @@ import React, { Fragment } from 'react'
 
 const Pinned = (props) => {
 
-
-    const repoData = props.pinnedRepos.data.user.pinnedRepositories.nodes
+    // deprecated api
+    // const repoData = props.pinnedRepos.data.user.pinnedRepositories.nodes
+ 
+    const repoData = props.pinnedRepos.data.user.itemShowcase.items.nodes
     //HTML VIEW JSX DATA BIND
     let pinned_view = repoData.map((repo) =>
         <div key={repo.name} className="col-md-4 my-3">

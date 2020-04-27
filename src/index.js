@@ -12,7 +12,7 @@ Object.keys(config).forEach(key => {
 });
 
 // Initialize sentry for error logging in production
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'stage') {
   console.log("SENTRY INITIALIZED !");
   Sentry.init({ dsn: window.SENTRY_URL });
 }

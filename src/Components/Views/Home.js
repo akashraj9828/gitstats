@@ -14,7 +14,7 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     let username = "akashraj9828";
-    try {
+    try { 
       username = props.match.params.username
         ? props.match.params.username
         : "akashraj9828";

@@ -10,13 +10,13 @@ function App() {
   return (
     <div className="App">
       <Router>
-      <Analytics id={window.GA_CODE} trackPathnameOnly>
+      <Analytics id={window.GA_CODE} trackPathnameOnly debug>
         <Switch>
           <Route path="/" exact component={LandingPage} />
           <Route path="/:username" exact component={Home} />
         </Switch>
         </Analytics>
-      </Router>
+      </Router> 
     </div>
   );
 } 
