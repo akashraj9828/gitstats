@@ -32,11 +32,14 @@ function sortObject(obj) {
     var unit = units[exponent];
     return (neg ? '-' : '') + num + ' ' + unit;
   }
+// helper function to add element at index
+function insertAtIndex (arr, index, newItem){
+  return [...arr.slice(0, index),newItem,...arr.slice(index)]
   
-const insertAtIndex = (arr, index, newItem) => [...arr.slice(0, index),newItem,...arr.slice(index)]
+}
 
-  module.exports={
-      toReadableBytes,
-      sortObject,
-      insertAtIndex
-  }
+export default {
+  toReadableBytes,
+  sortObject,
+  insertAtIndex
+}

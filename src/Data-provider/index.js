@@ -3,11 +3,11 @@ import TimeAgo from 'javascript-time-ago'
 // Load locale-specific relative date/time formatting rules.
 import en from 'javascript-time-ago/locale/en'
 import config from '../config/index'
-import {
-  toReadableBytes,
-  sortObject,
-  insertAtIndex
-} from "./utils"
+import util from "./utils"
+
+let {toReadableBytes,
+sortObject,
+insertAtIndex}=util
 
 Object.keys(config).forEach(key => {
   window[key] = config[key];
