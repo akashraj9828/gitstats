@@ -5,16 +5,18 @@ import en from 'javascript-time-ago/locale/en'
 import config from '../config/index'
 import util from "./utils"
 
-let {toReadableBytes,
-sortObject,
-insertAtIndex}=util
+let {
+  toReadableBytes,
+  sortObject,
+  insertAtIndex
+} = util
 
 Object.keys(config).forEach(key => {
   window[key] = config[key];
 });
 
 TimeAgo.addLocale(en)
- 
+
 // Create relative date/time formatter.
 const timeAgo = new TimeAgo('en-US')
 
@@ -61,19 +63,18 @@ async function getUserActivity(username) {
   let dom = await new window.DOMParser().parseFromString(user_activity, "text/xml")
   let entries = dom.getElementsByTagName("entry")
 
-  let parsed_data=[
-  ]
+  let parsed_data = []
 
   for (var i = 0; i < entries.length; i++) {
-    let entry=entries[i]
-    let title=entry.getElementsByTagName("title")[0].textContent
-    let image=entry.getElementsByTagName("media:thumbnail")[0].getAttribute("url")
-    let time=entry.getElementsByTagName("published")[0].textContent
+    let entry = entries[i]
+    let title = entry.getElementsByTagName("title")[0].textContent
+    let image = entry.getElementsByTagName("media:thumbnail")[0].getAttribute("url")
+    let time = entry.getElementsByTagName("published")[0].textContent
     // for relative time
-    time=timeAgo.format(new Date(time))
+    time = timeAgo.format(new Date(time))
 
-    let one_event={
-      id:i,
+    let one_event = {
+      id: i,
       title,
       image,
       time
@@ -96,6 +97,18 @@ async function getUserActivity(username) {
 async function profileAnalysis(repoInfo) {
 
   // repoNodes = list of repository objects
+  let error = null
+  if (repoInfo.errors || repoInfo.data === null) {
+    // error=repoInfo.errors[0].message
+    // console.log("error 500");
+    error = "🙊 500 Internal Server ERROR :<"
+    return {
+      basic_calculations: {},
+      language_calculations: {},
+      repo_calculations: {},
+      error
+    }
+  }
   let repoNodes = repoInfo.data.user.repositories.nodes;
   // let totalCommit = 0
   let totalStar = 0
@@ -199,6 +212,15 @@ async function languageGraphCaclulations(language_data) {
     language_count_data,
     language_color_data
   } = language_data
+  try {
+    // eslint-disable-next-line no-unused-vars
+    let test = language_size_data.length
+  } catch (error) {
+    return {
+      data_size_wise,
+      data_count_wise
+    }
+  }
   for (let i = 0; i < language_size_data.length; i++) {
     let language = language_size_data[i]
     toggle = !toggle;
@@ -279,6 +301,15 @@ async function repoBarGraphCalculation(repoInfo) {
     sorted_by_commits,
     sorted_by_popularity
   } = repoInfo
+  try {
+    // eslint-disable-next-line no-unused-vars
+    let test = sorted_by_commits.length
+  } catch (error) {
+    return {
+      data_commit_wise,
+      data_popularity_wise
+    }
+  }
   for (let i = 0; i < sorted_by_commits.length; i++) {
     let repo = sorted_by_commits[i]
     toggle = !toggle;
@@ -352,7 +383,7 @@ async function commitGraphDataDayWise(commitHistoryData) {
       const index = top2.indexOf(week_commit_activity[week_day]);
       if (index > -1) {
         top2.splice(index, 1);
-        top2days=insertAtIndex(top2days,index,i)
+        top2days = insertAtIndex(top2days, index, i)
       }
     }
     week_graph_data.push({

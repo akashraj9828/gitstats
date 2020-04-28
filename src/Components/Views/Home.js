@@ -51,7 +51,8 @@ class Home extends React.Component {
       initialPageLoad: Loader.section_loading, //For loading application at first time
       userActivity: [],
       userActivityLoaded: false,
-      week_dict: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+      week_dict: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      profileAnalysisError:null
 
     };
   }
@@ -101,6 +102,7 @@ class Home extends React.Component {
             languageDataLoaded: true,
             repoAnalysisData: data.repo_calculations,
             repoAnalysisDataLoaded: true,
+            profileAnalysisError:data.error?data.error:null
           }, () => {
             // API CALL TO GET COMMIT HISTORY OF ALL TIMES
             DataProvider.getCommitHistory(this.state.username).then((commitData) => {
@@ -194,9 +196,9 @@ class Home extends React.Component {
                   <h3 className="font-size-15 w-100">Commit analysis</h3>
                   <div className="card p-3 rounded" style={{ height: "calc( 100% - 20px )" }}>
                     {/* CONDITIONAL REDERING OF COMMIT ANALYSYS(repo wise) INFO */}
-                    {this.state.repoGraphDataCommitWiseLoaded ?
+                    {this.state.repoGraphDataCommitWiseLoaded || this.state.error ?
                       <Fragment>
-                        <PieChart data={this.state.repoGraphDataCommitWise} height={250} max_slices={10} />
+                        <PieChart data={this.state.repoGraphDataCommitWise} height={250} max_slices={10} error={this.state.profileAnalysisError}/>
                         {/* Extra info about pie chart */}
                         <div>
                           <h6 className="text-center mt-3">
@@ -220,9 +222,9 @@ class Home extends React.Component {
                   {/* height:"calc( 100% - 20px ) because h3 above take 20px but i wanted card to be equal to the col-height */}
                   <div className="card p-3 rounded" style={{ height: "calc( 100% - 20px )" }}>
                     {/* CONDITIONAL REDERING OF LANGUAGE ANALYSYS(BY SIZE) INFO */}
-                    {this.state.languageGraphDataSizeLoaded ?
+                    {this.state.languageGraphDataSizeLoaded || this.state.error ?
                       <Fragment>
-                        <PieChart data={this.state.languageGraphDataSize} height={250} max_slices={6} accumulate_remaining={true} />
+                        <PieChart data={this.state.languageGraphDataSize} height={250} max_slices={6} accumulate_remaining={true} error={this.state.profileAnalysisError}/>
                         {/* Extra info about pie chart */}
                         <div>
                           <h6 className="text-center mt-3">
@@ -240,9 +242,9 @@ class Home extends React.Component {
                   <h3 className="font-size-15 w-100">Language analysis Repo wise</h3>
                   <div className="card p-3 rounded" style={{ height: "calc( 100% - 20px )" }}>
                     {/* CONDITIONAL REDERING OF LANGUAGE ANALYSYS(BY COUNT) INFO */}
-                    {this.state.languageGraphDataCountLoaded ?
+                    {this.state.languageGraphDataCountLoaded || this.state.error ?
                       <Fragment>
-                        <PieChart data={this.state.languageGraphDataCount} height={250} max_slices={6} />
+                        <PieChart data={this.state.languageGraphDataCount} height={250} max_slices={6} error={this.state.profileAnalysisError}/>
                         {/* Extra info about pie chart */}
                         <div>
                           <h6 className="text-center mt-3">
@@ -279,9 +281,9 @@ class Home extends React.Component {
                   <h3 className="font-size-15 w-100">When am I most productive?</h3>
                   <div className="card p-3 rounded" style={{ height: "calc( 100% - 20px )" }} >
                     {/* CONDITIONAL REDERING OF WEEK DAY ACTIVITY */}
-                    {this.state.commitHistoryDataLoaded ?
+                    {this.state.commitHistoryDataLoaded || this.state.error ?
                       <Fragment>
-                        {this.state.commitHistoryDataLoaded ? <BarChart data={this.state.commitHistoryGraphData} height={250} max_bars={7} keys={["commit"]} indexBy={"day"} /> : Loader.section_loading}
+                        {this.state.commitHistoryDataLoaded ? <BarChart data={this.state.commitHistoryGraphData} height={250} max_bars={7} keys={["commit"]} indexBy={"day"} error={this.state.profileAnalysisError} /> : Loader.section_loading}
                         {/* Extra info about Week days chart */}
                         <div>
                           <h6 className="text-center mt-3">

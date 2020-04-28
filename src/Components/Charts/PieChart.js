@@ -9,8 +9,23 @@ import DataProvider from "../../Data-provider"
 
 // use "accumulate_data" only when showing language by size Dont use it other wise
 // accumulate_data will add all the remaining data and show it in the graph as "Others"
-function PieChart({ data, height, width, max_slices,accumulate_remaining }) {
+function PieChart({ data, height, width, max_slices,accumulate_remaining,error}) {
 
+    if (error) {
+        return (
+            <div style={{ height: height, width: width ? width : "auto" }}>
+                <div className="d-flex h-100" style={{
+                    flexDirection: "row",
+                    textAlign: "center",
+                    alignItems: "center"
+                }}>
+                    <h6 className="text-center mt-3 w-100">
+            <span style={{ color: "gray" }}>{error}</span>
+                    </h6>
+                </div>
+            </div>
+        )
+    }
     if (data.length < 2) {
         return (
             <div style={{ height: height, width: width ? width : "auto" }}>

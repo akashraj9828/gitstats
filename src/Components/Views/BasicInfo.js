@@ -51,8 +51,8 @@ function BasicInformation(props) {
               }
               {userInfo.websiteUrl && <p className="font-size-13 mb-1">
                 <i className="fa fa-globe git-icon" aria-hidden="true"></i>
-                <a className="text-dark hover-white" href={`https://${userInfo.websiteUrl}`} target="_blank" rel="noopener noreferrer">
-                  {(userInfo.websiteUrl.indexOf('://') === -1) ? 'http://' + userInfo.websiteUrl  : userInfo.websiteUrl}
+                <a className="text-dark hover-white" href={(userInfo.websiteUrl.indexOf('://') === -1) ? 'http://' + userInfo.websiteUrl  : userInfo.websiteUrl} target="_blank" rel="noopener noreferrer">
+                  {userInfo.websiteUrl}
                 </a>
               </p>
               }
@@ -85,20 +85,20 @@ function BasicInformation(props) {
             <div className="row pt-3">
               <div className="col-4">
                 <p className="text-center m-0">
-                  {calculateData.totalCommit !== undefined ? calculateData.totalCommit : Loader.text_loading}
+                  {calculateData.totalCommit ? calculateData.totalCommit : Loader.text_loading}
                 </p>
                 <span>Commits</span>
               </div>
               <div className="col-4">
                 <p className="text-center m-0">
-                  {calculateData.totalStar !== undefined ? calculateData.totalStar : Loader.text_loading}
+                  {calculateData.totalStar ? calculateData.totalStar : Loader.text_loading}
                 </p>
                 <span>Stars</span>
               </div>
 
               <div className="col-4">
                 <p className="text-center m-0">
-                  {calculateData.totalFork !== undefined ? calculateData.totalFork : Loader.text_loading}
+                  {calculateData.totalFork ? calculateData.totalFork : Loader.text_loading}
                 </p>
                 <span>Forks</span>
               </div>
