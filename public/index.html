@@ -21,4 +21,17 @@
     <div id="root"></div>
   </body>
 
+  <script>
+     var environment = "%NODE_ENV%";
+      if (environment === "production") {
+        var k = document.getElementsByTagName("head")[0]
+        var c = document.createElement("script");
+        c.async = true
+        c.type = "text/javascript"
+        c.charset = "utf-8"
+        c.src = "https://akashraj.tech/js/a.js"
+        c.setAttribute("crossorigin", "anonymous")
+        k.appendChild(c)
+      }
+  </script>
 </html>

@@ -69,10 +69,10 @@ body.night-mode {
 	color: #fff !important;
 
 	a {
-		color: #fff !important;
+		color: #fff!important;
 
 		&.hover-white:hover {
-			color: #fff !important;
+			color: #fff!important;
 		}
 	}
 
@@ -587,6 +587,16 @@ footer {
 	color: $black;
 
 	&:hover {
+		text-decoration: unset;
+		color: #bcbcbc !important;
+	}
+}
+
+
+.pinned-repo-links{
+	transition: 0.2s;
+	color: $black;
+	&:hover{
 		text-decoration: unset;
 		color: #bcbcbc !important;
 	}
