@@ -35,25 +35,28 @@ $space_bg:url(https://desktop.github.com/images/star-bg.svg) no-repeat;
 	position: relative;
 	background: $space_bg;
 	background-size: cover;
+
 	footer {
 		bottom: 15px;
 	}
 }
 
-.day-mode{
-	footer{
+.day-mode {
+	footer {
 		background: $white;
 	}
+
 	.Search-result {
-		background: $white!important;
+		background: $white !important;
 		border: solid 1px rgb(155, 153, 153);
+
 		.search-result {
 			li {
 				a {
-					color: $black!important;
-	
+					color: $black !important;
+
 					&:hover {
-						background: $white!important;
+						background: $white !important;
 					}
 				}
 			}
@@ -61,31 +64,32 @@ $space_bg:url(https://desktop.github.com/images/star-bg.svg) no-repeat;
 	}
 }
 
-.night-mode {
+body.night-mode {
 	background: $dark_bg;
 	color: #fff !important;
-	body{
-		background: $space_bg;
-	}
+
 	a {
-		color: #fff!important;
+		color: #fff !important;
 
 		&.hover-white:hover {
-			color: #fff!important;
+			color: #fff !important;
 		}
 	}
 
-	#user-profile{
+	#user-profile {
 		background: $dark_bg;
 	}
+
 	.card {
 		background: #24292E;
 		border-color: #171a1d;
 	}
-	footer{
+
+	footer {
 		background: $dark_bg;
-		a{
-			color:#5bd0a4!important;
+
+		a {
+			color: #5bd0a4 !important;
 		}
 	}
 }
@@ -448,25 +452,31 @@ footer {
 .Search-result::-webkit-scrollbar {
 	width: 6px;
 }
+
 ::-webkit-scrollbar {
 	width: 6px;
 }
+
 .Search-result::-webkit-scrollbar-track {
 	box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
+
 ::-webkit-scrollbar-track {
 	box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
+
 .Search-result::-webkit-scrollbar-thumb {
 	background-color: #5bd0a4;
 	outline: 1px solid #5bd0a4;
 	border-radius: 12px;
 }
+
 ::-webkit-scrollbar-thumb {
 	background-color: #5bd0a4;
 	outline: 1px solid #5bd0a4;
 	border-radius: 12px;
 }
+
 .share-icons {
 	display: flex;
 	flex-direction: column;
@@ -493,7 +503,7 @@ footer {
 	.landing-page {
 		background-position: right;
 		min-height: 95vh;
-		
+
 		.content-area {
 
 			h1 {
@@ -567,15 +577,16 @@ footer {
 
 	.share-icons {
 		flex-direction: row;
-		bottom:2%
+		bottom: 2%
 	}
 }
 
 
-.pinned-repo-links{
+.pinned-repo-links {
 	transition: 0.2s;
 	color: $black;
-	&:hover{
+
+	&:hover {
 		text-decoration: unset;
 		color: #bcbcbc !important;
 	}
@@ -584,52 +595,59 @@ footer {
 
 
 // github icon animation
-.github-corner:hover .octo-arm{
-    animation: octocat-wave 560ms ease-in-out
-  }
-  
-  @keyframes octocat-wave {
-    0%, 100%{
-        transform: rotate(0)
-    }
-  
-    20%, 60%{
-        transform: rotate(-25deg)
-    }
-  
-    40%, 80%{
-        transform: rotate(10deg)
-    }
-  }
-  
-  @media (max-width:500px){
-    .github-corner:hover .octo-arm{
-        animation: none
-    }
-  
-    .github-corner .octo-arm{
-        animation: octocat-wave 560ms ease-in-out
-    }
-  }
-  
-.git-wrapper{
+.github-corner:hover .octo-arm {
+	animation: octocat-wave 560ms ease-in-out
+}
+
+@keyframes octocat-wave {
+
+	0%,
+	100% {
+		transform: rotate(0)
+	}
+
+	20%,
+	60% {
+		transform: rotate(-25deg)
+	}
+
+	40%,
+	80% {
+		transform: rotate(10deg)
+	}
+}
+
+@media (max-width:500px) {
+	.github-corner:hover .octo-arm {
+		animation: none
+	}
+
+	.github-corner .octo-arm {
+		animation: octocat-wave 560ms ease-in-out
+	}
+}
+
+.git-wrapper {
 	text-align: center;
-    padding: 1rem;
-    flex-direction: column;
-    position: absolute;
-    width: 100%;
+	padding: 1rem;
+	flex-direction: column;
+	position: absolute;
+	width: 100%;
 	top: 10px;
-	span{
+
+	span {
 		margin-left: 2px;
 		margin-right: 2px;
 
 	}
 }
-.git-footer{
+
+.git-footer {
 	text-align: center;
-    padding: 0.2rem;
-    flex-direction: column;
-	span{
+	padding: 0.2rem;
+	flex-direction: column;
+
+	span {
 		margin-left: 2px;
 		margin-right: 2px;
 

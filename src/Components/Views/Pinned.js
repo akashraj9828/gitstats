@@ -19,7 +19,7 @@ const Pinned = (props) => {
                     </h6>
                     <div className="row text-center mt-3">
                         <div className="col-md-4 col-4">
-                            <span className="mob-font-size-13">{repo.defaultBranchRef.target.history.totalCount}</span>
+                            <span className="mob-font-size-13">{(repo.defaultBranchRef && repo.defaultBranchRef.target.history.totalCount) || 0}</span>
                             <br />
                             <span className="mob-font-size-13"> Commits</span>
                         </div>
