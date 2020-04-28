@@ -1,7 +1,7 @@
 import React from "react";
 
 function Footer() {
-    let color_scheme = localStorage.getItem('theme') === 'light' ? "no-preference: light; light: ligth; dark: light;" : "no-preference: dark; dark: dark; light: dark;"
+    let color_scheme = window.localStorage.getItem('theme') === 'light' ? "no-preference: light; light: ligth; dark: light;" : "no-preference: dark; dark: dark; light: dark;"
     return (
         <footer className="mt-5">
             <div>

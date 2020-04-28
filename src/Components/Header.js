@@ -11,7 +11,7 @@ function Header() {
     let body = document.querySelector("body");
 
     //Initial load theme set
-    if(localStorage.getItem('theme') === 'light'){
+    if(window.localStorage.getItem('theme') === 'light'){
         body.classList.add('day-mode');
         body.classList.remove('night-mode');
         imageUrl = "img/moon.png"
@@ -20,13 +20,13 @@ function Header() {
     }
 
     function changeTheme() {    
-        if (localStorage.getItem('theme') === 'light') {
-            localStorage.setItem('theme', 'dark');
+        if (window.localStorage.getItem('theme') === 'light') {
+            window.localStorage.setItem('theme', 'dark');
             body.classList.remove('day-mode');
             body.classList.add('night-mode');
             setImageUrl("/img/sun.png");
         } else {
-            localStorage.setItem('theme', 'light');
+            window.localStorage.setItem('theme', 'light');
             body.classList.remove('night-mode');
             body.classList.add('day-mode');
             setImageUrl("/img/moon.png");
@@ -107,7 +107,7 @@ function Header() {
                                             src={process.env.PUBLIC_URL + imageUrl}
                                             alt=""
                                         />
-                                        <span className="d-none d-lg-inline-block d-sm-inline-block">{localStorage.getItem('theme') === 'light' ? "Night Mode" : "Day Mode"}</span>
+                                        <span className="d-none d-lg-inline-block d-sm-inline-block">{window.localStorage.getItem('theme') === 'light' ? "Night Mode" : "Day Mode"}</span>
                                     </button>
                                 </div>
                             </li>
