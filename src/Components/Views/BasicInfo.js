@@ -51,7 +51,7 @@ function BasicInformation(props) {
               }
               {userInfo.websiteUrl && <p className="font-size-13 mb-1">
                 <i className="fa fa-globe git-icon" aria-hidden="true"></i>
-                <a className="text-dark hover-white" href={userInfo.websiteUrl} target="_blank" rel="noopener noreferrer">
+                <a className="text-dark hover-white" href={`https://${userInfo.websiteUrl}`} target="_blank" rel="noopener noreferrer">
                   {userInfo.websiteUrl}
                 </a>
               </p>

@@ -75,7 +75,9 @@ $space_bg:url(https://desktop.github.com/images/star-bg.svg) no-repeat;
 		}
 	}
 
-
+	#user-profile{
+		background: $dark_bg;
+	}
 	.card {
 		background: #24292E;
 		border-color: #171a1d;

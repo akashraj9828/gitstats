@@ -14,7 +14,7 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     let username = "akashraj9828";
-    try { 
+    try {
       username = props.match.params.username
         ? props.match.params.username
         : "akashraj9828";
@@ -163,16 +163,16 @@ class Home extends React.Component {
     return (
       <div>
         <Header />
+        {this.state.basicLoaded && <Share data={this.state.basicInfo} />}
         <Layout>
           {this.state.basicLoaded && this.state.basicInfo ? <div>
-            <Share data={this.state.basicInfo} />
             {/* CONDITIONAL REDERING OF BASIC INFO */}
             {this.state.basicLoaded ? <BasicInformation basicInfo={this.state.basicInfo} aggregateData={this.state.aggregateData} /> : Loader.section_loading}
 
-  {/* REPO SECTION */}
-  <section className="pt-5 ">
+            {/* REPO SECTION */}
+            <section className="pt-5 ">
               <div className="row">
-              <div className="col-sm-6 mt-3">
+                <div className="col-sm-6 mt-3">
                   <h3 className="font-size-15 w-100">My Recent activities</h3>
                   <div className="card p-3 rounded" style={{
                     height: "calc( 100% - 20px )",
@@ -189,7 +189,7 @@ class Home extends React.Component {
                       : Loader.section_loading}
                   </div>
                 </div>
-                
+
                 <div className="col-sm-6 mt-3">
                   <h3 className="font-size-15 w-100">Commit analysis</h3>
                   <div className="card p-3 rounded" style={{ height: "calc( 100% - 20px )" }}>
@@ -271,7 +271,7 @@ class Home extends React.Component {
             </section>
 
 
-          
+
             {/* PRODUCTIVITY SECTION */}
             <section className="pt-5">
               <div className="row">
