@@ -14,17 +14,24 @@ function download(data) {
   console.log("---: download -> data", data);
 
   var element = document.getElementById('user-profile');
-  var opt = {
-    margin: 1,
-    filename: 'myfile.pdf',
-    image: { type: 'png', quality: 1 },
-    html2canvas: { scale: 1 },
-    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+
+  // var scale = (screen.width / page.getViewport(1.0).width);
+  //       var viewport = page.getViewport(scale);
+  //       canvas.height = viewport.height;
+  //       canvas.width = viewport.width;
+        
+  let html2canvasOpts = {
+    scale: 0.2,       //  img_width/win_width // is 1,
+    width: 150,
+    windowWidth: window.innerWidth,
+    windowHeight: window.innerHeight,
   };
-  html2pdf(element, opt);
+
+  html2pdf(element, html2canvasOpts);
 }
 
 const Share = ({ data }) => {
+  debugger
   return (
     <div className="share-icons rounded">
       <FacebookShareButton url={window.location.href}>
