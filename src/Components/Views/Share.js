@@ -31,7 +31,6 @@ function download(data) {
 }
 
 const Share = ({ data }) => {
-  debugger
   return (
     <div className="share-icons rounded">
       <FacebookShareButton url={window.location.href}>
