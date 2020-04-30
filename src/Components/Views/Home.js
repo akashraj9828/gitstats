@@ -176,7 +176,7 @@ class Home extends React.Component {
               <div className="row">
                 <div className="col-sm-6 mt-3">
                   <h3 className="font-size-15 w-100">My Recent activities</h3>
-                  <div className="card p-3 rounded" style={{
+                  <div className="card p-3 rounded" id="user-activity" style={{
                     height: "calc( 100% - 20px )",
                     // height: "100%",
                     // minHeight:"calc( 100%-20px)",
