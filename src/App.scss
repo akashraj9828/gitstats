@@ -589,6 +589,18 @@ footer {
 	&:hover {
 		text-decoration: unset;
 		color: #bcbcbc !important;
+
+	}
+}
+
+
+.pinned-repo-links {
+	transition: 0.2s;
+	color: $black;
+
+	&:hover {
+		text-decoration: unset;
+		color: #bcbcbc !important;
 	}
 }
 

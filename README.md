@@ -1,4 +1,5 @@
-# GitStats - An open-source GitHub contibution analyzer
+# GitStats - An open-source GitHub contibution analyzer 
+[![Build Status](https://travis-ci.com/akashraj9828/gitstats.svg?branch=master)](https://travis-ci.com/akashraj9828/gitstats)
 
 ![Input](output/home.png)
 ## Available Scripts
