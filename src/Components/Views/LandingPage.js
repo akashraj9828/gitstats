@@ -10,9 +10,11 @@ const LandingPage = () => {
 
     async function search(event) {
         let result = await DataProvider.getSearchUsers(event.target.value);
-        let users = result && result.map(user =>
-            <li key={user.login}><a href={`/${user.login}`}><img src={user.avatar_url} alt={user.login} /> {user.login}</a></li>
-        );
+        let users = result && result
+            .filter(user => user.type==="User")
+            .map(user =>
+                <li key={user.login}><a href={`/${user.login}`}><img src={user.avatar_url} alt={user.login} /> {user.login}</a></li>
+            );
         setSearchUsers(users);
     }
 
