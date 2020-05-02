@@ -61,7 +61,7 @@ function Header() {
         let users = result && result
             .filter(user => user.type==="User")
             .map(user =>
-                <li key={user.login}><a href={`/${user.login}`}><img src={user.avatar_url} alt={user.login}/> {user.login}</a></li>
+                <li key={user.login}><Link href={`/${user.login}`}><img src={user.avatar_url} alt={user.login}/> {user.login}</Link></li>
             );
         setSearchUsers(users);
     }
