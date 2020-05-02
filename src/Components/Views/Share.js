@@ -42,6 +42,7 @@ const Share = ({ data }) => {
       <button
         aria-label="linkedin"
         onClick={(evt) => download(data)}
+        title="Download the stats"
         style={{
           backgroundColor: "transparent",
           border: "none",
