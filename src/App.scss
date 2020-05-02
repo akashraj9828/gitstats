@@ -477,21 +477,21 @@ footer {
 	border-radius: 12px;
 }
 
-.share-icons {
-	display: flex;
-	flex-direction: column;
-	z-index: 9;
+.share-icon {
+	z-index: 99;
 	position: fixed;
 	right: 10px;
-	bottom: 2%;
-
-	button {
-		display: block;
-		margin: 5px;
-	}
-
+	bottom: 10px;
 }
 
+.share-tray {
+	z-index: 99;
+	position: fixed;
+	bottom: 64px;
+	display: flex;
+	flex-direction: column;
+	transition: all 0.2s ease-in-out;
+}
 
 // Media Query for mobile devices
 // media query should be always at end of css so it can overwride default css and wont need to use !important
@@ -573,11 +573,6 @@ footer {
 		span {
 			font-size: 13px;
 		}
-	}
-
-	.share-icons {
-		flex-direction: row;
-		bottom: 2%
 	}
 }
 
