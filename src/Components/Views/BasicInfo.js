@@ -78,7 +78,7 @@ function BasicInformation(props) {
                 <p className="text-center m-0">
                   {userInfo.repositories.totalCount}
                 </p>
-                <span>Repository</span>
+                <span>{userInfo.repositories.totalCount <= 1 ? 'Repository' : 'Repositories'}</span>
               </div>
             </div>
 
