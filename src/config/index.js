@@ -1,21 +1,15 @@
-// const API_BASE_URL_PROD = "https://gitstats-api-prod.herokuapp.com/";
 const API_BASE_URL_PROD = "https://api.gitstats.me/";
 const API_BASE_URL_DEV = "https://gitstats-api-stage.herokuapp.com/";
 // default use dev api endpoint
 let API_BASE_URL = API_BASE_URL_DEV;
-// if production set production api
-if (process.env.NODE_ENV === "production") {
-    API_BASE_URL = API_BASE_URL_PROD
-}
-
-// if CUSTOM_API env variable set overwrite all
-// for heroku deployments
 try {
-    if(process.env.CUSTOM_API){
-        API_BASE_URL=process.env.CUSTOM_API
+    if(window.location.hostname==="gitstats.me"){
+        API_BASE_URL=API_BASE_URL_PROD
+    }else{
+        API_BASE_URL=API_BASE_URL_DEV
     }
 } catch (error) {
-    console.log(error);   
+    console.error(error);
 }
 
 const SENTRY_URL = "https://f32dcf786d96407dae5c787a38d5b88d@o380288.ingest.sentry.io/5209222";
