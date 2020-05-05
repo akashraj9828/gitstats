@@ -20,7 +20,7 @@ import { saveAs } from "file-saver";
 Object.keys(config).forEach((key) => {
   window[key] = config[key];
 });
-function download({ data }) {
+function download({ data },callback=window.downloadCallback) {
   let filename = data.user.name || data.user.login;
   var activity_card = document.getElementById("user-activity");
   // hide scrollbar before capture
@@ -31,6 +31,9 @@ function download({ data }) {
     // enable scrollbar before capture
     activity_card.style.overflow = "auto";
   });
+  if(callback){
+    callback(data)
+  }
 }
 
 const Share = ({ data }) => {
@@ -39,7 +42,8 @@ const Share = ({ data }) => {
     <div>
       <div className="share-icon">
         <button
-          aria-label="linkedin"
+          id="download-btn"
+          aria-label="download"
           onClick={() => (showIcons ? setIcons(false) : setIcons(true))}
           style={{
             backgroundColor: "transparent",
