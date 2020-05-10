@@ -29,7 +29,7 @@ function download({ data }, callback = window.downloadCallback) {
 
   // set viewport 1400px for mobile devices
   let viewport=document.getElementById("viewport")
-  viewport.setAttribute('content', 'width=1400')
+  viewport.setAttribute('content', 'width=1200')
 
   // allow 2s time for everything to fall in place
   setTimeout(()=>{
