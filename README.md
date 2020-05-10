@@ -1,12 +1,15 @@
-# GitStats - An open-source GitHub contibution analyzer 
+![Input](output/logo.svg)
+
+----
+<!-- # GitStats - An open-source GitHub contibution analyzer  -->
 
 [![Build Status](https://travis-ci.com/akashraj9828/gitstats.svg?branch=master)](https://travis-ci.com/akashraj9828/gitstats)
+
+[![Edit git-stats](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/akashraj9828/gitstats/tree/master/?fontsize=14&hidenavigation=1&theme=dark)
 
 ## Contributors  <a href="https://github.com/akashraj9828/gitstats/graphs/contributors">
   <img src="https://contributors-img.web.app/image?repo=akashraj9828/gitstats" />
  </a>
-
-
 
 
 ![Input](output/home.png)

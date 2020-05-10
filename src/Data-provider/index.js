@@ -109,7 +109,7 @@ async function profileAnalysis(repoInfo) {
       error
     }
   }
-  let repoNodes = repoInfo.data.user.repositories.nodes;
+  let repoNodes = repoInfo?.data?.user?.repositories?.nodes;
   // let totalCommit = 0
   let totalStar = 0
   let totalFork = 0
@@ -130,15 +130,15 @@ async function profileAnalysis(repoInfo) {
   repoNodes.forEach(repo => {
     // perform basic calculation here
     // totalCommit += repo.contributions ? repo.contributions.target.userCommits.totalCount : 0;
-    totalStar += repo.stargazers ? repo.stargazers.totalCount : 0;
-    totalFork += repo.forks ? repo.forks.totalCount : 0;
+    totalStar += repo?.stargazers?.totalCount ?? 0;
+    totalFork += repo?.forks?.totalCount ?? 0;
 
     // Simplify repo data here
     simplified_repo_data.push({
-      name: repo.name,
-      commits: repo.contributions ? repo.contributions.target.userCommits.totalCount : 0,
-      forks: repo.forks.totalCount,
-      stars: repo.stargazers.totalCount
+      name: repo?.name ?? "-",
+      commits: repo?.contributions?.target?.userCommits?.totalCount ?? 0,
+      forks: repo?.forks?.totalCount ?? 0,
+      stars: repo?.stargazers?.totalCount ?? 0,
     })
 
 
@@ -262,9 +262,9 @@ async function advancedRepoAnalysis(repoInfo) {
   repoNodes.forEach(repo => {
     simplified_repo_data.push({
       name: repo.name,
-      commits: repo.contributions ? repo.contributions.target.userCommits.totalCount : 0,
-      forks: repo.forks.totalCount,
-      stars: repo.stargazers.totalCount
+      commits: repo?.contributions?.target?.userCommits?.totalCount ?? 0,
+      forks: repo?.forks?.totalCount ?? 0,
+      stars: repo?.stargazers?.totalCount ?? 0
     })
   });
 
@@ -362,7 +362,7 @@ async function commitGraphDataDayWise(commitHistoryData) {
   // intensity throughout the week_day
   let week_intensity_activity = [0, 0, 0, 0, 0, 0, 0]
 
-  let contributions = commitHistoryData.contributions
+  let contributions = commitHistoryData?.contributions
 
   contributions.forEach(element => {
     let day = new Date(element.date).getDay()
