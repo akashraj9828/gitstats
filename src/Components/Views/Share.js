@@ -20,26 +20,40 @@ import { saveAs } from "file-saver";
 Object.keys(config).forEach((key) => {
   window[key] = config[key];
 });
-function download({ data },callback=window.downloadCallback) {
+
+function download({ data }, callback = window.downloadCallback) {
   let filename = data.user.name || data.user.login;
   var activity_card = document.getElementById("user-activity");
   // hide scrollbar before capture
   activity_card.style.overflow = "hidden";
-  var node = document.getElementById("user-profile");
-  domtoimage.toBlob(node).then(function (blob) {
-    saveAs(blob, filename + "_Gitstats.png");
-    // enable scrollbar before capture
-    activity_card.style.overflow = "auto";
-  });
-  if(callback){
-    callback(data)
-  }
+
+  // set viewport 1400px for mobile devices
+  let viewport=document.getElementById("viewport")
+  viewport.setAttribute('content', 'width=1400')
+
+  // allow 2s time for everything to fall in place
+  setTimeout(()=>{
+    var node = document.getElementById("user-profile");
+    domtoimage.toBlob(node).then(function (blob) {
+      // save img
+      saveAs(blob, filename + "_Gitstats.png");
+
+      // enable scrollbar after capture
+      activity_card.style.overflow = "auto";
+
+      // reset viewport to be responsive
+      viewport.setAttribute('content', 'width=device-width, initial-scale=1')
+    });
+    if (callback) {
+      callback(data)
+    }
+  },2000)
 }
 
 const Share = ({ data }) => {
   let [showIcons, setIcons] = useState(false);
   return (
-    <div>
+    <div className="share-container">
       <div className="share-icon">
         <button
           id="download-btn"
@@ -57,23 +71,6 @@ const Share = ({ data }) => {
         >
           <ShareIcon />
         </button>
-      </div>
-      <div
-        className="share-tray"
-        style={showIcons ? { right: "10px" } : { right: "-40px" }}
-      >
-        <FacebookShareButton url={window.location.href}>
-          <FacebookIcon size={40} round={true} />
-        </FacebookShareButton>
-        <TwitterShareButton url={window.location.href}>
-          <TwitterIcon size={40} round={true} />
-        </TwitterShareButton>
-        <WhatsappShareButton url={window.location.href}>
-          <WhatsappIcon size={40} round={true} />
-        </WhatsappShareButton>
-        <LinkedinShareButton url={window.location.href}>
-          <LinkedinIcon size={40} round={true} />
-        </LinkedinShareButton>
         <button
           aria-label="linkedin"
           onClick={(evt) => download(data)}
@@ -90,6 +87,24 @@ const Share = ({ data }) => {
         >
           <DownloadIcon />
         </button>
+      </div>
+      <div
+        className="share-tray"
+        style={showIcons ? { right: "0px" } : { right: "-50px" }}
+      >
+        <FacebookShareButton url={window.location.href}>
+          <FacebookIcon size={40} round={true} />
+        </FacebookShareButton>
+        <TwitterShareButton url={window.location.href}>
+          <TwitterIcon size={40} round={true} />
+        </TwitterShareButton>
+        <WhatsappShareButton url={window.location.href}>
+          <WhatsappIcon size={40} round={true} />
+        </WhatsappShareButton>
+        <LinkedinShareButton url={window.location.href}>
+          <LinkedinIcon size={40} round={true} />
+        </LinkedinShareButton>
+
       </div>
     </div>
   );

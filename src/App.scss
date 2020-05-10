@@ -477,17 +477,33 @@ footer {
 	border-radius: 12px;
 }
 
+.share-container {
+    z-index: 99;
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    display: flex;
+	flex-direction: column-reverse;
+	button{
+		transition: .2s;
+		width: 40px;
+		height: 40px;
+		margin: 5px 0px;
+		background:transparent!important;
+		&:hover{
+			// filter: invert(1);
+			transform: scale(1.1);
+		}
+	}
+}
+
 .share-icon {
-	z-index: 99;
-	position: fixed;
-	right: 10px;
-	bottom: 10px;
+	display: flex;
+	flex-direction: column;
 }
 
 .share-tray {
-	z-index: 99;
-	position: fixed;
-	bottom: 64px;
+	position: relative;	
 	display: flex;
 	flex-direction: column;
 	transition: all 0.2s ease-in-out;

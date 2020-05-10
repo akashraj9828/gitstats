@@ -178,9 +178,7 @@ class Home extends React.Component {
                   <h3 className="font-size-15 w-100">My Recent activities</h3>
                   <div className="card p-3 rounded" id="user-activity" style={{
                     height: "calc( 100% - 20px )",
-                    // height: "100%",
-                    // minHeight:"calc( 100%-20px)",
-                    maxHeight: "376px",
+                    maxHeight: "350px",
                     overflow: "auto"
                   }} >
                     {/*Will show 30 recent activity by user */}
@@ -308,12 +306,3 @@ class Home extends React.Component {
 }
 
 export default Home;
-
-// REPO VIEW
-// <div className="col-sm-6 mt-3">
-// <h3 className="font-size-15">Repository Details</h3>
-// <div className="card p-3 rounded" style={{height:"calc( 100% - 20px )"}}>
-//   {/* CONDITIONAL REDERING OF REPOSITORY INFO */}
-//   {/* {this.state.aggregateDataLoaded ? <Repository repoData={this.state.aggregateData} /> : Loader.section_loading} */}
-// </div>
-// </div>
