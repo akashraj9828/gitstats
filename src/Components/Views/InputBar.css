@@ -1,0 +1,15 @@
+input{
+    max-width: 600px;
+    width: 100%;
+    min-width: 400px;
+}
+@media screen and (max-width:440px){
+    input{
+        min-width: 300px;
+    }
+}
+@media screen and (max-width:350px){
+    input{
+        min-width: 200px;
+    }
+}
