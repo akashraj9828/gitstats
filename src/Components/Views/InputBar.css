@@ -8,3 +8,8 @@ input{
         min-width: 300px;
     }
 }
+@media screen and (max-width:350px){
+    input{
+        min-width: 200px;
+    }
+}
