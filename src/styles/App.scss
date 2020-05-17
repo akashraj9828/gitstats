@@ -1,0 +1,267 @@
+@import url('https://fonts.googleapis.com/css?family=Comfortaa|Montserrat:400,500|Sen&display=swap');
+
+body {
+	font-family: 'Sen', sans-serif;
+	background-color: #F5F5F5;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+	font-family: 'Montserrat', sans-serif;
+
+}
+
+.search-inner .Search-result {
+	width: 93%;
+	top: 75px;
+	margin: auto;
+	left: 0;
+	right: 0;
+}
+
+/* Global color decleartion */
+$blueheader: #24292E;
+$buttonPrimary: #54A3FF;
+$dark_bg:#1a1a1b;
+$white:#fff;
+$black:#000;
+$space_bg:url(https://desktop.github.com/images/star-bg.svg) no-repeat;
+
+
+.day-mode {
+	footer {
+		background: $white;
+	}
+
+	.Search-result {
+		background: $white !important;
+		border: solid 1px rgb(155, 153, 153);
+
+		.search-result {
+			li {
+				a {
+					color: $black !important;
+
+					&:hover {
+						background: $white !important;
+					}
+				}
+			}
+		}
+	}
+	#user-profile {
+		background: $white;
+	}
+}
+
+body.night-mode {
+	background: $dark_bg;
+	color: #fff !important;
+
+	a {
+		color: #fff !important;
+
+		&.hover-white:hover {
+			color: #fff !important;
+		}
+	}
+
+	#user-profile {
+		background: $dark_bg;
+	}
+
+	.card {
+		background: #24292E;
+		border-color: #171a1d;
+	}
+
+	footer {
+		background: $dark_bg;
+
+		a {
+			color: #5bd0a4 !important;
+		}
+	}
+}
+
+
+
+.app-wrapper {
+	position: relative;
+	min-height: calc(100vh - 200px);
+	// min-height: 80vh;
+}
+
+
+.navbar-brand {
+	svg {
+		width: 120px;
+	}
+}
+
+
+
+.font-size-11 {
+	font-size: 11px;
+}
+
+.font-size-12 {
+	font-size: 12px;
+}
+
+.font-size-13 {
+	font-size: 13px;
+}
+
+.font-size-14 {
+	font-size: 14px;
+}
+
+.font-size-15 {
+	font-size: 15px;
+}
+
+.font-size-16 {
+	font-size: 16px;
+}
+
+.font-size-17 {
+	font-size: 17px;
+}
+
+.font-size-18 {
+	font-size: 18px;
+}
+
+.font-size-19 {
+	font-size: 19px;
+}
+
+.font-size-20 {
+	font-size: 20px;
+}
+
+.font-size-21 {
+	font-size: 21px;
+}
+
+header {
+	background: $blueheader;
+	z-index: 99;
+	position: sticky;
+	top: 0;
+	border-bottom: solid 1px #9b9ea01c;
+}
+
+button {
+	&:focus {
+		outline: none;
+	}
+}
+
+.text-light-gray {
+	color: #BEBFC1;
+}
+
+
+.logo {
+	font-size: 14px;
+	font-family: 'Comfortaa', cursive;
+
+	img {
+		width: 27px;
+		margin-right: 10px;
+	}
+}
+
+
+
+.css-y1c0xs,
+[data-css-y1c0xs] {
+	max-height: 190px;
+}
+
+
+.mobile-theme {
+	position: absolute;
+	top: 9px;
+	right: 0;
+	text-align: right;
+}
+
+
+footer {
+	width: 100%;
+	position: absolute;
+	z-index: 10;
+}
+
+
+
+// Media Query for mobile devices
+// media query should be always at end of css so it can overwride default css and wont need to use !important
+@media (max-width:767px) {
+	.content-area>div {
+		padding: 20px !important;
+	}
+
+	.landing-page {
+		background-position: right;
+		min-height: 95vh;
+
+		.content-area {
+
+			h1 {
+				font-size: 25px;
+			}
+
+			p {
+				line-height: 28px;
+			}
+		}
+	}
+
+
+	.content-area div input {
+		height: 42px;
+		padding: 20px;
+		font-size: 13px;
+		width: 85%;
+	}
+
+
+
+
+	.content-area {
+		width: 100%;
+	}
+
+	.following-area {
+		padding-left: 0;
+	}
+
+	.following-area {
+		p {
+			font-size: 13px;
+		}
+
+		span {
+			font-size: 13px;
+		}
+	}
+}
+
+
+
+
+
+
+@import './chunks/stats';
+@import './chunks/footer';
+@import './chunks/githubLabels';
+@import './chunks/landing';
+@import './chunks/search';
+@import './chunks/share';

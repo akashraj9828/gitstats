@@ -17,22 +17,39 @@ import config from "../../config/index";
 import domtoimage from "dom-to-image";
 import { saveAs } from "file-saver";
 
+import Loader from "../Extras/Loader"
+
 Object.keys(config).forEach((key) => {
   window[key] = config[key];
 });
 
 function download({ data }, callback = window.downloadCallback) {
   let filename = data.user.name || data.user.login;
+
+  // enable backdrop when processing
+  let backdrop = document.getElementsByClassName("processing-backdrop")[0]
+  backdrop.style.display = "flex"
+
+  let credit = document.querySelector(".credits")
+  credit.style.display = "flex"
+
+  // set timestamp
+  const date = new Date()
+  document.querySelector(".timestamp").innerText = date.toDateString()
+
+  // add credits to end
+  document.querySelector(".credits .website").innerText = `gitstats.me/${data.user.login}`
+
   var activity_card = document.getElementById("user-activity");
   // hide scrollbar before capture
   activity_card.style.overflow = "hidden";
 
   // set viewport 1400px for mobile devices
-  let viewport=document.getElementById("viewport")
+  let viewport = document.getElementById("viewport")
   viewport.setAttribute('content', 'width=1200')
 
   // allow 2s time for everything to fall in place
-  setTimeout(()=>{
+  setTimeout(() => {
     var node = document.getElementById("user-profile");
     domtoimage.toBlob(node).then(function (blob) {
       // save img
@@ -43,17 +60,27 @@ function download({ data }, callback = window.downloadCallback) {
 
       // reset viewport to be responsive
       viewport.setAttribute('content', 'width=device-width, initial-scale=1')
+
+      // hide backdrop and credit when done
+      backdrop.style.display = "none"
+      credit.style.display = "none"
     });
+
     if (callback) {
       callback(data)
     }
-  },2000)
+  }, 2000)
 }
 
 const Share = ({ data }) => {
   let [showIcons, setIcons] = useState(false);
   return (
     <div className="share-container">
+      <div className="processing-backdrop">
+        <span>
+          {Loader.text_loading} Processing......
+          </span>
+      </div>
       <div className="share-icon">
         <button
           id="download-btn"

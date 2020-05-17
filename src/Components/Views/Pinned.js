@@ -10,7 +10,7 @@ const Pinned = (props) => {
     repoData=repoData.filter((obj)=>Object.keys(obj).length !== 0 && obj.constructor)
     //HTML VIEW JSX DATA BIND
     let pinned_view = repoData.map((repo) =>
-    <div key={repo.name} className="col-md-4 my-3">
+    <div key={repo.name} className="col-12 col-sm-6 col-md-4 my-3">
             <div className="card h-100 rounded">
                 <div className="card-block py-3 px-4">
 
