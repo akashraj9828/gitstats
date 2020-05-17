@@ -1,16 +1,16 @@
 import React, { Fragment } from "react";
-import Layout from "../Layout";
-import BasicInformation from "./BasicInfo";
-import Pinned from "./Pinned";
-import DataProvider from "../../Data-provider";
-import PieChart from "../Charts/PieChart";
-import BarChart from "../Charts/BarChart";
-import Loader from "../Extras/Loader";
-import Footer from "../Footer";
-import Share from './Share'
-import Header from '../Header'
-import UserActivity from "./UserActvity"
-class Home extends React.Component {
+import Layout from "../Components/Layout";
+import BasicInformation from "../Components/Views/BasicInfo";
+import Pinned from "../Components/Views/Pinned";
+import DataProvider from "../Data-provider";
+import PieChart from "../Components/Charts/PieChart";
+import BarChart from "../Components/Charts/BarChart";
+import Loader from "../Components/Extras/Loader";
+import Footer from "../Components/Footer";
+import Share from '../Components/Views/Share'
+import Header from '../Components/Header'
+import UserActivity from "../Components/Views/UserActvity"
+class Stats extends React.Component {
   constructor(props) {
     super(props);
     let username = "akashraj9828";
@@ -305,4 +305,4 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+export default Stats;

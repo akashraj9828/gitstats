@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
-import DataProvider from '../../Data-provider/index'
+import DataProvider from '../Data-provider/index'
 import { DebounceInput } from 'react-debounce-input';
-import Footer from '../Footer'
+import Footer from '../Components/Footer'
 import {Link} from "react-router-dom"
-import GithubLink from "./Components/GithubLink"
-import Styles from './InputBar.css'
+import GithubLink from "../Components/Views/Components/GithubLink"
 
 const LandingPage = () => {
     let [searchUsers, setSearchUsers] = useState();
@@ -38,7 +37,7 @@ const LandingPage = () => {
                             debounceTimeout={500}
                             placeholder="Find github users..."
                             onChange={search}
-                            style={Styles.input}
+                            id="landing_page_input"
 
                         />
 

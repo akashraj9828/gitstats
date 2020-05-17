@@ -1,0 +1,61 @@
+
+
+// github icon animation
+.github-corner:hover .octo-arm {
+	animation: octocat-wave 560ms ease-in-out
+}
+
+@keyframes octocat-wave {
+
+	0%,
+	100% {
+		transform: rotate(0)
+	}
+
+	20%,
+	60% {
+		transform: rotate(-25deg)
+	}
+
+	40%,
+	80% {
+		transform: rotate(10deg)
+	}
+}
+
+
+@media (max-width:500px) {
+	.github-corner:hover .octo-arm {
+		animation: none
+	}
+
+	.github-corner .octo-arm {
+		animation: octocat-wave 560ms ease-in-out
+	}
+}
+
+.git-wrapper {
+	text-align: center;
+	padding: 1rem;
+	flex-direction: column;
+	position: absolute;
+	width: 100%;
+	top: 10px;
+
+	span {
+		margin-left: 2px;
+		margin-right: 2px;
+
+	}
+}
+.git-footer {
+	text-align: center;
+	padding: 0.2rem;
+	flex-direction: column;
+
+	span {
+		margin-left: 2px;
+		margin-right: 2px;
+
+	}
+}

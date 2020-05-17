@@ -1,0 +1,92 @@
+.share-container {
+	z-index: 99;
+	position: fixed;
+	right: 10px;
+	bottom: 10px;
+	display: flex;
+	flex-direction: column-reverse;
+
+	button {
+		transition: .2s;
+		width: 40px;
+		height: 40px;
+		margin: 5px 0px;
+		background: transparent !important;
+
+		&:hover {
+			// filter: invert(1);
+			transform: scale(1.1);
+		}
+	}
+}
+
+.share-icon {
+	display: flex;
+	flex-direction: column;
+}
+
+.share-tray {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	transition: all 0.2s ease-in-out;
+}
+
+.processing-backdrop {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0, 0, 0, 0.7);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	display: none;
+	z-index: 2;
+
+	span {
+		font-size: 32px;
+	}
+}
+
+.credits {
+	// display: flex;
+	display: none;
+	justify-content: space-between;
+}
+
+.night-mode {
+	.timestamp {
+		background: #24292E;
+		border: 1px solid rgba(0, 0, 0, .125);
+		color: #5bd0a4 !important;
+	}
+
+	.credit-text {
+		background: #24292E;
+		border: 1px solid rgba(0, 0, 0, .125);
+
+		.website {
+			color: #5bd0a4 !important;
+		}
+	}
+}
+
+.day-mode {
+	.timestamp {
+		background: #fff;
+		border: 1px solid rgba(0, 0, 0, .125);
+		color: #5bd0a4 !important;
+
+	}
+
+	.credit-text {
+		background: #fff;
+		border: 1px solid rgba(0, 0, 0, .125);
+
+		.website {
+			color: #5bd0a4 !important;
+		}
+	}
+}
