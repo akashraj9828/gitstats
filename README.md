@@ -13,20 +13,30 @@
 
 
 ![Input](output/home.png)
-## Available Scripts
+# Available Scripts
 
 In the project directory, you can run:
 
-### `yarn start` // to serve the build files using express server
+## Before you begin
+`npm install`
 
-Runs the app in the development mode.<br />
-### `yarn dev` // to start the development server
+This installs all dependencies required by the project. <br />
 
+## For the developers:
+`npm run dev`
 
-### `yarn build` // to build
+## To prettify the code:
+`npm run pretty`
 
-Builds the app for  to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+This allows you to run this repo in the development environment, where you can make changes as well and see it get updated __live__. <br />
+ 
+## For the end users.
+```bash
+npm run build
+npm start
+```
+
+The first command correctly bundles React in production mode and optimizes the build for the best performance. The second command allows you to serve this static file through a node server. <br/>
 
 # Sample Screen
 ![Input](output/dark.png)
