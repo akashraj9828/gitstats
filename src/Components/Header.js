@@ -57,6 +57,7 @@ function Header() {
                         </a>
                     </li>
                 ));
+
         setSearchUsers(users);
     }
 
