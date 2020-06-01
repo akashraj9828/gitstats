@@ -25,6 +25,9 @@ This installs all dependencies required by the project. <br />
 ## For the developers:
 `npm run dev`
 
+## To prettify the code:
+`npm run pretty`
+
 This allows you to run this repo in the development environment, where you can make changes as well and see it get updated __live__. <br />
  
 ## For the end users.
