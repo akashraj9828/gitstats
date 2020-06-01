@@ -43,11 +43,6 @@ function Header() {
         }
     }
 
-    function closeSearch(){
-        let searchContainer = document.querySelector('.search-wrapper');
-        searchContainer.classList.remove('open')
-    }
-
     // To-Do
     // #3\ the weird sliding of search results when seach input goes out of focus // will be fixed by #1
     // #5\ make a landing page with search feature
@@ -61,7 +56,7 @@ function Header() {
         let users = result && result
             .filter(user => user.type==="User")
             .map(user =>
-                <li key={user.login}><Link href={`/${user.login}`}><img src={user.avatar_url} alt={user.login}/> {user.login}</Link></li>
+                <li key={user.login}><Link to={`/${user.login}`}><img src={user.avatar_url} alt={user.login}/> {user.login}</Link></li>
             );
         setSearchUsers(users);
     }
@@ -85,7 +80,6 @@ function Header() {
                                         className="search"
                                         placeholder="Search..."
                                         onChange={search}
-                                        onBlur={() => closeSearch()}
                                         id="search_bar"
                                     />
                                 </span>
