@@ -2,28 +2,24 @@
 # # https://help.sider.review/getting-started/custom-configuration
 
 #   # https://help.sider.review/tools/javascript/eslint
-#   eslint:
-#     dir: frontend/app
-#     config: .my_eslintrc
-#     ext: ".js,.jsx,.es6"
-#     ignore-path: .my_eslintignore
-#     no-ignore: true
-#     ignore-pattern: "/src/vendor/*"
-#     global: "require,exports:true"
-#     quiet: true
+  eslint:
+    dir: /src
+    config: .my_eslintrc
+    ext: ".js,.jsx,.es6"
+    ignore-path: .my_eslintignore
+    no-ignore: true
+    ignore-pattern: "/src/vendor/*"
+    global: "require,exports:true"
+    quiet: true
 
 #   # https://help.sider.review/tools/others/misspell
-#   misspell:
-#     exclude:
-#       - vendor
-#       - "**/*.min.js"
-#       - exclude_file.rb
-#     targets:
-#       - target_directory
-#       - another_target_directory/foo.rb
-#       - bar.rb
-#     locale: UK
-#     ignore: center,behavior
+  misspell:
+    exclude:
+      - "**/*.min.js"
+    targets:
+      - /src
+    locale: UK
+    ignore: center,behavior
 
 #   # https://help.sider.review/tools/shellscript/shellcheck
 #   shellcheck:
