@@ -1,13 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import DataProvider from '../Data-provider/index'
 import { DebounceInput } from 'react-debounce-input';
 import Footer from '../Components/Footer'
 import {Link} from "react-router-dom"
 import GithubLink from "../Components/Views/Components/GithubLink"
+import axios from "axios";
+
+const API_BASE_URL = window.API_BASE_URL
 
 const LandingPage = () => {
     let [searchUsers, setSearchUsers] = useState();
-
+    // ping api to wake up server
+    useEffect(() => {
+        axios.get(API_BASE_URL);
+    }, [])
 
     async function search(event) {
         let result = await DataProvider.getSearchUsers(event.target.value);
