@@ -6,7 +6,7 @@ try {
     if (window.location.hostname === "gitstats.me") {
         API_BASE_URL = API_BASE_URL_PROD;
     } else {
-        API_BASE_URL = API_BASE_URL_PROD;
+        API_BASE_URL = API_BASE_URL_DEV;
     }
 } catch (error) {
     console.error(error);
