@@ -1,5 +1,6 @@
-const API_BASE_URL_PROD = "http://api.gitstats.me/";
-const API_BASE_URL_DEV = "http://gitstats-api-stage.herokuapp.com/";
+// const API_BASE_URL_PROD = "http://api.gitstats.me/";
+const API_BASE_URL_PROD = "https://gitstats-api-prod.herokuapp.com/";
+const API_BASE_URL_DEV = "https://gitstats-api-stage.herokuapp.com/";
 // default use dev api endpoint
 let API_BASE_URL = API_BASE_URL_DEV;
 try {
