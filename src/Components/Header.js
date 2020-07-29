@@ -37,9 +37,9 @@ const Header = ({ theme, dispatch }) => {
 					// <li key={user.login}><Link to={`/${user.login}`}><img src={user.avatar_url} alt={user.login}/> {user.login}</Link></li>
 					//   temporary fix reload page instead of routing
 					<li key={user.login}>
-						<a href={`/${user.login}`}>
+						<Link to={`/${user.login}`}>
 							<img src={user.avatar_url} alt={user.login} /> {user.login}
-						</a>
+						</Link>
 					</li>
 				));
 
@@ -68,6 +68,7 @@ const Header = ({ theme, dispatch }) => {
 										placeholder='Search...'
 										onChange={search}
 										id='search_bar'
+										onFocus={() => setSearchUsers([])}
 										onBlur={() =>
 											setTimeout(() => {
 												setSearchUsers(null);
