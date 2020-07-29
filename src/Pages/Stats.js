@@ -112,6 +112,8 @@ const Stats = ({ match, history, theme, userName, name, userData, repoData, user
 		repoAnalysisData && languageData && analysis();
 	}, [repoAnalysisData, languageData]);
 
+	const [profileAnalysisError, setProfileAnalysisError] = useState(null);
+	const [error, setError] = useState(false);
 	if (!userData) {
 		return (
 			<Fragment>
@@ -128,247 +130,254 @@ const Stats = ({ match, history, theme, userName, name, userData, repoData, user
 		<Fragment>
 			<Header />
 			{userData && <Share data={userData} />}
-			{/* <Link to='akashraj9828'>akashraj9828</Link>
-			<Link to='tovalds'>torvalds</Link> */}
-			<div>
-				<Layout>{userData && aggregateData && <BasicInformation basicInfo={userData} aggregateData={aggregateData} />}</Layout>
-				{/* REPO SECTION */}
-				<section className='pt-5 '>
-					<div className='row'>
-						<div className='col-sm-6 mt-3'>
-							<h3 className='font-size-15 w-100'>My Recent activities</h3>
-							<div
-								className='card p-3 rounded'
-								id='user-activity'
-								style={{
-									height: "calc( 100% - 20px )",
-									maxHeight: "350px",
-									overflow: "auto",
-								}}>
-								{/*Will show 30 recent activity by user */}
-								{userActivity ? (
-									<Fragment>
-										<UserActivity data={userActivity} />
-									</Fragment>
-								) : (
-									Loader.section_loading
-								)}
-							</div>
-						</div>
+			<Layout>
+				{userData ? (
+					<div>
+						{/* CONDITIONAL REDERING OF BASIC INFO */}
+						{userData && aggregateData ? <BasicInformation basicInfo={userData} aggregateData={aggregateData} /> : Loader.section_loading}
 
-						<div className='col-sm-6 mt-3'>
-							<h3 className='font-size-15 w-100'>Commit analysis</h3>
-							<div className='card p-3 rounded' style={{ height: "calc( 100% - 20px )" }}>
-								{/* CONDITIONAL REDERING OF COMMIT ANALYSYS(repo wise) INFO */}
-								{repoGraphDataCommitWise ? (
-									<Fragment>
-										<PieChart data={repoGraphDataCommitWise} height={250} max_slices={10} error={null} />
-										{/* Extra info about pie chart */}
-										<div>
-											<h6 className='text-center mt-3'>
-												{repoGraphDataCommitWise[0] && (
-													<Fragment>
-														{" "}
-														Most Commits are done in{" "}
-														<span
-															style={{
-																color: repoGraphDataCommitWise[0].color,
-															}}>
-															{" "}
-															{repoGraphDataCommitWise[0].id}{" "}
-														</span>
-													</Fragment>
-												)}
-											</h6>
-										</div>
-									</Fragment>
-								) : (
-									Loader.section_loading
-								)}
-							</div>
-						</div>
-					</div>
-				</section>
+						{/* REPO SECTION */}
+						<section className='pt-5 '>
+							<div className='row'>
+								<div className='col-sm-6 mt-3'>
+									<h3 className='font-size-15 w-100'>My Recent activities</h3>
+									<div
+										className='card p-3 rounded'
+										id='user-activity'
+										style={{
+											height: "calc( 100% - 20px )",
+											maxHeight: "350px",
+											overflow: "auto",
+										}}>
+										{/*Will show 30 recent activity by user */}
+										{userActivity ? (
+											<Fragment>
+												<UserActivity data={userActivity} />
+											</Fragment>
+										) : (
+											Loader.section_loading
+										)}
+									</div>
+								</div>
 
-				{/* LANGUAGE SECTION */}
-				<section className='pt-5 '>
-					<div className='row'>
-						<div className='col-sm-6 mt-3'>
-							<h3 className='font-size-15 w-100'>Language analysis Size wise</h3>
-							{/* height:"calc( 100% - 20px ) because h3 above take 20px but i wanted card to be equal to the col-height */}
-							<div className='card p-3 rounded' style={{ height: "calc( 100% - 20px )" }}>
-								{/* CONDITIONAL REDERING OF LANGUAGE ANALYSYS(BY SIZE) INFO */}
-								{languageGraphDataSize ? (
-									<Fragment>
-										<PieChart data={languageGraphDataSize} height={250} max_slices={6} accumulate_remaining={true} error={null} />
-										{/* Extra info about pie chart */}
-										<div>
-											<h6 className='text-center mt-3'>
-												{languageGraphDataSize[0] && (
-													<Fragment>
-														{" "}
-														Most written language is{" "}
-														<span
-															style={{
-																color: languageGraphDataSize[0].color,
-															}}>
-															{" "}
-															{languageGraphDataSize[0].id}{" "}
-														</span>
-													</Fragment>
-												)}
-												{languageGraphDataSize[1] && (
-													<Fragment>
-														{" "}
-														followed by{" "}
-														<span
-															style={{
-																color: languageGraphDataSize[1].color,
-															}}>
-															{" "}
-															{languageGraphDataSize[1].id}{" "}
-														</span>
-													</Fragment>
-												)}
-												{languageGraphDataSize[2] && (
-													<Fragment>
-														{" "}
-														&{" "}
-														<span
-															style={{
-																color: languageGraphDataSize[2].color,
-															}}>
-															{" "}
-															{languageGraphDataSize[2].id}{" "}
-														</span>
-													</Fragment>
-												)}
-											</h6>
-										</div>
-									</Fragment>
-								) : (
-									Loader.section_loading
-								)}
-								{/* {languageDataLoaded ? <Language languageData={languageData} type="size" /> : Loader.section_loading} */}
+								<div className='col-sm-6 mt-3'>
+									<h3 className='font-size-15 w-100'>Commit analysis</h3>
+									<div className='card p-3 rounded' style={{ height: "calc( 100% - 20px )" }}>
+										{/* CONDITIONAL REDERING OF COMMIT ANALYSYS(repo wise) INFO */}
+										{repoGraphDataCommitWise || error ? (
+											<Fragment>
+												<PieChart data={repoGraphDataCommitWise} height={250} max_slices={10} error={profileAnalysisError} />
+												{/* Extra info about pie chart */}
+												<div>
+													<h6 className='text-center mt-3'>
+														{repoGraphDataCommitWise[0] && (
+															<Fragment>
+																{" "}
+																Most Commits are done in{" "}
+																<span
+																	style={{
+																		color: repoGraphDataCommitWise[0].color,
+																	}}>
+																	{" "}
+																	{repoGraphDataCommitWise[0].id}{" "}
+																</span>
+															</Fragment>
+														)}
+													</h6>
+												</div>
+											</Fragment>
+										) : (
+											Loader.section_loading
+										)}
+									</div>
+								</div>
 							</div>
-						</div>
-						<div className='col-sm-6 mt-3'>
-							<h3 className='font-size-15 w-100'>Language analysis Repo wise</h3>
-							<div className='card p-3 rounded' style={{ height: "calc( 100% - 20px )" }}>
-								{/* CONDITIONAL REDERING OF LANGUAGE ANALYSYS(BY COUNT) INFO */}
-								{languageGraphDataCount ? (
-									<Fragment>
-										<PieChart data={languageGraphDataCount} height={250} max_slices={6} error={null} />
-										{/* Extra info about pie chart */}
-										<div>
-											<h6 className='text-center mt-3'>
-												{languageGraphDataCount[0] && (
-													<Fragment>
-														{" "}
-														Most Used language is{" "}
-														<span
-															style={{
-																color: languageGraphDataCount[0].color,
-															}}>
-															{" "}
-															{languageGraphDataCount[0].id}{" "}
-														</span>
-													</Fragment>
-												)}
-												{languageGraphDataCount[1] && (
-													<Fragment>
-														{" "}
-														followed by{" "}
-														<span
-															style={{
-																color: languageGraphDataCount[1].color,
-															}}>
-															{" "}
-															{languageGraphDataCount[1].id}{" "}
-														</span>
-													</Fragment>
-												)}
-												{languageGraphDataCount[2] && (
-													<Fragment>
-														{" "}
-														&{" "}
-														<span
-															style={{
-																color: languageGraphDataCount[2].color,
-															}}>
-															{" "}
-															{languageGraphDataCount[2].id}{" "}
-														</span>
-													</Fragment>
-												)}
-											</h6>
-										</div>
-									</Fragment>
-								) : (
-									Loader.section_loading
-								)}
-								{/* {languageDataLoaded ? <Language languageData={languageData} type="count" /> : Loader.section_loading} */}
-							</div>
-						</div>
-					</div>
-				</section>
+						</section>
 
-				{/* PINNED SECTION */}
-				<section className='pt-5 '>
-					<div className='row'>
-						<div className='col-12'>
-							<h1 className='font-size-20 w-100'>My Awesome projects</h1>
-						</div>
-						{/* CONDITIONAL REDERING OF PINNED REPO INFO */}
-						{userData ? <Pinned pinnedRepos={userData} /> : Loader.section_loading}
-					</div>
-				</section>
-
-				{/* PRODUCTIVITY SECTION */}
-				<section className='pt-5'>
-					<div className='row'>
-						<div className='col-sm-12 mt-3'>
-							<h3 className='font-size-15 w-100'>When am I most productive?</h3>
-							<div className='card p-3 rounded' style={{ height: "calc( 100% - 20px )" }}>
-								{/* CONDITIONAL REDERING OF WEEK DAY ACTIVITY */}
-								{commitHistoryGraphData ? (
-									<Fragment>
-										{commitHistoryGraphData ? <BarChart data={commitHistoryGraphData} height={250} max_bars={7} keys={["commit"]} indexBy={"day"} error={null} /> : Loader.section_loading}
-										{/* Extra info about Week days chart */}
-										<div>
-											<h6 className='text-center mt-3'>
-												{commitHistoryGraphData[0] && (
-													<Fragment>
-														{" "}
-														I am most productive on{" "}
-														<span
-															style={{
-																color: commitHistoryGraphData[top2days[0]].commitColor,
-															}}>
-															{" "}
-															{week_dict[top2days[0]]}{" "}
-														</span>{" "}
-														and{" "}
-														<span
-															style={{
-																color: commitHistoryGraphData[top2days[1]].commitColor,
-															}}>
-															{" "}
-															{week_dict[top2days[1]]}{" "}
-														</span>{" "}
-													</Fragment>
-												)}
-											</h6>
-										</div>
-									</Fragment>
-								) : (
-									Loader.section_loading
-								)}
+						{/* LANGUAGE SECTION */}
+						<section className='pt-5 '>
+							<div className='row'>
+								<div className='col-sm-6 mt-3'>
+									<h3 className='font-size-15 w-100'>Language analysis Size wise</h3>
+									{/* height:"calc( 100% - 20px ) because h3 above take 20px but i wanted card to be equal to the col-height */}
+									<div className='card p-3 rounded' style={{ height: "calc( 100% - 20px )" }}>
+										{/* CONDITIONAL REDERING OF LANGUAGE ANALYSYS(BY SIZE) INFO */}
+										{languageGraphDataSize || error ? (
+											<Fragment>
+												<PieChart data={languageGraphDataSize} height={250} max_slices={6} accumulate_remaining={true} error={profileAnalysisError} />
+												{/* Extra info about pie chart */}
+												<div>
+													<h6 className='text-center mt-3'>
+														{languageGraphDataSize[0] && (
+															<Fragment>
+																{" "}
+																Most written language is{" "}
+																<span
+																	style={{
+																		color: languageGraphDataSize[0].color,
+																	}}>
+																	{" "}
+																	{languageGraphDataSize[0].id}{" "}
+																</span>
+															</Fragment>
+														)}
+														{languageGraphDataSize[1] && (
+															<Fragment>
+																{" "}
+																followed by{" "}
+																<span
+																	style={{
+																		color: languageGraphDataSize[1].color,
+																	}}>
+																	{" "}
+																	{languageGraphDataSize[1].id}{" "}
+																</span>
+															</Fragment>
+														)}
+														{languageGraphDataSize[2] && (
+															<Fragment>
+																{" "}
+																&{" "}
+																<span
+																	style={{
+																		color: languageGraphDataSize[2].color,
+																	}}>
+																	{" "}
+																	{languageGraphDataSize[2].id}{" "}
+																</span>
+															</Fragment>
+														)}
+													</h6>
+												</div>
+											</Fragment>
+										) : (
+											Loader.section_loading
+										)}
+										{/* {languageData ? <Language languageData={languageData} type="size" /> : Loader.section_loading} */}
+									</div>
+								</div>
+								<div className='col-sm-6 mt-3'>
+									<h3 className='font-size-15 w-100'>Language analysis Repo wise</h3>
+									<div className='card p-3 rounded' style={{ height: "calc( 100% - 20px )" }}>
+										{/* CONDITIONAL REDERING OF LANGUAGE ANALYSYS(BY COUNT) INFO */}
+										{languageGraphDataCount || error ? (
+											<Fragment>
+												<PieChart data={languageGraphDataCount} height={250} max_slices={6} error={profileAnalysisError} />
+												{/* Extra info about pie chart */}
+												<div>
+													<h6 className='text-center mt-3'>
+														{languageGraphDataCount[0] && (
+															<Fragment>
+																{" "}
+																Most Used language is{" "}
+																<span
+																	style={{
+																		color: languageGraphDataCount[0].color,
+																	}}>
+																	{" "}
+																	{languageGraphDataCount[0].id}{" "}
+																</span>
+															</Fragment>
+														)}
+														{languageGraphDataCount[1] && (
+															<Fragment>
+																{" "}
+																followed by{" "}
+																<span
+																	style={{
+																		color: languageGraphDataCount[1].color,
+																	}}>
+																	{" "}
+																	{languageGraphDataCount[1].id}{" "}
+																</span>
+															</Fragment>
+														)}
+														{languageGraphDataCount[2] && (
+															<Fragment>
+																{" "}
+																&{" "}
+																<span
+																	style={{
+																		color: languageGraphDataCount[2].color,
+																	}}>
+																	{" "}
+																	{languageGraphDataCount[2].id}{" "}
+																</span>
+															</Fragment>
+														)}
+													</h6>
+												</div>
+											</Fragment>
+										) : (
+											Loader.section_loading
+										)}
+										{/* {languageData ? <Language languageData={languageData} type="count" /> : Loader.section_loading} */}
+									</div>
+								</div>
 							</div>
-						</div>
+						</section>
+
+						{/* PINNED SECTION */}
+						<section className='pt-5 '>
+							<div className='row'>
+								<div className='col-12'>
+									<h1 className='font-size-20 w-100'>My Awesome projects</h1>
+								</div>
+								{/* CONDITIONAL REDERING OF PINNED REPO INFO */}
+								{userData ? <Pinned pinnedRepos={userData} /> : Loader.section_loading}
+							</div>
+						</section>
+
+						{/* PRODUCTIVITY SECTION */}
+						<section className='pt-5'>
+							<div className='row'>
+								<div className='col-sm-12 mt-3'>
+									<h3 className='font-size-15 w-100'>When am I most productive?</h3>
+									<div className='card p-3 rounded' style={{ height: "calc( 100% - 20px )" }}>
+										{/* CONDITIONAL REDERING OF WEEK DAY ACTIVITY */}
+										{commitHistory || error ? (
+											<Fragment>
+												{commitHistory ? <BarChart data={commitHistoryGraphData} height={250} max_bars={7} keys={["commit"]} indexBy={"day"} error={profileAnalysisError} /> : Loader.section_loading}
+												{/* Extra info about Week days chart */}
+												<div>
+													<h6 className='text-center mt-3'>
+														{commitHistoryGraphData[0] && (
+															<Fragment>
+																{" "}
+																I am most productive on{" "}
+																<span
+																	style={{
+																		color: commitHistoryGraphData[top2days[0]].commitColor,
+																	}}>
+																	{" "}
+																	{week_dict[top2days[0]]}{" "}
+																</span>{" "}
+																and{" "}
+																<span
+																	style={{
+																		color: commitHistoryGraphData[top2days[1]].commitColor,
+																	}}>
+																	{" "}
+																	{week_dict[top2days[1]]}{" "}
+																</span>{" "}
+															</Fragment>
+														)}
+													</h6>
+												</div>
+											</Fragment>
+										) : (
+											Loader.section_loading
+										)}
+									</div>
+								</div>
+							</div>
+						</section>
 					</div>
-				</section>
-			</div>
+				) : (
+					initialPageLoad
+				)}
+			</Layout>
+			<Footer />
 		</Fragment>
 	);
 };
