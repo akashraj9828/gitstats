@@ -12,7 +12,7 @@ import Header from "Components/Header";
 import UserActivity from "Components/Views/UserActvity";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { setUserName, resetState, setUserData, setRepoData, setUserActivity } from "redux/actions/app";
+import { setUserName, resetState, setUserData, setRepoData, setUserActivity, setCommitHistory } from "redux/actions/app";
 import { useDocumentTitle } from "CustomHooks";
 
 const Stats = ({ match, history, theme, userName, name, userData, repoData, userActivity, dispatch }) => {
@@ -28,7 +28,6 @@ const Stats = ({ match, history, theme, userName, name, userData, repoData, user
 	const [commitHistoryData, setCommitHistoryData] = useState(null);
 	const [commitHistoryGraphData, setCommitHistoryGraphData] = useState(null);
 	const [initialPageLoad, setInitialPageLoad] = useState(null);
-	const [userActivityLoaded, setUserActivityLoaded] = useState(null);
 
 	useEffect(() => {
 		console.log("username Changed");
@@ -54,7 +53,7 @@ const Stats = ({ match, history, theme, userName, name, userData, repoData, user
 	// API CALL
 	const getCommitHistory = async (username) => {
 		const commitHistory = await DataProvider.getCommitHistory(username);
-		dispatch(setUserActivity(commitHistory));
+		dispatch(setCommitHistory(commitHistory));
 	};
 
 	useEffect(() => {
@@ -67,12 +66,54 @@ const Stats = ({ match, history, theme, userName, name, userData, repoData, user
 		repoData && profileAnalysis();
 	}, [repoData]);
 
+	if (!userData) {
+		return (
+			<Fragment>
+				<Header />
+				{Loader.section_loading}
+			</Fragment>
+		);
+	}
+
 	return (
 		<Fragment>
 			<Header />
 			{userData && <Share data={userData} />}
-			<Link to='akashraj9828'>akashraj9828</Link>
-			<Link to='tovalds'>torvalds</Link>
+			{/* <Link to='akashraj9828'>akashraj9828</Link>
+			<Link to='tovalds'>torvalds</Link> */}
+			<div>
+			<Layout>{userData && aggregateData && <BasicInformation basicInfo={userData} aggregateData={aggregateData} />}</Layout>
+				{/* REPO SECTION */}
+				<section className='pt-5 '>
+								<div className='row'>
+									<div className='col-sm-6 mt-3'>
+										<h3 className='font-size-15 w-100'>My Recent activities</h3>
+										<div
+											className='card p-3 rounded'
+											id='user-activity'
+											style={{
+												height: "calc( 100% - 20px )",
+												maxHeight: "350px",
+												overflow: "auto",
+											}}>
+											{/*Will show 30 recent activity by user */}
+											{userActivity ? (
+												<Fragment>
+													<UserActivity data={userActivity} />
+												</Fragment>
+											) : (
+												Loader.section_loading
+											)}
+										</div>
+									</div>
+
+									{/*  */}
+								
+								</div>
+							</section>
+
+			</div>
+			
 		</Fragment>
 	);
 };
