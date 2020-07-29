@@ -1,37 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ReactComponent as GitStatsLogo } from "../Images/logo.svg";
 import DataProvider from "../Data-provider/index";
 import Loader from "../Components/Extras/Loader";
 import { DebounceInput } from "react-debounce-input";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { toggleTheme } from "redux/actions/app";
 
-function Header() {
+const Header = ({ theme, dispatch }) => {
+	console.log("---: Header -> theme", theme);
+
 	let [imageUrl, setImageUrl] = useState("img/sun.png");
 	let [searchUsers, setSearchUsers] = useState();
-	let body = document.querySelector("body");
 
-	//Initial load theme set
-	if (window.localStorage.getItem("theme") === "light") {
-		body.classList.add("day-mode");
-		body.classList.remove("night-mode");
-		imageUrl = "img/moon.png";
-	} else {
-		imageUrl = "img/sun.png";
-	}
-
-	function changeTheme() {
-		if (window.localStorage.getItem("theme") === "light") {
-			window.localStorage.setItem("theme", "dark");
-			body.classList.remove("day-mode");
-			body.classList.add("night-mode");
-			setImageUrl("/img/sun.png");
-		} else {
-			window.localStorage.setItem("theme", "light");
-			body.classList.remove("night-mode");
-			body.classList.add("day-mode");
-			setImageUrl("/img/moon.png");
-		}
-	}
+	useEffect(() => {
+		if (theme === "light") setImageUrl("img/moon.png");
+		else setImageUrl("img/sun.png");
+	}, [theme]);
 
 	function openSearch() {
 		let search = document.querySelector(".search-wrapper");
@@ -102,7 +87,7 @@ function Header() {
 							</li>
 							<li className='mobile-theme'>
 								<div className='change-theme mt-2 font-size-13'>
-									<button onClick={changeTheme}>
+									<button onClick={() => dispatch(toggleTheme())}>
 										<img className='mr-1' src={process.env.PUBLIC_URL + imageUrl} alt='' />
 										<span className='d-none d-lg-inline-block d-sm-inline-block'>{window.localStorage.getItem("theme") === "light" ? "Night Mode" : "Day Mode"}</span>
 									</button>
@@ -114,6 +99,10 @@ function Header() {
 			</div>
 		</header>
 	);
-}
+};
 
-export default Header;
+const mapStateToProps = (state) => {
+	return { theme: state.app.theme };
+};
+
+export default connect(mapStateToProps, null)(Header);

@@ -1,15 +1,15 @@
 import React, { Fragment } from "react";
-import Layout from "../Components/Layout";
-import BasicInformation from "../Components/Views/BasicInfo";
-import Pinned from "../Components/Views/Pinned";
-import DataProvider from "../Data-provider";
-import PieChart from "../Components/Charts/PieChart";
-import BarChart from "../Components/Charts/BarChart";
-import Loader from "../Components/Extras/Loader";
-import Footer from "../Components/Footer";
-import Share from "../Components/Views/Share";
-import Header from "../Components/Header";
-import UserActivity from "../Components/Views/UserActvity";
+import Layout from "Components/Layout";
+import BasicInformation from "Components/Views/BasicInfo";
+import Pinned from "Components/Views/Pinned";
+import DataProvider from "Data-provider";
+import PieChart from "Components/Charts/PieChart";
+import BarChart from "Components/Charts/BarChart";
+import Loader from "Components/Extras/Loader";
+import Footer from "Components/Footer";
+import Share from "Components/Views/Share";
+import Header from "Components/Header";
+import UserActivity from "Components/Views/UserActvity";
 class Stats extends React.Component {
 	constructor(props) {
 		super(props);

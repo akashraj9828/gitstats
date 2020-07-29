@@ -12,7 +12,7 @@ if (old_data) {
 		inital_state.user = userInfo;
 	}
 }
-let old_theme = localStorage.getItem("s2i_theme");
+let old_theme = localStorage.getItem("theme");
 if (old_theme) {
 	document.body.classList.add(old_theme);
 	inital_state.app.theme = old_theme;

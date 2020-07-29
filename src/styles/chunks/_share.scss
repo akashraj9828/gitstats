@@ -56,7 +56,7 @@
 	justify-content: space-between;
 }
 
-.night-mode {
+.dark {
 	.timestamp {
 		background: #24292e;
 		border: 1px solid rgba(0, 0, 0, 0.125);
@@ -73,7 +73,7 @@
 	}
 }
 
-.day-mode {
+.light {
 	.timestamp {
 		background: #fff;
 		border: 1px solid rgba(0, 0, 0, 0.125);

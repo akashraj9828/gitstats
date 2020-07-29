@@ -29,7 +29,7 @@ $white: #fff;
 $black: #000;
 $space_bg: url(https://desktop.github.com/images/star-bg.svg) no-repeat;
 
-.day-mode {
+.light {
 	footer {
 		background: $white;
 	}
@@ -55,7 +55,7 @@ $space_bg: url(https://desktop.github.com/images/star-bg.svg) no-repeat;
 	}
 }
 
-body.night-mode {
+body.dark {
 	background: $dark_bg;
 	color: #fff !important;
 
