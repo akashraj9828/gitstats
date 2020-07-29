@@ -1,36 +1,41 @@
 import React, { useState, useEffect } from "react";
 import DataProvider from "../Data-provider/index";
-import { DebounceInput } from "react-debounce-input";
 import Footer from "../Components/Footer";
 import { Link } from "react-router-dom";
 import GithubLink from "../Components/Views/Components/GithubLink";
 import axios from "axios";
+import { useDebounce } from "CustomHooks";
 
 const API_BASE_URL = window.API_BASE_URL;
 
 const LandingPage = () => {
-	let [searchUsers, setSearchUsers] = useState();
+	const [searchInput, setSearchInput] = useState("");
+	const [searchUsers, setSearchUsers] = useState();
 	// ping api to wake up server
 	useEffect(() => {
 		axios.get(API_BASE_URL);
 	}, []);
 
-	async function search(event) {
-		let result = await DataProvider.getSearchUsers(event.target.value);
-		let users =
-			result &&
-			result
-				.filter((user) => user.type === "User")
-				.map((user) => (
-					<li key={user.login}>
-						<Link to={`/${user.login}`}>
-							<img src={user.avatar_url} alt={user.login} /> {user.login}
-						</Link>
-					</li>
-				));
-		setSearchUsers(users);
-	}
+	const debouncedSearch = useDebounce(searchInput, 500);
 
+	useEffect(() => {
+		const search = async () => {
+			let result = await DataProvider.getSearchUsers(debouncedSearch);
+			let users =
+				result &&
+				result
+					.filter((user) => user.type === "User")
+					.map((user) => (
+						<li key={user.login}>
+							<Link to={`/${user.login}`}>
+								<img src={user.avatar_url} alt={user.login} /> {user.login}
+							</Link>
+						</li>
+					));
+			setSearchUsers(users);
+		};
+		search();
+	}, [debouncedSearch]);
 	return (
 		<div className='landing-page d-flex justify-content-center '>
 			<GithubLink color={"#caa981"} />
@@ -50,24 +55,22 @@ const LandingPage = () => {
 					<h1 className='font-weight-bold mb-3'>Git-Stats</h1>
 					<p className='font-size-14'>An open-source GitHub contribution analyzer </p>
 					<div className='search-inner position-relative'>
-						<DebounceInput
-							minLength={2}
-							debounceTimeout={500}
+						<input
 							placeholder='Find github users...'
-							onChange={search}
+							onChange={(e) => setSearchInput(e.target.value)}
+							value={searchInput}
 							id='landing_page_input'
+							onFocus={e=>setSearchUsers([])}
 							onBlur={() =>
 								setTimeout(() => {
 									setSearchUsers(null);
-								}, 1000)
+								}, 500)
 							}
 						/>
 
 						{searchUsers && (
 							<div className='Search-result'>
 								<ul className='search-result'>
-									{/*No Need to scroll to bottom  */}
-									{/* best match is always at top */}
 									{searchUsers.length > 0 ? searchUsers : ""}
 								</ul>
 							</div>
