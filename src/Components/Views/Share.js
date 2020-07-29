@@ -20,16 +20,6 @@ function download({ data }, callback = window.downloadCallback) {
 	let backdrop = document.getElementsByClassName("processing-backdrop")[0];
 	backdrop.style.display = "flex";
 
-	let credit = document.querySelector(".credits");
-	credit.style.display = "flex";
-
-	// set timestamp
-	const date = new Date();
-	document.querySelector(".timestamp").innerText = date.toDateString();
-
-	// add credits to end
-	document.querySelector(".credits .website").innerText = `gitstats.me/${data.user.login}`;
-
 	var activity_card = document.getElementById("user-activity");
 	// hide scrollbar before capture
 	activity_card.style.overflow = "hidden";
@@ -53,7 +43,6 @@ function download({ data }, callback = window.downloadCallback) {
 
 			// hide backdrop and credit when done
 			backdrop.style.display = "none";
-			credit.style.display = "none";
 		});
 
 		if (callback) {
