@@ -44,6 +44,7 @@ export function useDocumentTitle(title, retainOnUnmount = false) {
 	useEffect(() => {
 		return () => {
 			if (!retainOnUnmount) {
+				// eslint-disable-next-line react-hooks/exhaustive-deps
 				document.title = defaultTitle.current;
 			}
 		};

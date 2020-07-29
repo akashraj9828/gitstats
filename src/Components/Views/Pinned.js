@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-
+import { GoRepoForked as ForkIcon, GoGitCommit as CommitIcon, GoStar as StarIcon } from "react-icons/go";
 const Pinned = (props) => {
 	// deprecated api
 	// const repoData = props.pinnedRepos.data.user.pinnedRepositories.nodes
@@ -19,19 +19,28 @@ const Pinned = (props) => {
 					</h6>
 					<div className='row text-center mt-3'>
 						<div className='col-md-4 col-4'>
-							<span className='mob-font-size-13'>{(repo.defaultBranchRef && repo.defaultBranchRef.target.history.totalCount) || 0}</span>
+							<span className='mob-font-size-13 pinned-meta'>{(repo.defaultBranchRef && repo.defaultBranchRef.target.history.totalCount) || 0}</span>
 							<br />
-							<span className='mob-font-size-13'> Commits</span>
+							<a className='mob-font-size-13 pinned-meta' href={"http://github.com/" + repo.nameWithOwner + "/commits"} target='_blank' rel='noopener noreferrer'>
+								{" "}
+								<CommitIcon className='mr-1' /> Commits{" "}
+							</a>
 						</div>
 						<div className='col-md-4 col-4'>
-							<span className='mob-font-size-13'>{repo.forkCount || 0}</span>
+							<span className='mob-font-size-13 pinned-meta'>{repo.forkCount || 0}</span>
 							<br />
-							<span className='mob-font-size-13'> Forks</span>
+							<a className='mob-font-size-13 pinned-meta' href={"http://github.com/" + repo.nameWithOwner + "/network/members"} target='_blank' rel='noopener noreferrer'>
+								{" "}
+								<ForkIcon className='mr-1' /> Forks{" "}
+							</a>
 						</div>
 						<div className='col-md-4 col-4'>
-							<span className='mob-font-size-13'>{(repo.stargazers && repo.stargazers.totalCount) || 0}</span>
+							<span className='mob-font-size-13 pinned-meta'>{(repo.stargazers && repo.stargazers.totalCount) || 0}</span>
 							<br />
-							<span className='mob-font-size-13'> Stars</span>
+							<a className='mob-font-size-13 pinned-meta' href={"http://github.com/" + repo.nameWithOwner + "/stargazers"} target='_blank' rel='noopener noreferrer'>
+								{" "}
+								<StarIcon className='mr-1' /> Stars
+							</a>
 						</div>
 					</div>
 					<h6 className='text-center mt-3'>

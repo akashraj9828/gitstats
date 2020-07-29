@@ -57,10 +57,11 @@ async function getUserActivity(username) {
 	let entries = dom.getElementsByTagName("entry");
 
 	let parsed_data = [];
-
+	// window.eee=entries
 	for (var i = 0; i < entries.length; i++) {
 		let entry = entries[i];
 		let title = entry.getElementsByTagName("title")[0].textContent;
+		let link = entry.getElementsByTagName("link")[0].getAttribute("href");
 		let image = entry.getElementsByTagName("media:thumbnail")[0].getAttribute("url");
 		let time = entry.getElementsByTagName("published")[0].textContent;
 		// for relative time
@@ -69,6 +70,7 @@ async function getUserActivity(username) {
 		let one_event = {
 			id: i,
 			title,
+			link,
 			image,
 			time,
 		};
@@ -88,7 +90,6 @@ async function profileAnalysis(repoInfo) {
 	let error = null;
 	if (repoInfo.errors || repoInfo.data === null) {
 		// error=repoInfo.errors[0].message
-		// console.log("error 500");
 		error = "🙊 Something went wrong :<";
 		return {
 			basic_calculations: {},
@@ -295,9 +296,9 @@ async function repoBarGraphCalculation(repoInfo) {
 			repo: repo.name,
 			stars: repo.stars,
 			color: color_pallet[i % color_pallet.length],
-			starsColor: "yellow",
+			starsColor: "#f1e05a",
 			forks: repo.forks,
-			forksColor: "purple",
+			forksColor: "#563d7c",
 			parsed: `${repo.stars} Stars , ${repo.forks} Forks`, // the data we'll see when hovered on chart
 			style: toggle ? "lines" : "dots",
 		});

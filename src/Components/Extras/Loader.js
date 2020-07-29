@@ -9,4 +9,5 @@ export default {
 	),
 	search_icon: <i className='fa fa-search' aria-hidden='true'></i>,
 	user_not_found: <p className='text-center mt-4 text-muted'>User not found on Github !</p>,
+	search_for_user: <p className='text-center mt-4 text-muted'>Search for some github user</p>,
 };

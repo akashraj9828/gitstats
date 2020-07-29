@@ -60,7 +60,7 @@ const LandingPage = () => {
 							onChange={(e) => setSearchInput(e.target.value)}
 							value={searchInput}
 							id='landing_page_input'
-							onFocus={e=>setSearchUsers([])}
+							onFocus={(e) => setSearchUsers([])}
 							onBlur={() =>
 								setTimeout(() => {
 									setSearchUsers(null);
@@ -70,9 +70,7 @@ const LandingPage = () => {
 
 						{searchUsers && (
 							<div className='Search-result'>
-								<ul className='search-result'>
-									{searchUsers.length > 0 ? searchUsers : ""}
-								</ul>
+								<ul className='search-result'>{searchUsers.length > 0 ? searchUsers : ""}</ul>
 							</div>
 						)}
 					</div>

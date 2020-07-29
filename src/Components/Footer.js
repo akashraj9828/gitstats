@@ -1,7 +1,8 @@
 import React from "react";
+import { connect } from "react-redux";
 
-function Footer() {
-	let color_scheme = window.localStorage.getItem("theme") === "light" ? "no-preference: light; light: ligth; dark: light;" : "no-preference: dark; dark: dark; light: dark;";
+function Footer({ theme }) {
+	let color_scheme = theme === "light" ? "no-preference: light; light: ligth; dark: light;" : "no-preference: dark; dark: dark; light: dark;";
 	return (
 		<footer className='mt-5'>
 			<div>
@@ -28,7 +29,12 @@ function Footer() {
 	);
 }
 
-export default Footer;
+const mapStateToProps = (state) => {
+	const { theme } = state.app;
+	return { theme };
+};
+
+export default connect(mapStateToProps, null)(Footer);
 
 // data-color-scheme="no-preference: dark; light: dark; dark: dark;"
 // data-color-scheme="no-preference: dark; light: dark; dark: dark;"

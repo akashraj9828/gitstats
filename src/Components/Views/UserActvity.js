@@ -28,7 +28,10 @@ function UserActivity(props) {
 			</div>
 			<div className='col'>
 				<h6 className='m-0 font-size-11'>
-					{event.title}
+					<a className='m-0 font-size-11' href={event.link} target='_blank' rel='noopener noreferrer'>
+						{" "}
+						{event.title}{" "}
+					</a>
 					<br />
 					<small className='text-muted'>{event.time}</small>
 				</h6>

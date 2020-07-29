@@ -92,16 +92,10 @@ input#landing_page_input {
 	}
 }
 
-.search_icon {
-	position: absolute;
-	top: 16px;
-	right: 62px;
-	background: transparent;
-	border: none;
-	color: #9b9ea0;
-	cursor: pointer;
-	z-index: 99;
-	display: none;
+.nav-item {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .search-wrapper {
@@ -181,8 +175,10 @@ input#landing_page_input {
 		margin-right: 0;
 	}
 
-	.search_icon {
+	.search_icon,
+	.search-icon {
 		display: block;
+		color: white !important;
 	}
 
 	.Search-result {

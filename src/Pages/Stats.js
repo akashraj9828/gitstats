@@ -18,7 +18,6 @@ const Stats = ({ match, history, theme, userName, name, userData, repoData, user
 	let username = match.params.username;
 	useDocumentTitle(name ? `${name} | GitStats` : `GitStats - An open-source contribution analyzer`);
 	const [aggregateData, setAggregateData] = useState(null);
-	console.log("---: Stats -> aggregateData", aggregateData);
 	const [languageData, setLanguageData] = useState(null);
 	const [repoAnalysisData, setRepoAnalysisData] = useState(null);
 	const [languageGraphDataSize, setLanguageGraphDataSize] = useState(null);
@@ -26,7 +25,6 @@ const Stats = ({ match, history, theme, userName, name, userData, repoData, user
 	const [repoGraphDataCommitWise, setRepoGraphDataCommitWise] = useState(null);
 	const [repoGraphDataPopularityWise, setRepoGraphDataPopularityWise] = useState(null);
 	const [commitHistoryGraphData, setCommitHistoryGraphData] = useState(null);
-	const [initialPageLoad, setInitialPageLoad] = useState(null);
 	const [top2days, setTop2days] = useState(null);
 	const [profileAnalysisError, setProfileAnalysisError] = useState(null);
 	const reset = () => {
@@ -37,11 +35,9 @@ const Stats = ({ match, history, theme, userName, name, userData, repoData, user
 		setRepoGraphDataCommitWise(null);
 		setRepoGraphDataPopularityWise(null);
 		setCommitHistoryGraphData(null);
-		setInitialPageLoad(null);
 		setTop2days(null);
 	};
 	useEffect(() => {
-		console.log("username Changed");
 		reset();
 		dispatch(resetState());
 		dispatch(setUserName(username));
@@ -68,6 +64,7 @@ const Stats = ({ match, history, theme, userName, name, userData, repoData, user
 		dispatch(setCommitHistory(commitHistory));
 	};
 
+	// when commit history is updated calclulate productivity graph
 	useEffect(() => {
 		const analysis = async () => {
 			const result = await DataProvider.commitGraphDataDayWise(commitHistory);
@@ -84,7 +81,7 @@ const Stats = ({ match, history, theme, userName, name, userData, repoData, user
 
 	// on change of repo data perform some calculation
 	useEffect(() => {
-		const repoAnalysis = async () => {
+		const analysis = async () => {
 			setProfileAnalysisError(null);
 			const result = await DataProvider.profileAnalysis(repoData);
 			result.error && setProfileAnalysisError(result.error);
@@ -92,19 +89,20 @@ const Stats = ({ match, history, theme, userName, name, userData, repoData, user
 			setLanguageData(result.language_calculations);
 			setRepoAnalysisData(result.repo_calculations);
 		};
-		repoData && repoAnalysis();
+		repoData && analysis();
 	}, [repoData]);
 
 	// when repo analysis changes perform graph calcualtion
 	useEffect(() => {
-		const graphCalculation = async () => {
+		const analysis = async () => {
 			const graphData = await DataProvider.repoBarGraphCalculation(repoAnalysisData);
 			setRepoGraphDataCommitWise(graphData.data_commit_wise);
 			setRepoGraphDataPopularityWise(graphData.data_popularity_wise);
 		};
-		repoAnalysisData && graphCalculation();
+		repoAnalysisData && analysis();
 	}, [repoAnalysisData]);
 
+	// when repoanalysis and language data processes .. calculate lannguage graph
 	useEffect(() => {
 		const analysis = async () => {
 			const result = await DataProvider.languageGraphCaclulations(languageData, repoAnalysisData);
@@ -122,9 +120,6 @@ const Stats = ({ match, history, theme, userName, name, userData, repoData, user
 			</Fragment>
 		);
 	}
-
-	console.log("---: Stats -> commitHistoryGraphData", commitHistoryGraphData);
-	console.log("---: Stats -> top2days", top2days);
 
 	return (
 		<Fragment>
@@ -334,17 +329,16 @@ const Stats = ({ match, history, theme, userName, name, userData, repoData, user
 								<div className='col-sm-12 mt-3'>
 									<h3 className='font-size-15 w-100'>My Popuplar Projects</h3>
 									<div className='card p-3 rounded' style={{ height: "calc( 100% - 20px )" }}>
-										{/* CONDITIONAL REDERING OF COMMIT ANALYSYS(repo wise) INFO */}
 										{repoGraphDataPopularityWise ? (
 											<Fragment>
 												<BarChart data={repoGraphDataPopularityWise} height={250} max_bars={5} error={profileAnalysisError} />
-												{/* Extra info about pie chart */}
+												{/* Extra info about bar chart */}
 												<div>
 													<h6 className='text-center mt-3'>
 														{repoGraphDataPopularityWise[0] && (
 															<Fragment>
 																{" "}
-																Most Commits are done in{" "}
+																My most Popular Project is{" "}
 																<span
 																	style={{
 																		color: repoGraphDataPopularityWise[0].color,
@@ -411,7 +405,7 @@ const Stats = ({ match, history, theme, userName, name, userData, repoData, user
 						</section>
 					</div>
 				) : (
-					initialPageLoad
+					Loader.section_loading
 				)}
 			</Layout>
 			<Footer />
