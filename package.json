@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": "^10.16.x",
+    "node": ">=10.16.x",
     "npm": "6.x"
   },
   "dependencies": {
@@ -21,12 +21,14 @@
     "node-sass": "^4.14.1",
     "path": "^0.12.7",
     "react": "^16.13.1",
-    "react-debounce-input": "^3.2.2",
     "react-dom": "^16.13.1",
+    "react-icons": "^3.10.0",
+    "react-redux": "^7.2.1",
     "react-router-dom": "^5.1.2",
     "react-router-ga": "^1.2.3",
     "react-scripts": "3.4.1",
-    "react-share": "^4.1.0"
+    "react-share": "^4.1.0",
+    "redux": "^4.0.5"
   },
   "scripts": {
     "start": "node server.js",
@@ -34,7 +36,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "pretty": "prettier --write \"./src/**/*.{js,jsx,json}\""
+    "pretty": "prettier --write \"./src/**/*.{js,jsx,json,scss,css}\""
   },
   "eslintConfig": {
     "extends": "react-app"

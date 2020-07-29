@@ -7,18 +7,18 @@ import { Route, Switch } from "react-router";
 import Analytics from "react-router-ga";
 
 function App() {
-    return (
-        <div className="App">
-            <Router>
-                <Analytics id={window.GA_CODE} trackPathnameOnly debug>
-                    <Switch>
-                        <Route path="/" exact component={LandingPage} />
-                        <Route path="/:username" exact component={Stats} />
-                    </Switch>
-                </Analytics>
-            </Router>
-        </div>
-    );
+	return (
+		<div className='App'>
+			<Router>
+				<Analytics id={window.GA_CODE} trackPathnameOnly debug>
+					<Switch>
+						<Route path='/' exact component={LandingPage} />
+						<Route path='/:username' exact component={Stats} />
+					</Switch>
+				</Analytics>
+			</Router>
+		</div>
+	);
 }
 
 export default App;

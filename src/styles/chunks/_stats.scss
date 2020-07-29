@@ -65,7 +65,7 @@
 		width: 0%;
 		height: 100%;
 		background: $buttonPrimary;
-		content: '';
+		content: "";
 		left: 0;
 		top: 0;
 		transition: all 0.2s;
@@ -100,7 +100,7 @@
 
 .total-badge {
 	max-width: 120px;
-	background: #2196F3;
+	background: #2196f3;
 	width: 40px;
 	border-radius: 3px;
 	padding: 0 7px;
@@ -119,10 +119,8 @@
 	&:hover {
 		text-decoration: unset;
 		color: #bcbcbc !important;
-
 	}
 }
-
 
 .pinned-repo-links {
 	transition: 0.2s;
@@ -134,3 +132,9 @@
 	}
 }
 
+.pinned-meta {
+	white-space: nowrap;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css?family=Comfortaa|Montserrat:400,500|Sen&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Comfortaa|Montserrat:400,500|Sen&display=swap");
 
 body {
-	font-family: 'Sen', sans-serif;
-	background-color: #F5F5F5;
+	font-family: "Sen", sans-serif;
+	background-color: #f5f5f5;
 }
 
 h1,
@@ -10,8 +10,7 @@ h2,
 h3,
 h4,
 h5 {
-	font-family: 'Montserrat', sans-serif;
-
+	font-family: "Montserrat", sans-serif;
 }
 
 .search-inner .Search-result {
@@ -20,18 +19,18 @@ h5 {
 	margin: auto;
 	left: 0;
 	right: 0;
+	z-index: 40;
 }
 
 /* Global color decleartion */
-$blueheader: #24292E;
-$buttonPrimary: #54A3FF;
-$dark_bg:#1a1a1b;
-$white:#fff;
-$black:#000;
-$space_bg:url(https://desktop.github.com/images/star-bg.svg) no-repeat;
+$blueheader: #24292e;
+$buttonPrimary: #54a3ff;
+$dark_bg: #1a1a1b;
+$white: #fff;
+$black: #000;
+$space_bg: url(https://desktop.github.com/images/star-bg.svg) no-repeat;
 
-
-.day-mode {
+.light {
 	footer {
 		background: $white;
 	}
@@ -57,7 +56,7 @@ $space_bg:url(https://desktop.github.com/images/star-bg.svg) no-repeat;
 	}
 }
 
-body.night-mode {
+body.dark {
 	background: $dark_bg;
 	color: #fff !important;
 
@@ -74,7 +73,7 @@ body.night-mode {
 	}
 
 	.card {
-		background: #24292E;
+		background: #24292e;
 		border-color: #171a1d;
 	}
 
@@ -87,22 +86,17 @@ body.night-mode {
 	}
 }
 
-
-
 .app-wrapper {
 	position: relative;
 	min-height: calc(100vh - 200px);
 	// min-height: 80vh;
 }
 
-
 .navbar-brand {
 	svg {
 		width: 120px;
 	}
 }
-
-
 
 .font-size-11 {
 	font-size: 11px;
@@ -163,13 +157,12 @@ button {
 }
 
 .text-light-gray {
-	color: #BEBFC1;
+	color: #bebfc1;
 }
-
 
 .logo {
 	font-size: 14px;
-	font-family: 'Comfortaa', cursive;
+	font-family: "Comfortaa", cursive;
 
 	img {
 		width: 27px;
@@ -177,13 +170,10 @@ button {
 	}
 }
 
-
-
 .css-y1c0xs,
 [data-css-y1c0xs] {
 	max-height: 190px;
 }
-
 
 .mobile-theme {
 	position: absolute;
@@ -192,19 +182,16 @@ button {
 	text-align: right;
 }
 
-
 footer {
 	width: 100%;
 	position: absolute;
 	z-index: 10;
 }
 
-
-
 // Media Query for mobile devices
 // media query should be always at end of css so it can overwride default css and wont need to use !important
-@media (max-width:767px) {
-	.content-area>div {
+@media (max-width: 767px) {
+	.content-area > div {
 		padding: 20px !important;
 	}
 
@@ -213,7 +200,6 @@ footer {
 		min-height: 95vh;
 
 		.content-area {
-
 			h1 {
 				font-size: 25px;
 			}
@@ -224,16 +210,12 @@ footer {
 		}
 	}
 
-
 	.content-area div input {
 		height: 42px;
 		padding: 20px;
 		font-size: 13px;
 		width: 85%;
 	}
-
-
-
 
 	.content-area {
 		width: 100%;
@@ -254,14 +236,9 @@ footer {
 	}
 }
 
-
-
-
-
-
-@import './chunks/stats';
-@import './chunks/footer';
-@import './chunks/githubLabels';
-@import './chunks/landing';
-@import './chunks/search';
-@import './chunks/share';
+@import "./chunks/stats";
+@import "./chunks/footer";
+@import "./chunks/githubLabels";
+@import "./chunks/landing";
+@import "./chunks/search";
+@import "./chunks/share";

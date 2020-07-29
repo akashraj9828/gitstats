@@ -7,7 +7,7 @@
 	flex-direction: column-reverse;
 
 	button {
-		transition: .2s;
+		transition: 0.2s;
 		width: 40px;
 		height: 40px;
 		margin: 5px 0px;
@@ -51,21 +51,24 @@
 }
 
 .credits {
-	// display: flex;
-	display: none;
+	display: flex;
+	// display: none;
 	justify-content: space-between;
 }
+.timestamp {
+	white-space: nowrap;
+}
 
-.night-mode {
+.dark {
 	.timestamp {
-		background: #24292E;
-		border: 1px solid rgba(0, 0, 0, .125);
+		background: #24292e;
+		border: 1px solid rgba(0, 0, 0, 0.125);
 		color: #5bd0a4 !important;
 	}
 
 	.credit-text {
-		background: #24292E;
-		border: 1px solid rgba(0, 0, 0, .125);
+		background: #24292e;
+		border: 1px solid rgba(0, 0, 0, 0.125);
 
 		.website {
 			color: #5bd0a4 !important;
@@ -73,17 +76,16 @@
 	}
 }
 
-.day-mode {
+.light {
 	.timestamp {
 		background: #fff;
-		border: 1px solid rgba(0, 0, 0, .125);
+		border: 1px solid rgba(0, 0, 0, 0.125);
 		color: #5bd0a4 !important;
-
 	}
 
 	.credit-text {
 		background: #fff;
-		border: 1px solid rgba(0, 0, 0, .125);
+		border: 1px solid rgba(0, 0, 0, 0.125);
 
 		.website {
 			color: #5bd0a4 !important;

@@ -10,113 +10,102 @@ import { saveAs } from "file-saver";
 import Loader from "../Extras/Loader";
 
 Object.keys(config).forEach((key) => {
-    window[key] = config[key];
+	window[key] = config[key];
 });
 
 function download({ data }, callback = window.downloadCallback) {
-    let filename = data.user.name || data.user.login;
+	let filename = data.user.name || data.user.login;
 
-    // enable backdrop when processing
-    let backdrop = document.getElementsByClassName("processing-backdrop")[0];
-    backdrop.style.display = "flex";
+	// enable backdrop when processing
+	let backdrop = document.getElementsByClassName("processing-backdrop")[0];
+	backdrop.style.display = "flex";
 
-    let credit = document.querySelector(".credits");
-    credit.style.display = "flex";
+	var activity_card = document.getElementById("user-activity");
+	// hide scrollbar before capture
+	activity_card.style.overflow = "hidden";
 
-    // set timestamp
-    const date = new Date();
-    document.querySelector(".timestamp").innerText = date.toDateString();
+	// set viewport 1400px for mobile devices
+	let viewport = document.getElementById("viewport");
+	viewport.setAttribute("content", "width=1200");
 
-    // add credits to end
-    document.querySelector(".credits .website").innerText = `gitstats.me/${data.user.login}`;
+	// allow 2s time for everything to fall in place
+	setTimeout(() => {
+		var node = document.getElementById("user-profile");
+		domtoimage.toBlob(node).then(function (blob) {
+			// save img
+			saveAs(blob, filename + "_Gitstats.png");
 
-    var activity_card = document.getElementById("user-activity");
-    // hide scrollbar before capture
-    activity_card.style.overflow = "hidden";
+			// enable scrollbar after capture
+			activity_card.style.overflow = "auto";
 
-    // set viewport 1400px for mobile devices
-    let viewport = document.getElementById("viewport");
-    viewport.setAttribute("content", "width=1200");
+			// reset viewport to be responsive
+			viewport.setAttribute("content", "width=device-width, initial-scale=1");
 
-    // allow 2s time for everything to fall in place
-    setTimeout(() => {
-        var node = document.getElementById("user-profile");
-        domtoimage.toBlob(node).then(function (blob) {
-            // save img
-            saveAs(blob, filename + "_Gitstats.png");
+			// hide backdrop and credit when done
+			backdrop.style.display = "none";
+		});
 
-            // enable scrollbar after capture
-            activity_card.style.overflow = "auto";
-
-            // reset viewport to be responsive
-            viewport.setAttribute("content", "width=device-width, initial-scale=1");
-
-            // hide backdrop and credit when done
-            backdrop.style.display = "none";
-            credit.style.display = "none";
-        });
-
-        if (callback) {
-            callback(data);
-        }
-    }, 2000);
+		if (callback) {
+			callback(data);
+		}
+	}, 2000);
 }
 
 const Share = ({ data }) => {
-    let [showIcons, setIcons] = useState(false);
-    return (
-        <div className="share-container">
-            <div className="processing-backdrop">
-                <span>{Loader.text_loading} Processing......</span>
-            </div>
-            <div className="share-icon">
-                <button
-                    id="download-btn"
-                    aria-label="download"
-                    onClick={() => (showIcons ? setIcons(false) : setIcons(true))}
-                    style={{
-                        backgroundColor: "transparent",
-                        border: "none",
-                        padding: "0px",
-                        font: "inherit",
-                        color: "inherit",
-                        cursor: "pointer",
-                        width: 40,
-                    }}>
-                    <ShareIcon />
-                </button>
-                <button
-                    aria-label="linkedin"
-                    onClick={(evt) => download(data)}
-                    style={{
-                        backgroundColor: "#fff",
-                        borderRadius: "50%",
-                        border: "none",
-                        padding: "0px",
-                        font: "inherit",
-                        color: "inherit",
-                        cursor: "pointer",
-                        height: "40px",
-                    }}>
-                    <DownloadIcon />
-                </button>
-            </div>
-            <div className="share-tray" style={showIcons ? { right: "0px" } : { right: "-50px" }}>
-                <FacebookShareButton url={window.location.href}>
-                    <FacebookIcon size={40} round={true} />
-                </FacebookShareButton>
-                <TwitterShareButton url={window.location.href}>
-                    <TwitterIcon size={40} round={true} />
-                </TwitterShareButton>
-                <WhatsappShareButton url={window.location.href}>
-                    <WhatsappIcon size={40} round={true} />
-                </WhatsappShareButton>
-                <LinkedinShareButton url={window.location.href}>
-                    <LinkedinIcon size={40} round={true} />
-                </LinkedinShareButton>
-            </div>
-        </div>
-    );
+	let [showIcons, setIcons] = useState(false);
+	return (
+		<div className='share-container'>
+			<div className='processing-backdrop'>
+				<span>{Loader.text_loading} Processing......</span>
+			</div>
+			<div className='share-icon'>
+				<button
+					id='download-btn'
+					aria-label='download'
+					onClick={() => (showIcons ? setIcons(false) : setIcons(true))}
+					style={{
+						backgroundColor: "transparent",
+						border: "none",
+						padding: "0px",
+						font: "inherit",
+						color: "inherit",
+						cursor: "pointer",
+						width: 40,
+					}}>
+					<ShareIcon />
+				</button>
+				<button
+					aria-label='linkedin'
+					onClick={(evt) => download(data)}
+					style={{
+						backgroundColor: "#fff",
+						borderRadius: "50%",
+						border: "none",
+						padding: "0px",
+						font: "inherit",
+						color: "inherit",
+						cursor: "pointer",
+						height: "40px",
+					}}>
+					<DownloadIcon />
+				</button>
+			</div>
+			<div className='share-tray' style={showIcons ? { right: "0px" } : { right: "-50px" }}>
+				<FacebookShareButton url={window.location.href}>
+					<FacebookIcon size={40} round={true} />
+				</FacebookShareButton>
+				<TwitterShareButton url={window.location.href}>
+					<TwitterIcon size={40} round={true} />
+				</TwitterShareButton>
+				<WhatsappShareButton url={window.location.href}>
+					<WhatsappIcon size={40} round={true} />
+				</WhatsappShareButton>
+				<LinkedinShareButton url={window.location.href}>
+					<LinkedinIcon size={40} round={true} />
+				</LinkedinShareButton>
+			</div>
+		</div>
+	);
 };
 
 export default Share;

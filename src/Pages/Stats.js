@@ -1,425 +1,421 @@
-import React, { Fragment } from "react";
-import Layout from "../Components/Layout";
-import BasicInformation from "../Components/Views/BasicInfo";
-import Pinned from "../Components/Views/Pinned";
-import DataProvider from "../Data-provider";
-import PieChart from "../Components/Charts/PieChart";
-import BarChart from "../Components/Charts/BarChart";
-import Loader from "../Components/Extras/Loader";
-import Footer from "../Components/Footer";
-import Share from "../Components/Views/Share";
-import Header from "../Components/Header";
-import UserActivity from "../Components/Views/UserActvity";
-class Stats extends React.Component {
-    constructor(props) {
-        super(props);
-        let username = "akashraj9828";
-        try {
-            username = props.match.params.username ? props.match.params.username : "akashraj9828";
-        } catch (error) {}
+import React, { Fragment, useEffect, useState } from "react";
+import Layout from "Components/Layout";
+import BasicInformation from "Components/Views/BasicInfo";
+import Pinned from "Components/Views/Pinned";
+import DataProvider from "Data-provider";
+import PieChart from "Components/Charts/PieChart";
+import BarChart from "Components/Charts/BarChart";
+import Loader from "Components/Extras/Loader";
+import Footer from "Components/Footer";
+import Share from "Components/Views/Share";
+import Header from "Components/Header";
+import UserActivity from "Components/Views/UserActvity";
+import { connect } from "react-redux";
+import { setUserName, resetState, setUserData, setRepoData, setUserActivity, setCommitHistory } from "redux/actions/app";
+import { useDocumentTitle } from "CustomHooks";
 
-        // state of entire page is managed here
-        this.state = {
-            username: username,
-            user_id: "", //userid
-            basicInfo: {}, //basic info // name // email // followers //following ,etc
-            pinnedInfo: {}, //pinned repos
-            repoInfo: {}, // all repos upto 100
-            aggregateData: {}, // total commits// total stars// total forks
-            languageData: {}, // lanuage size wise data// language count wise data/ language color data
-            repoAnalysisData: {}, // [{repo_name:y,commits:x,forks:x,stars:x}] array of repos simplified
-            basicLoaded: false,
-            repoLoaded: false,
-            pinnedLoaded: false,
-            aggregateDataLoaded: false,
-            repoAnalysisDataLoaded: false,
-            languageDataLoaded: false,
-            languageGraphDataSize: [], //language data size wise for pie chart
-            languageGraphDataSizeLoaded: false,
-            languageGraphDataCount: [], //language data repo count wise for pie chart
-            languageGraphDataCountLoaded: false,
-            repoGraphDataCommitWise: [], //repo data commit wise for pie chart
-            repoGraphDataCommitWiseLoaded: false,
-            repoGraphDataPopularityWise: [], //language data populatiry wise for bar graph chart
-            repoGraphDataPopularityWiseLoaded: false,
-            commitHistoryData: [], //commit data for all years day wise
-            commitHistoryDataLoaded: false,
-            commitHistoryGraphData: [], //commit data accumulated for each day of week [monday,tuesday,...sunday] from all times
-            commitHistoryGraphDataLoaded: false,
-            initialPageLoad: Loader.section_loading, //For loading application at first time
-            userActivity: [],
-            userActivityLoaded: false,
-            week_dict: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            profileAnalysisError: null,
-        };
-    }
+const Stats = ({ match, history, theme, userName, name, userData, repoData, userActivity, commitHistory, week_dict, dispatch }) => {
+	let username = match.params.username;
+	useDocumentTitle(name ? `${name} | GitStats` : `GitStats - An open-source contribution analyzer`);
+	const [aggregateData, setAggregateData] = useState(null);
+	const [languageData, setLanguageData] = useState(null);
+	const [repoAnalysisData, setRepoAnalysisData] = useState(null);
+	const [languageGraphDataSize, setLanguageGraphDataSize] = useState(null);
+	const [languageGraphDataCount, setLanguageGraphDataCount] = useState(null);
+	const [repoGraphDataCommitWise, setRepoGraphDataCommitWise] = useState(null);
+	const [repoGraphDataPopularityWise, setRepoGraphDataPopularityWise] = useState(null);
+	const [commitHistoryGraphData, setCommitHistoryGraphData] = useState(null);
+	const [top2days, setTop2days] = useState(null);
+	const [profileAnalysisError, setProfileAnalysisError] = useState(null);
+	const reset = () => {
+		setLanguageData(null);
+		setRepoAnalysisData(null);
+		setLanguageGraphDataSize(null);
+		setLanguageGraphDataCount(null);
+		setRepoGraphDataCommitWise(null);
+		setRepoGraphDataPopularityWise(null);
+		setCommitHistoryGraphData(null);
+		setTop2days(null);
+	};
+	useEffect(() => {
+		reset();
+		dispatch(resetState());
+		dispatch(setUserName(username));
+		fetchApiData(username);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [username]);
+	// API CALL
+	const fetchApiData = async (username) => {
+		getUserActivity(username);
+		getCommitHistory(username);
+		const userData = await DataProvider.getUserInfo(username);
+		dispatch(setUserData(userData));
+		const repoData = await DataProvider.getRepositoryInfo(username, userData.data.user.id);
+		dispatch(setRepoData(repoData));
+	};
+	// API CALL
+	const getUserActivity = async (username) => {
+		const userActivity = await DataProvider.getUserActivity(username);
+		dispatch(setUserActivity(userActivity));
+	};
+	// API CALL
+	const getCommitHistory = async (username) => {
+		const commitHistory = await DataProvider.getCommitHistory(username);
+		dispatch(setCommitHistory(commitHistory));
+	};
 
-    componentDidMount() {
-        // API CALL TO GET BASIC USER INFO
-        // PINNED REPOS merged into this api as well.
-        // Reduces api call from 3 to 2
+	// when commit history is updated calclulate productivity graph
+	useEffect(() => {
+		const analysis = async () => {
+			const result = await DataProvider.commitGraphDataDayWise(commitHistory);
+			setTop2days(result.top2days);
+			setCommitHistoryGraphData(result.week_graph_data);
+			setAggregateData((s) => ({
+				...s,
+				totalCommit: result.total_commit_all_years,
+			}));
+		};
+		commitHistory && analysis();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [commitHistory]);
 
-        DataProvider.getUserInfo(this.state.username).then((userData) => {
-            if (userData.errors) {
-                this.setState({
-                    initialPageLoad: Loader.user_not_found,
-                });
-                return;
-            }
-            document.title = userData.data.user.name + " | GitStats";
-            this.setState({
-                basicInfo: userData,
-                user_id: userData.data.user.id,
-                basicLoaded: true,
-                pinnedInfo: userData, //  few extra data is stored here but no worries
-                pinnedLoaded: true,
-            });
+	// on change of repo data perform some calculation
+	useEffect(() => {
+		const analysis = async () => {
+			setProfileAnalysisError(null);
+			const result = await DataProvider.profileAnalysis(repoData);
+			result.error && setProfileAnalysisError(result.error);
+			setAggregateData((s) => ({ ...s, ...result.basic_calculations }));
+			setLanguageData(result.language_calculations);
+			setRepoAnalysisData(result.repo_calculations);
+		};
+		repoData && analysis();
+	}, [repoData]);
 
-            // API CALL TO GET ALL REPO INFO // NESTED BECAUSE USER_ID HAS DEPENDENCY ON FIRST API CALL (getUserInfo)
-            DataProvider.getRepositoryInfo(this.state.username, this.state.user_id).then((repoData) => {
-                this.setState({
-                    repoInfo: repoData,
-                    repoLoaded: true,
-                });
+	// when repo analysis changes perform graph calcualtion
+	useEffect(() => {
+		const analysis = async () => {
+			const graphData = await DataProvider.repoBarGraphCalculation(repoAnalysisData);
+			setRepoGraphDataCommitWise(graphData.data_commit_wise);
+			setRepoGraphDataPopularityWise(graphData.data_popularity_wise);
+		};
+		repoAnalysisData && analysis();
+	}, [repoAnalysisData]);
 
-                // PERFORM BASIC CALCULATIONS and LANGUAGE ANALYSIS  and REPO CALCULATIONS
-                // Basic calculations: COMMIT COUNT // STARS COUNT // FORK COUNT // TOTAL REPO COUNT //
-                // Language calculations: size data // repo count by language data // language color data //
-                // Repo calculations: // COMMITS PER REPO // STARS and FORKS PER REPO
+	// when repoanalysis and language data processes .. calculate lannguage graph
+	useEffect(() => {
+		const analysis = async () => {
+			const result = await DataProvider.languageGraphCaclulations(languageData, repoAnalysisData);
+			setLanguageGraphDataSize(result.data_size_wise);
+			setLanguageGraphDataCount(result.data_count_wise);
+		};
+		repoAnalysisData && languageData && analysis();
+	}, [repoAnalysisData, languageData]);
 
-                DataProvider.profileAnalysis(this.state.repoInfo).then((data) => {
-                    this.setState(
-                        {
-                            aggregateData: data.basic_calculations,
-                            aggregateDataLoaded: true,
-                            languageData: data.language_calculations,
-                            languageDataLoaded: true,
-                            repoAnalysisData: data.repo_calculations,
-                            repoAnalysisDataLoaded: true,
-                            profileAnalysisError: data.error ? data.error : null,
-                        },
-                        () => {
-                            // API CALL TO GET COMMIT HISTORY OF ALL TIMES
-                            DataProvider.getCommitHistory(this.state.username).then((commitData) => {
-                                this.setState({
-                                    commitHistoryData: commitData,
-                                    commitHistoryDataLoaded: true,
-                                });
-                                DataProvider.commitGraphDataDayWise(commitData).then((data) => {
-                                    this.setState({
-                                        commitHistoryGraphData: data.week_graph_data,
-                                        commitHistoryGraphDataLoaded: true,
-                                        aggregateData: {
-                                            ...this.state.aggregateData,
-                                            totalCommit: data.total_commit_all_years,
-                                        },
-                                        top2days: data.top2days,
-                                    });
-                                });
-                            });
-                        }
-                    );
+	if (!userData) {
+		return (
+			<Fragment>
+				<Header />
+				{Loader.section_loading}
+			</Fragment>
+		);
+	}
 
-                    // Language Graph Calculations
-                    DataProvider.languageGraphCaclulations(this.state.languageData, this.state.repoAnalysisData).then((data) => {
-                        this.setState({
-                            languageGraphDataSize: data.data_size_wise,
-                            languageGraphDataSizeLoaded: true,
-                            languageGraphDataCount: data.data_count_wise,
-                            languageGraphDataCountLoaded: true,
-                        });
-                    });
+	return (
+		<Fragment>
+			<Header />
+			{userData && <Share data={userData} />}
+			<Layout>
+				{userData ? (
+					<div>
+						{/* CONDITIONAL REDERING OF BASIC INFO */}
+						{userData && aggregateData ? <BasicInformation basicInfo={userData} aggregateData={aggregateData} /> : Loader.section_loading}
 
-                    // Repo graph Calculations
-                    // PERFORM Advanced REPO ANALYSIS // COMMITED PER REPO // STARS and FORKS PER REPO
-                    // Repo info:
-                    DataProvider.repoBarGraphCalculation(this.state.repoAnalysisData).then((data) => {
-                        this.setState({
-                            repoGraphDataCommitWise: data.data_commit_wise,
-                            repoGraphDataCommitWiseLoaded: true,
-                            repoGraphDataPopularityWise: data.data_popularity_wise,
-                            repoGraphDataPopularityWiseLoaded: true,
-                        });
-                    });
-                });
-            });
-        });
+						{/* REPO SECTION */}
+						<section className='pt-5 '>
+							<div className='row'>
+								<div className='col-sm-6 mt-3'>
+									<h3 className='font-size-15 w-100'>My Recent activities</h3>
+									<div
+										className='card p-3 rounded'
+										id='user-activity'
+										style={{
+											height: "calc( 100% - 20px )",
+											maxHeight: "350px",
+											overflow: "auto",
+										}}>
+										{/*Will show 30 recent activity by user */}
+										{userActivity ? (
+											<Fragment>
+												<UserActivity data={userActivity} />
+											</Fragment>
+										) : (
+											Loader.section_loading
+										)}
+									</div>
+								</div>
 
-        DataProvider.getUserActivity(this.state.username).then((userActivity) => {
-            this.setState({
-                userActivity: userActivity,
-                userActivityLoaded: true,
-            });
-        });
-    }
+								<div className='col-sm-6 mt-3'>
+									<h3 className='font-size-15 w-100'>Commit analysis</h3>
+									<div className='card p-3 rounded' style={{ height: "calc( 100% - 20px )" }}>
+										{/* CONDITIONAL REDERING OF COMMIT ANALYSYS(repo wise) INFO */}
+										{repoGraphDataCommitWise ? (
+											<Fragment>
+												<PieChart data={repoGraphDataCommitWise} height={250} max_slices={10} error={profileAnalysisError} />
+												{/* Extra info about pie chart */}
+												<div>
+													<h6 className='text-center mt-3'>
+														{repoGraphDataCommitWise[0] && (
+															<Fragment>
+																{" "}
+																Most Commits are done in{" "}
+																<span
+																	style={{
+																		color: repoGraphDataCommitWise[0].color,
+																	}}>
+																	{" "}
+																	{repoGraphDataCommitWise[0].id}{" "}
+																</span>
+															</Fragment>
+														)}
+													</h6>
+												</div>
+											</Fragment>
+										) : (
+											Loader.section_loading
+										)}
+									</div>
+								</div>
+							</div>
+						</section>
 
-    render() {
-        return (
-            <div>
-                <Header />
-                {this.state.basicLoaded && <Share data={this.state.basicInfo} />}
-                <Layout>
-                    {this.state.basicLoaded && this.state.basicInfo ? (
-                        <div>
-                            {/* CONDITIONAL REDERING OF BASIC INFO */}
-                            {this.state.basicLoaded ? <BasicInformation basicInfo={this.state.basicInfo} aggregateData={this.state.aggregateData} /> : Loader.section_loading}
+						{/* LANGUAGE SECTION */}
+						<section className='pt-5 '>
+							<div className='row'>
+								<div className='col-sm-6 mt-3'>
+									<h3 className='font-size-15 w-100'>Language analysis Size wise</h3>
+									{/* height:"calc( 100% - 20px ) because h3 above take 20px but i wanted card to be equal to the col-height */}
+									<div className='card p-3 rounded' style={{ height: "calc( 100% - 20px )" }}>
+										{/* CONDITIONAL REDERING OF LANGUAGE ANALYSYS(BY SIZE) INFO */}
+										{languageGraphDataSize ? (
+											<Fragment>
+												<PieChart data={languageGraphDataSize} height={250} max_slices={6} accumulate_remaining={true} error={profileAnalysisError} />
+												{/* Extra info about pie chart */}
+												<div>
+													<h6 className='text-center mt-3'>
+														{languageGraphDataSize[0] && (
+															<Fragment>
+																{" "}
+																Most written language is{" "}
+																<span
+																	style={{
+																		color: languageGraphDataSize[0].color,
+																	}}>
+																	{" "}
+																	{languageGraphDataSize[0].id}{" "}
+																</span>
+															</Fragment>
+														)}
+														{languageGraphDataSize[1] && (
+															<Fragment>
+																{" "}
+																followed by{" "}
+																<span
+																	style={{
+																		color: languageGraphDataSize[1].color,
+																	}}>
+																	{" "}
+																	{languageGraphDataSize[1].id}{" "}
+																</span>
+															</Fragment>
+														)}
+														{languageGraphDataSize[2] && (
+															<Fragment>
+																{" "}
+																&{" "}
+																<span
+																	style={{
+																		color: languageGraphDataSize[2].color,
+																	}}>
+																	{" "}
+																	{languageGraphDataSize[2].id}{" "}
+																</span>
+															</Fragment>
+														)}
+													</h6>
+												</div>
+											</Fragment>
+										) : (
+											Loader.section_loading
+										)}
+										{/* {languageData ? <Language languageData={languageData} type="size" /> : Loader.section_loading} */}
+									</div>
+								</div>
+								<div className='col-sm-6 mt-3'>
+									<h3 className='font-size-15 w-100'>Language analysis Repo wise</h3>
+									<div className='card p-3 rounded' style={{ height: "calc( 100% - 20px )" }}>
+										{/* CONDITIONAL REDERING OF LANGUAGE ANALYSYS(BY COUNT) INFO */}
+										{languageGraphDataCount ? (
+											<Fragment>
+												<PieChart data={languageGraphDataCount} height={250} max_slices={6} error={profileAnalysisError} />
+												{/* Extra info about pie chart */}
+												<div>
+													<h6 className='text-center mt-3'>
+														{languageGraphDataCount[0] && (
+															<Fragment>
+																{" "}
+																Most Used language is{" "}
+																<span
+																	style={{
+																		color: languageGraphDataCount[0].color,
+																	}}>
+																	{" "}
+																	{languageGraphDataCount[0].id}{" "}
+																</span>
+															</Fragment>
+														)}
+														{languageGraphDataCount[1] && (
+															<Fragment>
+																{" "}
+																followed by{" "}
+																<span
+																	style={{
+																		color: languageGraphDataCount[1].color,
+																	}}>
+																	{" "}
+																	{languageGraphDataCount[1].id}{" "}
+																</span>
+															</Fragment>
+														)}
+														{languageGraphDataCount[2] && (
+															<Fragment>
+																{" "}
+																&{" "}
+																<span
+																	style={{
+																		color: languageGraphDataCount[2].color,
+																	}}>
+																	{" "}
+																	{languageGraphDataCount[2].id}{" "}
+																</span>
+															</Fragment>
+														)}
+													</h6>
+												</div>
+											</Fragment>
+										) : (
+											Loader.section_loading
+										)}
+										{/* {languageData ? <Language languageData={languageData} type="count" /> : Loader.section_loading} */}
+									</div>
+								</div>
+							</div>
+						</section>
 
-                            {/* REPO SECTION */}
-                            <section className="pt-5 ">
-                                <div className="row">
-                                    <div className="col-sm-6 mt-3">
-                                        <h3 className="font-size-15 w-100">My Recent activities</h3>
-                                        <div
-                                            className="card p-3 rounded"
-                                            id="user-activity"
-                                            style={{
-                                                height: "calc( 100% - 20px )",
-                                                maxHeight: "350px",
-                                                overflow: "auto",
-                                            }}>
-                                            {/*Will show 30 recent activity by user */}
-                                            {this.state.userActivityLoaded ? (
-                                                <Fragment>
-                                                    <UserActivity data={this.state.userActivity} />
-                                                </Fragment>
-                                            ) : (
-                                                Loader.section_loading
-                                            )}
-                                        </div>
-                                    </div>
+						{/* PINNED SECTION */}
+						<section className='pt-5 '>
+							<div className='row'>
+								<div className='col-12'>
+									<h1 className='font-size-20 w-100'>My Awesome projects</h1>
+								</div>
+								{/* CONDITIONAL REDERING OF PINNED REPO INFO */}
+								{userData ? <Pinned pinnedRepos={userData} /> : Loader.section_loading}
+							</div>
+						</section>
 
-                                    <div className="col-sm-6 mt-3">
-                                        <h3 className="font-size-15 w-100">Commit analysis</h3>
-                                        <div className="card p-3 rounded" style={{ height: "calc( 100% - 20px )" }}>
-                                            {/* CONDITIONAL REDERING OF COMMIT ANALYSYS(repo wise) INFO */}
-                                            {this.state.repoGraphDataCommitWiseLoaded || this.state.error ? (
-                                                <Fragment>
-                                                    <PieChart data={this.state.repoGraphDataCommitWise} height={250} max_slices={10} error={this.state.profileAnalysisError} />
-                                                    {/* Extra info about pie chart */}
-                                                    <div>
-                                                        <h6 className="text-center mt-3">
-                                                            {this.state.repoGraphDataCommitWise[0] && (
-                                                                <Fragment>
-                                                                    {" "}
-                                                                    Most Commits are done in{" "}
-                                                                    <span
-                                                                        style={{
-                                                                            color: this.state.repoGraphDataCommitWise[0].color,
-                                                                        }}>
-                                                                        {" "}
-                                                                        {this.state.repoGraphDataCommitWise[0].id}{" "}
-                                                                    </span>
-                                                                </Fragment>
-                                                            )}
-                                                        </h6>
-                                                    </div>
-                                                </Fragment>
-                                            ) : (
-                                                Loader.section_loading
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
+						{/* POPUPLAR SECTION */}
+						<section className='pt-5'>
+							<div className='row'>
+								<div className='col-sm-12 mt-3'>
+									<h3 className='font-size-15 w-100'>My Popuplar Projects</h3>
+									<div className='card p-3 rounded' style={{ height: "calc( 100% - 20px )" }}>
+										{repoGraphDataPopularityWise ? (
+											<Fragment>
+												<BarChart data={repoGraphDataPopularityWise} height={250} max_bars={5} error={profileAnalysisError} />
+												{/* Extra info about bar chart */}
+												<div>
+													<h6 className='text-center mt-3'>
+														{repoGraphDataPopularityWise[0] && (
+															<Fragment>
+																{" "}
+																My most Popular Project is{" "}
+																<span
+																	style={{
+																		color: repoGraphDataPopularityWise[0].color,
+																	}}>
+																	{" "}
+																	{repoGraphDataPopularityWise[0].id}{" "}
+																</span>
+															</Fragment>
+														)}
+													</h6>
+												</div>
+											</Fragment>
+										) : (
+											Loader.section_loading
+										)}
+									</div>
+								</div>
+							</div>
+						</section>
 
-                            {/* LANGUAGE SECTION */}
-                            <section className="pt-5 ">
-                                <div className="row">
-                                    <div className="col-sm-6 mt-3">
-                                        <h3 className="font-size-15 w-100">Language analysis Size wise</h3>
-                                        {/* height:"calc( 100% - 20px ) because h3 above take 20px but i wanted card to be equal to the col-height */}
-                                        <div className="card p-3 rounded" style={{ height: "calc( 100% - 20px )" }}>
-                                            {/* CONDITIONAL REDERING OF LANGUAGE ANALYSYS(BY SIZE) INFO */}
-                                            {this.state.languageGraphDataSizeLoaded || this.state.error ? (
-                                                <Fragment>
-                                                    <PieChart data={this.state.languageGraphDataSize} height={250} max_slices={6} accumulate_remaining={true} error={this.state.profileAnalysisError} />
-                                                    {/* Extra info about pie chart */}
-                                                    <div>
-                                                        <h6 className="text-center mt-3">
-                                                            {this.state.languageGraphDataSize[0] && (
-                                                                <Fragment>
-                                                                    {" "}
-                                                                    Most written language is{" "}
-                                                                    <span
-                                                                        style={{
-                                                                            color: this.state.languageGraphDataSize[0].color,
-                                                                        }}>
-                                                                        {" "}
-                                                                        {this.state.languageGraphDataSize[0].id}{" "}
-                                                                    </span>
-                                                                </Fragment>
-                                                            )}
-                                                            {this.state.languageGraphDataSize[1] && (
-                                                                <Fragment>
-                                                                    {" "}
-                                                                    followed by{" "}
-                                                                    <span
-                                                                        style={{
-                                                                            color: this.state.languageGraphDataSize[1].color,
-                                                                        }}>
-                                                                        {" "}
-                                                                        {this.state.languageGraphDataSize[1].id}{" "}
-                                                                    </span>
-                                                                </Fragment>
-                                                            )}
-                                                            {this.state.languageGraphDataSize[2] && (
-                                                                <Fragment>
-                                                                    {" "}
-                                                                    &{" "}
-                                                                    <span
-                                                                        style={{
-                                                                            color: this.state.languageGraphDataSize[2].color,
-                                                                        }}>
-                                                                        {" "}
-                                                                        {this.state.languageGraphDataSize[2].id}{" "}
-                                                                    </span>
-                                                                </Fragment>
-                                                            )}
-                                                        </h6>
-                                                    </div>
-                                                </Fragment>
-                                            ) : (
-                                                Loader.section_loading
-                                            )}
-                                            {/* {this.state.languageDataLoaded ? <Language languageData={this.state.languageData} type="size" /> : Loader.section_loading} */}
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-6 mt-3">
-                                        <h3 className="font-size-15 w-100">Language analysis Repo wise</h3>
-                                        <div className="card p-3 rounded" style={{ height: "calc( 100% - 20px )" }}>
-                                            {/* CONDITIONAL REDERING OF LANGUAGE ANALYSYS(BY COUNT) INFO */}
-                                            {this.state.languageGraphDataCountLoaded || this.state.error ? (
-                                                <Fragment>
-                                                    <PieChart data={this.state.languageGraphDataCount} height={250} max_slices={6} error={this.state.profileAnalysisError} />
-                                                    {/* Extra info about pie chart */}
-                                                    <div>
-                                                        <h6 className="text-center mt-3">
-                                                            {this.state.languageGraphDataCount[0] && (
-                                                                <Fragment>
-                                                                    {" "}
-                                                                    Most Used language is{" "}
-                                                                    <span
-                                                                        style={{
-                                                                            color: this.state.languageGraphDataCount[0].color,
-                                                                        }}>
-                                                                        {" "}
-                                                                        {this.state.languageGraphDataCount[0].id}{" "}
-                                                                    </span>
-                                                                </Fragment>
-                                                            )}
-                                                            {this.state.languageGraphDataCount[1] && (
-                                                                <Fragment>
-                                                                    {" "}
-                                                                    followed by{" "}
-                                                                    <span
-                                                                        style={{
-                                                                            color: this.state.languageGraphDataCount[1].color,
-                                                                        }}>
-                                                                        {" "}
-                                                                        {this.state.languageGraphDataCount[1].id}{" "}
-                                                                    </span>
-                                                                </Fragment>
-                                                            )}
-                                                            {this.state.languageGraphDataCount[2] && (
-                                                                <Fragment>
-                                                                    {" "}
-                                                                    &{" "}
-                                                                    <span
-                                                                        style={{
-                                                                            color: this.state.languageGraphDataCount[2].color,
-                                                                        }}>
-                                                                        {" "}
-                                                                        {this.state.languageGraphDataCount[2].id}{" "}
-                                                                    </span>
-                                                                </Fragment>
-                                                            )}
-                                                        </h6>
-                                                    </div>
-                                                </Fragment>
-                                            ) : (
-                                                Loader.section_loading
-                                            )}
-                                            {/* {this.state.languageDataLoaded ? <Language languageData={this.state.languageData} type="count" /> : Loader.section_loading} */}
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
+						{/* PRODUCTIVITY SECTION */}
+						<section className='pt-5'>
+							<div className='row'>
+								<div className='col-sm-12 mt-3'>
+									<h3 className='font-size-15 w-100'>When am I most productive?</h3>
+									<div className='card p-3 rounded' style={{ height: "calc( 100% - 20px )" }}>
+										{/* CONDITIONAL REDERING OF WEEK DAY ACTIVITY */}
+										{commitHistoryGraphData ? (
+											<Fragment>
+												{commitHistoryGraphData ? <BarChart data={commitHistoryGraphData} height={250} max_bars={7} keys={["commit"]} indexBy={"day"} error={profileAnalysisError} /> : Loader.section_loading}
+												{/* Extra info about Week days chart */}
+												<div>
+													<h6 className='text-center mt-3'>
+														{commitHistoryGraphData[0] && (
+															<Fragment>
+																{" "}
+																I am most productive on{" "}
+																<span
+																	style={{
+																		color: commitHistoryGraphData[top2days[0]].commitColor,
+																	}}>
+																	{" "}
+																	{week_dict[top2days[0]]}{" "}
+																</span>{" "}
+																and{" "}
+																<span
+																	style={{
+																		color: commitHistoryGraphData[top2days[1]].commitColor,
+																	}}>
+																	{" "}
+																	{week_dict[top2days[1]]}{" "}
+																</span>{" "}
+															</Fragment>
+														)}
+													</h6>
+												</div>
+											</Fragment>
+										) : (
+											Loader.section_loading
+										)}
+									</div>
+								</div>
+							</div>
+						</section>
+					</div>
+				) : (
+					Loader.section_loading
+				)}
+			</Layout>
+			<Footer />
+		</Fragment>
+	);
+};
 
-                            {/* PINNED SECTION */}
-                            <section className="pt-5 ">
-                                <div className="row">
-                                    <div className="col-12">
-                                        <h1 className="font-size-20 w-100">My Awesome projects</h1>
-                                    </div>
-                                    {/* CONDITIONAL REDERING OF PINNED REPO INFO */}
-                                    {this.state.pinnedLoaded ? <Pinned pinnedRepos={this.state.pinnedInfo} /> : Loader.section_loading}
-                                </div>
-                            </section>
+const mapStateToProps = (state) => {
+	const { theme, userName, name, userData, repoData, userActivity, commitHistory, week_dict } = state.app;
+	return { theme, userName, name, userData, repoData, userActivity, commitHistory, week_dict };
+};
 
-                            {/* PRODUCTIVITY SECTION */}
-                            <section className="pt-5">
-                                <div className="row">
-                                    <div className="col-sm-12 mt-3">
-                                        <h3 className="font-size-15 w-100">When am I most productive?</h3>
-                                        <div className="card p-3 rounded" style={{ height: "calc( 100% - 20px )" }}>
-                                            {/* CONDITIONAL REDERING OF WEEK DAY ACTIVITY */}
-                                            {this.state.commitHistoryDataLoaded || this.state.error ? (
-                                                <Fragment>
-                                                    {this.state.commitHistoryDataLoaded ? (
-                                                        <BarChart
-                                                            data={this.state.commitHistoryGraphData}
-                                                            height={250}
-                                                            max_bars={7}
-                                                            keys={["commit"]}
-                                                            indexBy={"day"}
-                                                            error={this.state.profileAnalysisError}
-                                                        />
-                                                    ) : (
-                                                        Loader.section_loading
-                                                    )}
-                                                    {/* Extra info about Week days chart */}
-                                                    <div>
-                                                        <h6 className="text-center mt-3">
-                                                            {this.state.commitHistoryGraphData[0] && (
-                                                                <Fragment>
-                                                                    {" "}
-                                                                    I am most productive on{" "}
-                                                                    <span
-                                                                        style={{
-                                                                            color: this.state.commitHistoryGraphData[this.state.top2days[0]].commitColor,
-                                                                        }}>
-                                                                        {" "}
-                                                                        {this.state.week_dict[this.state.top2days[0]]}{" "}
-                                                                    </span>{" "}
-                                                                    and{" "}
-                                                                    <span
-                                                                        style={{
-                                                                            color: this.state.commitHistoryGraphData[this.state.top2days[1]].commitColor,
-                                                                        }}>
-                                                                        {" "}
-                                                                        {this.state.week_dict[this.state.top2days[1]]}{" "}
-                                                                    </span>{" "}
-                                                                </Fragment>
-                                                            )}
-                                                        </h6>
-                                                    </div>
-                                                </Fragment>
-                                            ) : (
-                                                Loader.section_loading
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-                        </div>
-                    ) : (
-                        this.state.initialPageLoad
-                    )}
-                </Layout>
-                <Footer />
-            </div>
-        );
-    }
-}
-
-export default Stats;
+export default connect(mapStateToProps, null)(Stats);
