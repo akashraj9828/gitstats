@@ -89,7 +89,7 @@ async function profileAnalysis(repoInfo) {
 	if (repoInfo.errors || repoInfo.data === null) {
 		// error=repoInfo.errors[0].message
 		// console.log("error 500");
-		error = "🙊 500 Internal Server ERROR :<";
+		error = "🙊 Something went wrong :<";
 		return {
 			basic_calculations: {},
 			language_calculations: {},

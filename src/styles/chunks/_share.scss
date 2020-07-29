@@ -55,6 +55,9 @@
 	display: none;
 	justify-content: space-between;
 }
+.timestamp {
+	white-space: nowrap;
+}
 
 .dark {
 	.timestamp {

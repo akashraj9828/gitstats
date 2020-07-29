@@ -11,7 +11,6 @@ import Share from "Components/Views/Share";
 import Header from "Components/Header";
 import UserActivity from "Components/Views/UserActvity";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import { setUserName, resetState, setUserData, setRepoData, setUserActivity, setCommitHistory } from "redux/actions/app";
 import { useDocumentTitle } from "CustomHooks";
 
@@ -29,6 +28,7 @@ const Stats = ({ match, history, theme, userName, name, userData, repoData, user
 	const [commitHistoryGraphData, setCommitHistoryGraphData] = useState(null);
 	const [initialPageLoad, setInitialPageLoad] = useState(null);
 	const [top2days, setTop2days] = useState(null);
+	const [profileAnalysisError, setProfileAnalysisError] = useState(null);
 	const reset = () => {
 		setLanguageData(null);
 		setRepoAnalysisData(null);
@@ -85,7 +85,9 @@ const Stats = ({ match, history, theme, userName, name, userData, repoData, user
 	// on change of repo data perform some calculation
 	useEffect(() => {
 		const repoAnalysis = async () => {
+			setProfileAnalysisError(null);
 			const result = await DataProvider.profileAnalysis(repoData);
+			result.error && setProfileAnalysisError(result.error);
 			setAggregateData((s) => ({ ...s, ...result.basic_calculations }));
 			setLanguageData(result.language_calculations);
 			setRepoAnalysisData(result.repo_calculations);
@@ -112,8 +114,6 @@ const Stats = ({ match, history, theme, userName, name, userData, repoData, user
 		repoAnalysisData && languageData && analysis();
 	}, [repoAnalysisData, languageData]);
 
-	const [profileAnalysisError, setProfileAnalysisError] = useState(null);
-	const [error, setError] = useState(false);
 	if (!userData) {
 		return (
 			<Fragment>
@@ -164,7 +164,7 @@ const Stats = ({ match, history, theme, userName, name, userData, repoData, user
 									<h3 className='font-size-15 w-100'>Commit analysis</h3>
 									<div className='card p-3 rounded' style={{ height: "calc( 100% - 20px )" }}>
 										{/* CONDITIONAL REDERING OF COMMIT ANALYSYS(repo wise) INFO */}
-										{repoGraphDataCommitWise || error ? (
+										{repoGraphDataCommitWise ? (
 											<Fragment>
 												<PieChart data={repoGraphDataCommitWise} height={250} max_slices={10} error={profileAnalysisError} />
 												{/* Extra info about pie chart */}
@@ -202,7 +202,7 @@ const Stats = ({ match, history, theme, userName, name, userData, repoData, user
 									{/* height:"calc( 100% - 20px ) because h3 above take 20px but i wanted card to be equal to the col-height */}
 									<div className='card p-3 rounded' style={{ height: "calc( 100% - 20px )" }}>
 										{/* CONDITIONAL REDERING OF LANGUAGE ANALYSYS(BY SIZE) INFO */}
-										{languageGraphDataSize || error ? (
+										{languageGraphDataSize ? (
 											<Fragment>
 												<PieChart data={languageGraphDataSize} height={250} max_slices={6} accumulate_remaining={true} error={profileAnalysisError} />
 												{/* Extra info about pie chart */}
@@ -260,7 +260,7 @@ const Stats = ({ match, history, theme, userName, name, userData, repoData, user
 									<h3 className='font-size-15 w-100'>Language analysis Repo wise</h3>
 									<div className='card p-3 rounded' style={{ height: "calc( 100% - 20px )" }}>
 										{/* CONDITIONAL REDERING OF LANGUAGE ANALYSYS(BY COUNT) INFO */}
-										{languageGraphDataCount || error ? (
+										{languageGraphDataCount ? (
 											<Fragment>
 												<PieChart data={languageGraphDataCount} height={250} max_slices={6} error={profileAnalysisError} />
 												{/* Extra info about pie chart */}
@@ -328,6 +328,43 @@ const Stats = ({ match, history, theme, userName, name, userData, repoData, user
 							</div>
 						</section>
 
+						{/* POPUPLAR SECTION */}
+						<section className='pt-5'>
+							<div className='row'>
+								<div className='col-sm-12 mt-3'>
+									<h3 className='font-size-15 w-100'>My Popuplar Projects</h3>
+									<div className='card p-3 rounded' style={{ height: "calc( 100% - 20px )" }}>
+										{/* CONDITIONAL REDERING OF COMMIT ANALYSYS(repo wise) INFO */}
+										{repoGraphDataPopularityWise ? (
+											<Fragment>
+												<BarChart data={repoGraphDataPopularityWise} height={250} max_bars={5} error={profileAnalysisError} />
+												{/* Extra info about pie chart */}
+												<div>
+													<h6 className='text-center mt-3'>
+														{repoGraphDataPopularityWise[0] && (
+															<Fragment>
+																{" "}
+																Most Commits are done in{" "}
+																<span
+																	style={{
+																		color: repoGraphDataPopularityWise[0].color,
+																	}}>
+																	{" "}
+																	{repoGraphDataPopularityWise[0].id}{" "}
+																</span>
+															</Fragment>
+														)}
+													</h6>
+												</div>
+											</Fragment>
+										) : (
+											Loader.section_loading
+										)}
+									</div>
+								</div>
+							</div>
+						</section>
+
 						{/* PRODUCTIVITY SECTION */}
 						<section className='pt-5'>
 							<div className='row'>
@@ -335,9 +372,9 @@ const Stats = ({ match, history, theme, userName, name, userData, repoData, user
 									<h3 className='font-size-15 w-100'>When am I most productive?</h3>
 									<div className='card p-3 rounded' style={{ height: "calc( 100% - 20px )" }}>
 										{/* CONDITIONAL REDERING OF WEEK DAY ACTIVITY */}
-										{commitHistory || error ? (
+										{commitHistoryGraphData ? (
 											<Fragment>
-												{commitHistory ? <BarChart data={commitHistoryGraphData} height={250} max_bars={7} keys={["commit"]} indexBy={"day"} error={profileAnalysisError} /> : Loader.section_loading}
+												{commitHistoryGraphData ? <BarChart data={commitHistoryGraphData} height={250} max_bars={7} keys={["commit"]} indexBy={"day"} error={profileAnalysisError} /> : Loader.section_loading}
 												{/* Extra info about Week days chart */}
 												<div>
 													<h6 className='text-center mt-3'>
