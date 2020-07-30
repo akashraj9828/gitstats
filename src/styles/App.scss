@@ -91,10 +91,22 @@ body.dark {
 	min-height: calc(100vh - 200px);
 	// min-height: 80vh;
 }
-
+.navbar{
+	display: flex;
+	justify-content: space-between;
+}
 .navbar-brand {
 	svg {
 		width: 120px;
+	}
+}
+.navbar-extras{
+	display: flex;
+	justify-content: center;
+	align-self: center;
+	position: relative;
+	*{
+		white-space: nowrap;
 	}
 }
 
@@ -175,12 +187,7 @@ button {
 	max-height: 190px;
 }
 
-.mobile-theme {
-	position: absolute;
-	top: 9px;
-	right: 0;
-	text-align: right;
-}
+
 
 footer {
 	width: 100%;
