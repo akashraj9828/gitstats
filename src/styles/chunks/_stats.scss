@@ -84,7 +84,6 @@
 }
 
 .change-theme {
-
 	button {
 		border: none;
 		background: transparent;
@@ -124,7 +123,7 @@
 .pinned-repo-links {
 	transition: 0.2s;
 	color: $black;
-	
+
 	&:hover {
 		text-decoration: unset;
 		color: #bcbcbc !important;
@@ -137,7 +136,7 @@
 	justify-content: center;
 	align-items: center;
 	transition: 0.2s;
-	&:hover{
+	&:hover {
 		text-decoration: none;
 		color: var(--color) !important;
 	}

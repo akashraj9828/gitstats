@@ -56,12 +56,22 @@ $space_bg: url(https://desktop.github.com/images/star-bg.svg) no-repeat;
 	}
 }
 
+body.light {
+	:not(footer) {
+		a {
+			color: black;
+			text-decoration: none;
+		}
+	}
+}
+
 body.dark {
 	background: $dark_bg;
 	color: #fff !important;
 
 	a {
 		color: #fff !important;
+		text-decoration: none;
 
 		&.hover-white:hover {
 			color: #fff !important;
@@ -91,7 +101,7 @@ body.dark {
 	min-height: calc(100vh - 200px);
 	// min-height: 80vh;
 }
-.navbar{
+.navbar {
 	display: flex;
 	justify-content: space-between;
 }
@@ -100,12 +110,12 @@ body.dark {
 		width: 120px;
 	}
 }
-.navbar-extras{
+.navbar-extras {
 	display: flex;
 	justify-content: center;
 	align-self: center;
 	position: relative;
-	*{
+	* {
 		white-space: nowrap;
 	}
 }
@@ -186,8 +196,6 @@ button {
 [data-css-y1c0xs] {
 	max-height: 190px;
 }
-
-
 
 footer {
 	width: 100%;

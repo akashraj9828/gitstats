@@ -326,7 +326,7 @@ const Stats = ({ match, history, theme, userName, name, userData, repoData, user
 						</section>
 
 						{/* POPUPLAR SECTION */}
-						{(repoGraphDataPopularityWise && repoGraphDataPopularityWise.length &&  (repoGraphDataPopularityWise[0].stars||repoGraphDataPopularityWise[0].forks) && (
+						{(repoGraphDataPopularityWise && repoGraphDataPopularityWise.length && (repoGraphDataPopularityWise[0].stars || repoGraphDataPopularityWise[0].forks) && (
 							<section className='pt-5'>
 								<div className='row'>
 									<div className='col-sm-12 mt-3'>
@@ -361,7 +361,8 @@ const Stats = ({ match, history, theme, userName, name, userData, repoData, user
 									</div>
 								</div>
 							</section>
-						)) || ""}
+						)) ||
+							""}
 
 						{/* PRODUCTIVITY SECTION */}
 						<section className='pt-5'>
