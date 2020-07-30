@@ -20,6 +20,7 @@ function listen() {
     var host = server.address().address;
     var port = server.address().port;
     console.log('React app live at http://' + host + ':' + port);
+    console.log('If you want to run a developemnt server instead use:  `npm run dev` or `yarn dev` ');
 }
 
 
