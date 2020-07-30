@@ -130,6 +130,13 @@
 	}
 }
 
+// .pinned-meta-holder {
+// &:hover {
+// 	.pinned-meta{
+// 		text-decoration: none;
+// 		color: var(--color) !important;
+// 	}
+// }
 .pinned-meta {
 	white-space: nowrap;
 	display: flex;
@@ -141,3 +148,4 @@
 		color: var(--color) !important;
 	}
 }
+// }
