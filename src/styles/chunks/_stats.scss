@@ -84,8 +84,6 @@
 }
 
 .change-theme {
-	min-width: 110px;
-
 	button {
 		border: none;
 		background: transparent;
@@ -132,9 +130,22 @@
 	}
 }
 
+// .pinned-meta-holder {
+// &:hover {
+// 	.pinned-meta{
+// 		text-decoration: none;
+// 		color: var(--color) !important;
+// 	}
+// }
 .pinned-meta {
 	white-space: nowrap;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	transition: 0.2s;
+	&:hover {
+		text-decoration: none;
+		color: var(--color) !important;
+	}
 }
+// }

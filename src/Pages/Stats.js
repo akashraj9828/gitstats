@@ -121,6 +121,8 @@ const Stats = ({ match, history, theme, userName, name, userData, repoData, user
 		);
 	}
 
+	console.log("---: Stats -> repoGraphDataPopularityWise", repoGraphDataPopularityWise);
+
 	return (
 		<Fragment>
 			<Header />
@@ -324,40 +326,43 @@ const Stats = ({ match, history, theme, userName, name, userData, repoData, user
 						</section>
 
 						{/* POPUPLAR SECTION */}
-						<section className='pt-5'>
-							<div className='row'>
-								<div className='col-sm-12 mt-3'>
-									<h3 className='font-size-15 w-100'>My Popuplar Projects</h3>
-									<div className='card p-3 rounded' style={{ height: "calc( 100% - 20px )" }}>
-										{repoGraphDataPopularityWise ? (
-											<Fragment>
-												<BarChart data={repoGraphDataPopularityWise} height={250} max_bars={5} error={profileAnalysisError} />
-												{/* Extra info about bar chart */}
-												<div>
-													<h6 className='text-center mt-3'>
-														{repoGraphDataPopularityWise[0] && (
-															<Fragment>
-																{" "}
-																My most Popular Project is{" "}
-																<span
-																	style={{
-																		color: repoGraphDataPopularityWise[0].color,
-																	}}>
+						{(repoGraphDataPopularityWise && repoGraphDataPopularityWise.length && (repoGraphDataPopularityWise[0].stars || repoGraphDataPopularityWise[0].forks) && (
+							<section className='pt-5'>
+								<div className='row'>
+									<div className='col-sm-12 mt-3'>
+										<h3 className='font-size-15 w-100'>My Popuplar Projects</h3>
+										<div className='card p-3 rounded' style={{ height: "calc( 100% - 20px )" }}>
+											{repoGraphDataPopularityWise ? (
+												<Fragment>
+													<BarChart data={repoGraphDataPopularityWise} height={250} max_bars={5} error={profileAnalysisError} />
+													{/* Extra info about bar chart */}
+													<div>
+														<h6 className='text-center mt-3'>
+															{repoGraphDataPopularityWise[0] && (
+																<Fragment>
 																	{" "}
-																	{repoGraphDataPopularityWise[0].id}{" "}
-																</span>
-															</Fragment>
-														)}
-													</h6>
-												</div>
-											</Fragment>
-										) : (
-											Loader.section_loading
-										)}
+																	My most Popular Project is{" "}
+																	<span
+																		style={{
+																			color: repoGraphDataPopularityWise[0].color,
+																		}}>
+																		{" "}
+																		{repoGraphDataPopularityWise[0].id}{" "}
+																	</span>
+																</Fragment>
+															)}
+														</h6>
+													</div>
+												</Fragment>
+											) : (
+												Loader.section_loading
+											)}
+										</div>
 									</div>
 								</div>
-							</div>
-						</section>
+							</section>
+						)) ||
+							""}
 
 						{/* PRODUCTIVITY SECTION */}
 						<section className='pt-5'>

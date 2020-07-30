@@ -18,25 +18,22 @@ const Pinned = (props) => {
 						</a>
 					</h6>
 					<div className='row text-center mt-3'>
-						<div className='col-md-4 col-4'>
+						<div style={{ "--color": "#f47560" }} className='pinned-meta-holder col-md-4 col-4'>
 							<span className='mob-font-size-13 pinned-meta'>{(repo.defaultBranchRef && repo.defaultBranchRef.target.history.totalCount) || 0}</span>
-							<br />
 							<a className='mob-font-size-13 pinned-meta' href={"http://github.com/" + repo.nameWithOwner + "/commits"} target='_blank' rel='noopener noreferrer'>
 								{" "}
 								<CommitIcon className='mr-1' /> Commits{" "}
 							</a>
 						</div>
-						<div className='col-md-4 col-4'>
+						<div style={{ "--color": "#563d7c" }} className='pinned-meta-holder col-md-4 col-4'>
 							<span className='mob-font-size-13 pinned-meta'>{repo.forkCount || 0}</span>
-							<br />
 							<a className='mob-font-size-13 pinned-meta' href={"http://github.com/" + repo.nameWithOwner + "/network/members"} target='_blank' rel='noopener noreferrer'>
 								{" "}
 								<ForkIcon className='mr-1' /> Forks{" "}
 							</a>
 						</div>
-						<div className='col-md-4 col-4'>
+						<div style={{ "--color": "#f1e05a" }} className='pinned-meta-holder col-md-4 col-4'>
 							<span className='mob-font-size-13 pinned-meta'>{(repo.stargazers && repo.stargazers.totalCount) || 0}</span>
-							<br />
 							<a className='mob-font-size-13 pinned-meta' href={"http://github.com/" + repo.nameWithOwner + "/stargazers"} target='_blank' rel='noopener noreferrer'>
 								{" "}
 								<StarIcon className='mr-1' /> Stars
