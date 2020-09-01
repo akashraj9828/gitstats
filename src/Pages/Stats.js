@@ -330,7 +330,7 @@ const Stats = ({ match, history, theme, userName, name, userData, repoData, user
 							<section className='pt-5'>
 								<div className='row'>
 									<div className='col-sm-12 mt-3'>
-										<h3 className='font-size-15 w-100'>My Popuplar Projects</h3>
+										<h3 className='font-size-15 w-100'>My Popular Projects</h3>
 										<div className='card p-3 rounded' style={{ height: "calc( 100% - 20px )" }}>
 											{repoGraphDataPopularityWise ? (
 												<Fragment>
