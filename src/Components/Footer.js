@@ -18,7 +18,7 @@ function Footer({ theme }) {
 				</h5>
 				<div className='git-footer'>
 					<a className='github-button' data-color-scheme={color_scheme} href='https://github.com/akashraj9828' data-show-count='true' aria-label='Follow @akashraj9828 on GitHub'>
-						Follow @akashraj9828
+						Follow @akashraj9828 
 					</a>
 					<a className='github-button' data-color-scheme={color_scheme} href='https://github.com/amirsohel007' data-show-count='true' aria-label='Follow @amirsohel007 on GitHub'>
 						Follow @amirsohel007
