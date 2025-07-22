@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Search api test page</title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    </head>
+
+    <body>
+        <div class="container text-center">
+            <input id="search-bar" class="form-control form-group input mt-3" type="text" placeholder="Username">
+            <div id="result" class="row my-4 mx-2">
+
+            </div>
+
+        </div>
+    </body>
+
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <script>
+
+        let holder = $("#result")
+        $("#search-bar").on("input", function (evt) {
+            let query = evt.target.value
+            console.log(query);
+            if(query==""){
+                return
+            }
+            fetch("/search/" + query).then(res => res.json()).then(res => {
+                // console.log(res);
+                holder.empty()
+                let items = res
+                let e = items
+                console.log(e);
+                let name = e.login ? e.login : e.message;
+                let img = e.avatar_url ? e.avatar_url : "https://avatars2.githubusercontent.com/u/194705?v=4"
+                let dom = `<div class="col-md-12  p-2">
+                    <div class="row bg-dark rounded text-white p-2">
+                        <div class="col-4">
+                            <img class="img-fluid img" src="${img}" alt="" srcset="">
+                        </div>
+                        <div class="col-8 text-left">
+                            <h5>${name}</h5>
+                            <h6>${e.bio ? e.bio : "~"}</h6>
+                            <h6>Repos: ${e.public_repos ? e.public_repos : "~"}</h6>
+                            <h6>Gist: ${e.public_gists ? e.public_gists : "~"}</h6>
+                            <h6>Followers: ${e.followers ? e.followers : "~"}</h6>
+                            <h6>Following: ${e.following ? e.following : "~"}</h6>
+                        </div>
+                    </div>
+                </div>`
+                holder.append(dom)
+
+            })
+
+
+        })
+    </script>
+
+</html>
