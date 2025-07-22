@@ -22,7 +22,7 @@
     "path": "^0.12.7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-icons": "^3.10.0",
+    "react-icons": "^4.2.0",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.1.2",
     "react-router-ga": "^1.2.3",
