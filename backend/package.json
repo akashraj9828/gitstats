@@ -1,8 +1,8 @@
 {
-  "name": "gitstats-backend",
+  "name": "gitstats",
   "version": "1.0.0",
   "description": "Backend for gitstats",
-   "engines": {
+  "engines": {
     "node": "12.18.0",
     "npm": "6.x"
   },
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/akashraj9828/gitstats-backend.git"
+    "url": "git+https://github.com/akashraj9828/gitstats.git"
   },
   "keywords": [
     "backend",
@@ -23,9 +23,9 @@
   "author": "Akash",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/akashraj9828/gitstats-backend/issues"
+    "url": "https://github.com/akashraj9828/gitstats/issues"
   },
-  "homepage": "https://github.com/akashraj9828/gitstats-backend#readme",
+  "homepage": "https://github.com/akashraj9828/gitstats#readme",
   "dependencies": {
     "@sentry/node": "5.15.4",
     "axios": "^0.19.2",
@@ -50,7 +50,7 @@
     "displayBadge": true,
     "displayDate": false,
     "displayFilename": true,
-    "displayLabel":  true ,
+    "displayLabel": true,
     "displayTimestamp": true,
     "underlineLabel": true,
     "underlineMessage": false,
