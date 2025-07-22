@@ -14,8 +14,5 @@
   "builds": [
     { "src": "package.json", "use": "@vercel/static-build", "config": { "distDir": "build" } },
     { "src": "api/index.js", "use": "@vercel/node" }
-  ],
-  "engines": {
-    "node": "18.x"
-  }
+  ]
 }
