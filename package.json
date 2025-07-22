@@ -7,7 +7,7 @@
     "npm": "6.x"
   },
   "dependencies": {
-    "@nivo/bar": "^0.61.1",
+    "@nivo/bar": "^0.99.0",
     "@nivo/pie": "^0.61.1",
     "@sentry/browser": "^6.10.0",
     "@testing-library/jest-dom": "^4.2.4",
