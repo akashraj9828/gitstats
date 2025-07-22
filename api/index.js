@@ -271,10 +271,12 @@ app.use("/", cache.route(), (req, res) => {
 // The error handler must be before any other error middleware and after all controllers
 app.use(Sentry.Handlers.errorHandler());
 // 3000 for frontend on local machine
-const port = 5000;
-const server = app.listen(process.env.PORT || port, "0.0.0.0", () => {
-    signale.start(`STARTING SERVER`)
-    var host = server.address().address;
-    var port = server.address().port;
-    signale.success(`EXPRESS SERVER LISTENING LIVE AT ${host}:${port}`)
-})
+// const port = 5000;
+// const server = app.listen(process.env.PORT || port, "0.0.0.0", () => {
+//     signale.start(`STARTING SERVER`)
+//     var host = server.address().address;
+//     var port = server.address().port;
+//     signale.success(`EXPRESS SERVER LISTENING LIVE AT ${host}:${port}`)
+// })
+
+module.exports = app;
