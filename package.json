@@ -18,7 +18,6 @@
     "express": "^4.17.1",
     "file-saver": "^2.0.2",
     "javascript-time-ago": "^2.0.7",
-    "node-sass": "^4.14.1",
     "path": "^0.12.7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -28,7 +27,8 @@
     "react-router-ga": "^1.2.3",
     "react-scripts": "3.4.1",
     "react-share": "^4.1.0",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "sass": "^1.89.2"
   },
   "scripts": {
     "dev": "react-scripts start",
