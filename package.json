@@ -35,9 +35,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "pretty": "prettier --write \"./src/**/*.{js,jsx,json,scss,css}\""
-    // Optionally, add a Vercel build script if needed
-    // "vercel-build": "react-scripts build"
+    "pretty": "prettier --write \"./src/**/*.{js,jsx,json,scss,css}\"",
+    "vercel-build": "react-scripts build"
   },
   "eslintConfig": {
     "extends": "react-app"
