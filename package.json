@@ -13,7 +13,7 @@
     "@sentry/browser": "^6.10.0",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^13.2.1",
-    "axios": "^0.19.2",
+    "axios": "^1.11.0",
     "dom-to-image": "^2.6.0",
     "express": "^4.17.1",
     "file-saver": "^2.0.2",
