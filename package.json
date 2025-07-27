@@ -2,10 +2,6 @@
   "name": "git-stats",
   "version": "1.0.0",
   "private": true,
-  "engines": {
-    "node": ">=10.16.x",
-    "npm": "6.x"
-  },
   "dependencies": {
     "@nivo/bar": "^0.61.1",
     "@nivo/pie": "^0.61.1",
@@ -18,7 +14,6 @@
     "express": "^4.17.1",
     "file-saver": "^2.0.2",
     "javascript-time-ago": "^2.0.7",
-    "node-sass": "^4.14.1",
     "path": "^0.12.7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -28,15 +23,18 @@
     "react-router-ga": "^1.2.3",
     "react-scripts": "3.4.1",
     "react-share": "^4.1.0",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "sass": "^1.89.2"
   },
   "scripts": {
-    "start": "node server.js",
-    "dev": "react-scripts start",
-    "build": "react-scripts build",
+    "dev": "NODE_OPTIONS=--openssl-legacy-provider concurrently \"yarn dev:frontend\" \"yarn dev:backend\"",
+    "dev:frontend": "react-scripts start",
+    "dev:backend": "cd api && yarn start",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "pretty": "prettier --write \"./src/**/*.{js,jsx,json,scss,css}\""
+    "pretty": "prettier --write \"./src/**/*.{js,jsx,json,scss,css}\"",
+    "vercel-build": "NODE_OPTIONS=--openssl-legacy-provider react-scripts build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -54,6 +52,7 @@
     ]
   },
   "devDependencies": {
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "concurrently": "^8.2.0"
   }
 }

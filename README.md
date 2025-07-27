@@ -43,3 +43,13 @@ The first command correctly bundles React in production mode and optimizes the b
 # Sample Screen
 ![Input](output/dark.png)
 ![Input](output/light.png)
+
+## Monorepo Structure (Vercel Compatible)
+
+- **Frontend (React):** Located at the root. Built with Create React App. Vercel serves the static build automatically.
+- **Backend (API):** Located in `/api`. Express app exported as a module for Vercel serverless deployment.
+
+## Deployment
+
+- Deploy the root of this repository to Vercel.
+- Vercel will serve the React app as static files and the Express API as serverless functions from `/api`.
