@@ -27,7 +27,9 @@
     "sass": "^1.89.2"
   },
   "scripts": {
-    "dev": "react-scripts start",
+    "dev": "NODE_OPTIONS=--openssl-legacy-provider concurrently \"yarn dev:frontend\" \"yarn dev:backend\"",
+    "dev:frontend": "react-scripts start",
+    "dev:backend": "cd api && yarn start",
     "build": "NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -50,6 +52,7 @@
     ]
   },
   "devDependencies": {
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "concurrently": "^8.2.0"
   }
 }

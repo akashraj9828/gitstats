@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Backend for gitstats",
   "scripts": {
+    "start": "NODE_ENV=development node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -35,9 +36,7 @@
     "serve-favicon": "^2.5.0",
     "signale": "^1.4.0"
   },
-  "devDependencies": {
-    
-  },
+  "devDependencies": {},
   "signale": {
     "displayScope": true,
     "displayBadge": true,
